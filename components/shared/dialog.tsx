@@ -3,7 +3,8 @@ import React, { forwardRef, ReactNode, useEffect, useImperativeHandle, useState 
 import { StyleSheet, ViewStyle } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, FadeOutDown } from 'react-native-reanimated';
 
-import { Text } from '~/components/shared';
+import Text from './text';
+
 import { THEME } from '~/constants/theme';
 
 /**
