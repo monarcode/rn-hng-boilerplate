@@ -1,11 +1,10 @@
 import { Text, View } from '~/components/shared';
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   return (
     <View>
-      <Text>LoginScreen</Text>
+      <Text>SignUpScreen</Text>
     </View>
   );
 };
-
-export default LoginScreen;
+export default SignUpScreen;
