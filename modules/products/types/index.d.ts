@@ -20,6 +20,7 @@ interface Review {
   comment: string; // Comment provided by the reviewer
 }
 
+<<<<<<< HEAD
 interface ProductData {
   id: string;
   created_at: string;
@@ -38,4 +39,21 @@ interface ProductData {
 
 declare interface ProductContentProps {
   data: ProductData;
+=======
+interface ProductDetailsProps {
+  id: string; // Product ID, using string as per the JSON structure
+  name: string; // Name of the product
+  price: number; // Price of the product
+  description: string; // Detailed description of the product
+  images: string[]; // Array of image URLs
+  reviews: Review[]; // Array of reviews
+  category: string;
+  dateTime: DateTime;
+  stock: number;
+  productId: string;
+}
+
+declare interface ProductContentProps {
+  data: ProductDetailsProps;
+>>>>>>> 36f173b (Add product details ui screen implementation)
 }
