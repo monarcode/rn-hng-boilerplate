@@ -8,6 +8,7 @@ const colors = {
     400: '#7B7B7B',
   },
   dark: '#0F172A',
+  error: '#E80D0D',
 } as const;
 
 const spacing = {
