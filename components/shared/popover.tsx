@@ -12,7 +12,9 @@ import { THEME } from '~/constants/theme';
  *
  * @example
  * <Popover>
- *   <PopoverTrigger>Click Me</PopoverTrigger>
+ *   <PopoverTrigger>
+ *     <Text>Click Me</Text>
+ *   </PopoverTrigger>
  *   <PopoverContent>
  *     <Text>Popover Content</Text>
  *   </PopoverContent>
@@ -24,7 +26,9 @@ const Popover = PopoverPrimitive.Root;
  * PopoverTrigger component.
  *
  * @example
- * <PopoverTrigger>Click Me</PopoverTrigger>
+ * <PopoverTrigger>
+ *   <Text>Click Me</Text>
+ * </PopoverTrigger>
  *
  * @link https://rn-primitives.vercel.app/popover/#trigger
  */

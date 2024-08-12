@@ -19,7 +19,7 @@ import Text from './text';
 
 import { THEME } from '~/constants/theme';
 
-interface PasswordInputProps {
+export interface PasswordInputProps {
   /**
    * Placeholder text for the password input.
    * @default 'Enter password'
@@ -63,6 +63,9 @@ interface PasswordInputProps {
    * Label text to display above the input.
    */
   label?: string;
+  onFocus?: () => void;
+  /** Callback function called when the input loses focus */
+  onBlur?: () => void;
 }
 
 /**
@@ -82,7 +85,7 @@ interface PasswordInputProps {
  * ```
  */
 const PasswordInput: React.FC<PasswordInputProps> = ({
-  placeholder = 'Enter password',
+  placeholder,
   value,
   onChangeText,
   icon,
@@ -143,13 +146,13 @@ const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
     overflow: 'hidden',
-    borderRadius: 8,
+    borderRadius: 6,
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.6,
-    borderRadius: 8,
+    borderWidth: 1,
+    borderRadius: 6,
     padding: 10,
     height: 40,
   },

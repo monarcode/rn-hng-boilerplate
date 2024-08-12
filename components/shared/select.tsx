@@ -9,7 +9,7 @@ import { THEME } from '~/constants/theme';
 /**
  * Represents an option in the select component.
  */
-type Option = {
+export type Option = {
   label: string;
   value: string;
 };
@@ -17,7 +17,7 @@ type Option = {
 /**
  * Props for the Select component.
  */
-interface SelectProps {
+export interface SelectProps {
   /** Array of options to display in the select */
   options: Option[];
   /** Placeholder text to display when no option is selected */
@@ -32,6 +32,7 @@ interface SelectProps {
   width?: number;
   /** Color of the chevron icon */
   iconColor?: string;
+  value?: string;
 }
 
 const WIDTH = Dimensions.get('window').width - 48;
@@ -69,6 +70,7 @@ const Select: React.FC<SelectProps> = ({
   onOpenChange,
   width = WIDTH,
   iconColor = THEME.colors.black,
+  value,
 }) => {
   /**
    * Handles the open state change of the select.
@@ -82,18 +84,18 @@ const Select: React.FC<SelectProps> = ({
    * Handles the value change when an option is selected.
    * @param {SelectPrimitive.Option} value - The selected option
    */
-  const handleValueChange = (value: SelectPrimitive.Option) => {
-    if (onValueChange) {
-      onValueChange(value);
-      onOpenChange?.(false);
-    }
+  const handleValueChange = (selectedValue: SelectPrimitive.Option) => {
+    onValueChange?.(selectedValue);
   };
+
+  // Find the label for the current value
+  const selectedLabel = options.find((option) => option.value === value)?.label || placeholder;
 
   return (
     <View style={[styles.container, containerStyle]}>
       <SelectPrimitive.Root onOpenChange={handleOpenChange} onValueChange={handleValueChange}>
         <SelectPrimitive.Trigger style={styles.trigger}>
-          <SelectPrimitive.Value placeholder={placeholder} />
+          <SelectPrimitive.Value placeholder={selectedLabel} />
 
           <ChevronDown style={{ marginLeft: 'auto' }} color={iconColor} width={18} height={18} />
         </SelectPrimitive.Trigger>
@@ -101,7 +103,10 @@ const Select: React.FC<SelectProps> = ({
         <SelectPrimitive.Portal>
           <SelectPrimitive.Overlay style={styles.overlay}>
             <SelectPrimitive.Content align="center" style={{ width }}>
-              <Animated.View entering={FadeIn} exiting={FadeOutDown} style={styles.content}>
+              <Animated.View
+                entering={FadeIn.duration(200)}
+                exiting={FadeOutDown.duration(200)}
+                style={styles.content}>
                 {options.map((option) => (
                   <SelectPrimitive.Item
                     key={option.value}
