@@ -14,7 +14,7 @@ import Text from './text';
 
 import { THEME } from '~/constants/theme';
 
-type ButtonVariant = 'primary' | 'outline';
+type ButtonVariant = 'primary' | 'outline' | 'secondary';
 
 interface ButtonProps extends PressableProps {
   children: React.ReactNode;
@@ -51,13 +51,17 @@ function Button({
   const dynamicStyles = useMemo(() => {
     const container = [
       styles.container,
-      variant === 'primary' ? styles.primaryContainer : styles.outlineContainer,
+      variant === 'primary' && styles.primaryContainer,
+      variant === 'outline' && styles.outlineContainer,
+      variant === 'secondary' && styles.secondaryContainer,
       containerStyle,
     ];
 
     const text = [
       styles.text,
-      variant === 'primary' ? styles.primaryText : styles.outlineText,
+      variant === 'primary' && styles.primaryText,
+      variant === 'outline' && styles.outlineText,
+      variant === 'secondary' && styles.secondaryText,
       textStyle,
     ];
 
@@ -88,7 +92,7 @@ export default Button;
 const styles = StyleSheet.create({
   container: {
     height: 40,
-    borderRadius: 8,
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
     width: 'auto',
@@ -106,7 +110,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: THEME.colors.primary,
   },
+  secondaryContainer: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: THEME.colors.border,
+  },
   outlineText: {
     color: THEME.colors.primary,
+  },
+  secondaryText: {
+    color: THEME.colors.dark,
+    fontFamily: THEME.fontFamily.medium,
   },
 });
