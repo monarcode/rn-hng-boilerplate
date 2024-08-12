@@ -16,6 +16,7 @@ const spacing = {
   md: 16,
   lg: 24,
   xl: 32,
+  /** Screen horizontal padding */
   gutter: 24,
 } as const;
 
