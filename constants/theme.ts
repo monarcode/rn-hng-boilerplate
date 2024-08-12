@@ -7,6 +7,7 @@ const colors = {
     300: '#525252',
     400: '#7B7B7B',
   },
+  dark: '#0F172A',
 } as const;
 
 const spacing = {
@@ -15,6 +16,7 @@ const spacing = {
   md: 16,
   lg: 24,
   xl: 32,
+  gutter: 24,
 } as const;
 
 const fontFamily = {
