@@ -1,13 +1,12 @@
-import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
-const HomeScreen = () => {
+const UserSettingsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text>User Settings</Text>
     </View>
   );
 };
@@ -22,4 +21,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default UserSettingsScreen;
