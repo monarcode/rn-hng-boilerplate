@@ -5,7 +5,7 @@ import { THEME } from '~/constants/theme';
 /**
  * Extend Native Text props
  */
-interface TextProps extends RNTextProps {
+export interface TextProps extends RNTextProps {
   size?: keyof typeof THEME.fontSize;
   weight?: keyof typeof THEME.fontFamily;
 }

@@ -14,7 +14,7 @@ import { THEME } from '~/constants/theme';
 /**
  * Props for the TextInput component.
  */
-interface TextInputProps {
+export interface TextInputProps {
   /** Placeholder text for the input */
   placeholder?: string;
   /** Current value of the input */
@@ -35,45 +35,12 @@ interface TextInputProps {
   unfocusedColor?: string;
   /** Optional label text to display above the input */
   label?: string;
+  /** Callback function called when the input is focused */
+  onFocus?: () => void;
+  /** Callback function called when the input loses focus */
+  onBlur?: () => void;
 }
 
-/**
- * A customizable TextInput component.
- * Features animated focus states, optional icon, and label.
- *
- * @component
- * @example
- * // Basic usage
- * <TextInput
- *   placeholder="Enter your name"
- *   value={name}
- *   onChangeText={setName}
- * />
- *
- * @example
- * // With icon and label
- * import { UserIcon } from 'your-icon-library';
- *
- * <TextInput
- *   label="Username"
- *   placeholder="Enter your username"
- *   value={username}
- *   onChangeText={setUsername}
- *   icon={<UserIcon size={20} color={THEME.colors.dark} />}
- * />
- *
- * @example
- * // Custom styling
- * <TextInput
- *   placeholder="Custom input"
- *   value={customValue}
- *   onChangeText={setCustomValue}
- *   containerStyle={{ backgroundColor: '#f0f0f0' }}
- *   inputStyle={{ color: 'blue' }}
- *   focusColor="green"
- *   unfocusedColor="gray"
- * />
- */
 const TextInput: React.FC<TextInputProps> = ({
   placeholder = '',
   value,
@@ -85,6 +52,8 @@ const TextInput: React.FC<TextInputProps> = ({
   focusColor = THEME.colors.primary,
   unfocusedColor = THEME.colors.border,
   label,
+  onFocus,
+  onBlur,
 }) => {
   const focusProgress = useSharedValue(0);
 
@@ -98,10 +67,12 @@ const TextInput: React.FC<TextInputProps> = ({
 
   const handleFocus = () => {
     focusProgress.value = withTiming(1, { duration: 200 });
+    onFocus?.();
   };
 
   const handleBlur = () => {
     focusProgress.value = withTiming(0, { duration: 200 });
+    onBlur?.();
   };
 
   return (
@@ -126,14 +97,13 @@ const TextInput: React.FC<TextInputProps> = ({
 const styles = StyleSheet.create({
   outerContainer: {
     width: 'auto',
-    overflow: 'hidden',
     borderRadius: 8,
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.6,
-    borderRadius: 8,
+    borderWidth: 1,
+    borderRadius: 6,
     padding: 10,
     height: 40,
   },
