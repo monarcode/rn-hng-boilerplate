@@ -1,5 +1,12 @@
 import React, { ReactNode } from 'react';
-import { TextInput as NativeTextInput, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
+import {
+  TextInput as NativeTextInput,
+  TextInputProps as NativeTextInputProps,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -14,7 +21,7 @@ import { THEME } from '~/constants/theme';
 /**
  * Props for the TextInput component.
  */
-export interface TextInputProps {
+export interface TextInputProps extends NativeTextInputProps {
   /** Placeholder text for the input */
   placeholder?: string;
   /** Current value of the input */
@@ -54,6 +61,7 @@ const TextInput: React.FC<TextInputProps> = ({
   label,
   onFocus,
   onBlur,
+  ...props
 }) => {
   const focusProgress = useSharedValue(0);
 
@@ -88,6 +96,7 @@ const TextInput: React.FC<TextInputProps> = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholderTextColor={THEME.colors.dark}
+          {...props}
         />
       </Animated.View>
     </View>
@@ -112,6 +121,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    fontFamily: THEME.fontFamily.regular,
   },
   inputLabel: {
     fontSize: 14,

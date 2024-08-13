@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -11,6 +11,7 @@ import {
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 import Text from './text';
+import View from './view';
 
 import { THEME } from '~/constants/theme';
 
@@ -22,6 +23,7 @@ interface ButtonProps extends PressableProps {
   containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   variant?: ButtonVariant;
+  icon?: ReactNode;
 }
 
 /**
@@ -46,6 +48,7 @@ function Button({
   textStyle,
   loading = false,
   variant = 'primary',
+  icon,
   ...others
 }: ButtonProps): JSX.Element {
   const dynamicStyles = useMemo(() => {
@@ -73,6 +76,7 @@ function Button({
       style={dynamicStyles.container}
       accessibilityRole="button"
       accessibilityState={{ disabled: loading }}
+      disabled={loading}
       {...others}>
       {loading ? (
         <Animated.View entering={ZoomIn} exiting={ZoomOut}>
@@ -81,7 +85,10 @@ function Button({
           />
         </Animated.View>
       ) : (
-        <Text style={dynamicStyles.text}>{children}</Text>
+        <>
+          {icon && <View style={styles.iconContainer}>{icon}</View>}
+          <Text style={dynamicStyles.text}>{children}</Text>
+        </>
       )}
     </Pressable>
   );
@@ -97,13 +104,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 'auto',
     paddingHorizontal: THEME.spacing.md,
+    flexDirection: 'row',
+    columnGap: THEME.spacing.md,
   },
   text: {},
   primaryContainer: {
     backgroundColor: THEME.colors.primary,
-  },
-  primaryText: {
-    color: THEME.colors.white,
   },
   outlineContainer: {
     backgroundColor: 'transparent',
@@ -115,6 +121,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: THEME.colors.border,
   },
+  primaryText: {
+    color: THEME.colors.white,
+  },
   outlineText: {
     color: THEME.colors.primary,
   },
@@ -122,4 +131,5 @@ const styles = StyleSheet.create({
     color: THEME.colors.dark,
     fontFamily: THEME.fontFamily.medium,
   },
+  iconContainer: {},
 });
