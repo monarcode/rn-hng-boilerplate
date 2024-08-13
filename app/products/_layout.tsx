@@ -7,4 +7,5 @@ const ProductsLayout = () => {
     </Stack>
   );
 };
+
 export default ProductsLayout;

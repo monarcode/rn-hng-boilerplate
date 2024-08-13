@@ -96,7 +96,7 @@ const TextInput: React.FC<TextInputProps> = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholderTextColor={THEME.colors.dark}
-          {...props}
+          
         />
       </Animated.View>
     </View>

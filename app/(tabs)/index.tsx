@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { Link, Redirect } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -8,8 +8,9 @@ import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {
-  const authstore = useAuthStore();
-
+  if (true){
+    return <Redirect href={'/products/categories'} />
+  }
   return (
     <View style={styles.container}>
       <Link href="/(create-product)/create-product">Create Product</Link>
