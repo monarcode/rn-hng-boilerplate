@@ -1,7 +1,6 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { ReactNode } from 'react';
-import { StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, ScrollView, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
@@ -15,6 +14,7 @@ import People from '~/assets/icons/people.svg';
 import Wallet from '~/assets/icons/wallet.svg';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+import { SettingItem, SettingsSection } from '~/modules/settings/components';
 
 const UserSettingsScreen = () => {
   const insets = useSafeAreaInsets();
@@ -98,40 +98,6 @@ const styles = StyleSheet.create({
   profileEmail: {
     color: THEME.colors.neutral[400],
   },
-  section: {
-    marginBottom: THEME.spacing.xl,
-  },
-  sectionTitle: {
-    marginBottom: THEME.spacing.lg,
-  },
-  settingItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: THEME.spacing.md - 3,
-  },
-  settingText: {
-    flex: 1,
-    marginLeft: THEME.spacing.sm,
-  },
 });
 
 export default UserSettingsScreen;
-
-const SettingItem = ({ icon, title, goto }: { icon: any; title: string; goto?: () => void }) => (
-  <TouchableOpacity style={styles.settingItem} onPress={goto ?? (() => {})}>
-    {icon}
-    <Text size="md" style={styles.settingText}>
-      {title}
-    </Text>
-    <Ionicons name="chevron-forward" size={16} color={THEME.colors.neutral[300]} />
-  </TouchableOpacity>
-);
-
-const SettingsSection = ({ title, children }: { title: string; children: ReactNode }) => (
-  <View style={styles.section}>
-    <Text size="lg" weight="bold" style={styles.sectionTitle}>
-      {title}
-    </Text>
-    {children}
-  </View>
-);
