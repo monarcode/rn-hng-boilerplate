@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
   },
   secondaryText: {
     color: THEME.colors.dark,
-    fontFamily: THEME.fontFamily.medium,
   },
   iconContainer: {},
 });
