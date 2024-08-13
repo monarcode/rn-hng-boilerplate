@@ -4,12 +4,13 @@ declare interface HeaderProps {
   search: () => void; // Function triggered when the search button is pressed
   notification: () => void; // Function triggered when the notification button is pressed
 }
+
 interface DateTime {
   date: string; // e.g., '2024-08-12'
   time: string; // e.g., '14:30:00'
 }
 
-declare interface HeaderHeroProps {
+interface HeaderHeroProps {
   title: string;
   goback: () => void; // Function triggered when the Chevron-Left button is pressed
 }
@@ -32,7 +33,7 @@ interface ProductData {
   description: string;
 <<<<<<< HEAD
   category: string;
-  image: string | null;
+  images: string | null | string[]; // An image can be a single URL, null, or an array of URLs
   price: number;
   cost_price: number;
   quantity: number;
@@ -41,8 +42,9 @@ interface ProductData {
   deletedAt: string | null;
 }
 
-declare interface ProductContentProps {
+interface ProductContentProps {
   data: ProductData;
+<<<<<<< HEAD
 =======
 interface ProductDetailsProps {
   id: string; // Product ID, using string as per the JSON structure
@@ -70,4 +72,7 @@ declare interface ProductContentProps {
 =======
   data: ProductData;
 >>>>>>> fc6b8d1 (Add product details feature)
+=======
+  title: 'user' | 'Organizational'; // Added title property with specific union types
+>>>>>>> 9508895 (implement product details ui and update related components)
 }

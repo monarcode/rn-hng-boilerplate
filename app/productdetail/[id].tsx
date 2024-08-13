@@ -9,13 +9,17 @@ import React from 'react';
 import React, { useState } from 'react';
 >>>>>>> fc6b8d1 (Add product details feature)
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, ScrollView } from 'react-native';
 import Header from '~/modules/products/components/Header';
 import HeaderHero from '~/modules/products/components/HeaderHero';
 
 import ProductContent from '~/modules/products/components/ProductContent';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import { ProductDetails } from '~/modules/products/constants';
+>>>>>>> 9508895 (implement product details ui and update related components)
 
 const ProductDetail = () => {
   const insets = useSafeAreaInsets();
@@ -43,6 +47,7 @@ const ProductDetail = () => {
 
       <HeaderHero title={'Product Description'} goback={() => console.log('go back clicked')} />
 
+<<<<<<< HEAD
       <View style={styles.container}>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -54,6 +59,11 @@ const ProductDetail = () => {
         <ProductContent />
 >>>>>>> fc6b8d1 (Add product details feature)
       </View>
+=======
+      <ScrollView contentContainerStyle={styles.container}>
+        <ProductContent data={ProductDetails} title={'user'} />
+      </ScrollView>
+>>>>>>> 9508895 (implement product details ui and update related components)
       <View
         style={[
           styles.buttonContainer,
@@ -109,8 +119,9 @@ export default ProductDetail;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    gap: 50,
+
     marginTop: 16,
+    marginBottom: 100,
   },
   safeArea: {
     flex: 1,
@@ -125,7 +136,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     // bottom: 0,
-    left: 24,
-    right: 24,
+    paddingHorizontal: 24,
+    backgroundColor: '#fff',
+    width: '100%',
+    paddingTop: 5,
   },
 });
