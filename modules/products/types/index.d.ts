@@ -20,19 +20,22 @@ interface Review {
   comment: string; // Comment provided by the reviewer
 }
 
-interface ProductDetailsProps {
-  id: string; // Product ID, using string as per the JSON structure
-  name: string; // Name of the product
-  price: number; // Price of the product
-  description: string; // Detailed description of the product
-  images: string[]; // Array of image URLs
-  reviews: Review[]; // Array of reviews
+interface ProductData {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  description: string;
   category: string;
-  dateTime: DateTime;
-  stock: number;
-  productId: string;
+  image: string | null;
+  price: number;
+  cost_price: number;
+  quantity: number;
+  size: string;
+  stock_status: string;
+  deletedAt: string | null;
 }
 
 declare interface ProductContentProps {
-  data: ProductDetailsProps;
+  data: ProductData;
 }

@@ -1,16 +1,15 @@
 import { Button, Text, View } from '~/components/shared';
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, Platform } from 'react-native';
 import Header from '~/modules/products/components/Header';
 import HeaderHero from '~/modules/products/components/HeaderHero';
 
 import ProductContent from '~/modules/products/components/ProductContent';
-import { ProductDetails } from '~/modules/products/constants';
 
 const ProductDetail = () => {
   const insets = useSafeAreaInsets();
-  const data = ProductDetails;
+
   return (
     <SafeAreaView style={[styles.safeArea]}>
       <Header
@@ -22,7 +21,7 @@ const ProductDetail = () => {
       <HeaderHero title={'Product Description'} goback={() => console.log('go back clicked')} />
 
       <View style={styles.container}>
-        <ProductContent data={data} />
+        <ProductContent />
       </View>
       <View
         style={[
@@ -39,14 +38,14 @@ const ProductDetail = () => {
             textStyle={{
               color: '#000',
             }}>
-            Edit
+            Checkout
           </Button>
           <Button
             containerStyle={{
               width: '50%',
-              backgroundColor: '#DC2626',
+              backgroundColor: '#F68C1E',
             }}>
-            Delete
+            Add to Cart
           </Button>
         </View>
       </View>
