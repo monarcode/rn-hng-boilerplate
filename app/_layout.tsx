@@ -68,6 +68,24 @@ function Root() {
 
   return (
     <>
+      <Root />
+    </>
+  );
+}
+
+function Root() {
+  const authStore = useAuthStore();
+
+  useEffect(() => {
+    if (authStore.status === 'authenticated') {
+      router.replace('/');
+    } else if (authStore.status === 'unauthenticated') {
+      router.replace('/login');
+    }
+  }, [authStore.status]);
+
+  return (
+    <>
       <QueryClientProvider client={queryClient}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Stack>
