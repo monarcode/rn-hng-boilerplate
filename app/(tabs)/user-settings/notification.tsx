@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, SectionList, Switch, SafeAreaView } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { StyleSheet, SectionList, Switch, SafeAreaView } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 import { Text, View, Button } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+import notificationSections from '~/constants/notification';
+import GoBack from '~/components/go-back';
 
 type Item = {
   header: string,
@@ -12,76 +13,6 @@ type Item = {
 }
 
 const NotificationSettings = () => {
-  const insets = useSafeAreaInsets();
-  const topInset = insets.top;
-  const bottomInset = insets.bottom;
-
-  const notificationSections = [
-    {
-      title: (
-        <Text size="xl" weight="semiBold">
-          Notifications Alert
-        </Text>
-      ),
-      data: [
-        {
-          header: 'Mobile push notifications',
-          body: 'Receive push notifications on mentions and comments via your mobile app'
-        }
-      ]
-    },
-    {
-      title: (
-        <Text size="xl" weight="semiBold">
-          Email notifications
-        </Text>
-      ),
-      data: [
-        {
-          header: 'Activity in your workspace',
-          body: 'Receive emails when you get comments, mentions, page invites, reminders, access requests, and property changes'
-        },
-        {
-          header: 'Always send email notifications',
-          body: 'Receive emails about activity in your workspace, even when you are active on the app'
-        },
-        {
-          header: 'Email digests',
-          body: 'Receive email digest every 8 hours for changes to pages you are subscribed to'
-        },
-        {
-          header: 'Announcement and update emails',
-          body: 'Receive occasional emails about product launches and new features from notion'
-        },
-      ]
-    },
-    {
-      title: (
-        <Text size="xl" weight="semiBold">
-          Slack Notification
-        </Text>
-      ),
-      data: [
-        {
-          header: 'Activity in your workspace',
-          body: 'Receive emails when you get comments, mentions, page invites, reminders, access requests, and property changes'
-        },
-        {
-          header: 'Always send email notifications',
-          body: 'Receive emails about activity in your workspace, even when you are active on the app'
-        },
-        {
-          header: 'Email digests',
-          body: 'Receive email digest every 8 hours for changes to pages you are subscribed to'
-        },
-        {
-          header: 'Announcement and update emails',
-          body: 'Receive occasional emails about product launches and new features from notion'
-        },
-      ]
-    }
-  ];
-
   const renderBody = ({ item }: { item: Item }) => {
     const [isEnabled, setEnabled] = useState(false);
     const toggleSwitch = () => setEnabled(bool => !bool);
@@ -105,8 +36,8 @@ const NotificationSettings = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.header, { paddingTop: topInset, paddingBottom: bottomInset }]}>
-        <FontAwesome name="angle-left" size={24} color="black" />
+      <View style={[styles.header]}>
+        <GoBack />
         <Text size="lg" weight="semiBold">
           Notification
         </Text>
@@ -131,9 +62,11 @@ const NotificationSettings = () => {
         sections={notificationSections}
         renderItem={renderBody}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.sectionHeader}>
-            {title}
-          </Text>
+          <View style={styles.sectionHeader}>
+            <Text size="xl" weight="semiBold">
+              {title}
+            </Text>
+          </View>
         )}
       />
     </SafeAreaView>
@@ -145,12 +78,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: THEME.colors.white,
     paddingHorizontal: THEME.spacing.gutter,
+    paddingVertical: THEME.spacing.gutter,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
+    paddingVertical: THEME.spacing.sm,
   },
   saveBtn: {
     columnGap: THEME.spacing.sm,
@@ -180,7 +115,7 @@ const styles = StyleSheet.create({
   sectionBody: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '70%',
+    width: '75%',
     paddingBottom: 11,
     marginTop: THEME.spacing.md,
     gap: 12,
