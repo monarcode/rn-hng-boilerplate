@@ -21,12 +21,16 @@ interface Review {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fc6b8d1 (Add product details feature)
 interface ProductData {
   id: string;
   created_at: string;
   updated_at: string;
   name: string;
   description: string;
+<<<<<<< HEAD
   category: string;
   image: string | null;
   price: number;
@@ -47,13 +51,23 @@ interface ProductDetailsProps {
   description: string; // Detailed description of the product
   images: string[]; // Array of image URLs
   reviews: Review[]; // Array of reviews
+=======
+>>>>>>> fc6b8d1 (Add product details feature)
   category: string;
-  dateTime: DateTime;
-  stock: number;
-  productId: string;
+  image: string | null;
+  price: number;
+  cost_price: number;
+  quantity: number;
+  size: string;
+  stock_status: string;
+  deletedAt: string | null;
 }
 
 declare interface ProductContentProps {
+<<<<<<< HEAD
   data: ProductDetailsProps;
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+  data: ProductData;
+>>>>>>> fc6b8d1 (Add product details feature)
 }

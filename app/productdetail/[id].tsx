@@ -1,15 +1,20 @@
 import { Button, Text, View } from '~/components/shared';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useState } from 'react';
 =======
 import React from 'react';
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+import React, { useState } from 'react';
+>>>>>>> fc6b8d1 (Add product details feature)
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, Platform } from 'react-native';
 import Header from '~/modules/products/components/Header';
 import HeaderHero from '~/modules/products/components/HeaderHero';
 
 import ProductContent from '~/modules/products/components/ProductContent';
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 const ProductDetail = () => {
@@ -22,6 +27,12 @@ const ProductDetail = () => {
   const insets = useSafeAreaInsets();
   const data = ProductDetails;
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+
+const ProductDetail = () => {
+  const insets = useSafeAreaInsets();
+
+>>>>>>> fc6b8d1 (Add product details feature)
   return (
     <SafeAreaView style={[styles.safeArea]}>
       <Header
@@ -34,10 +45,14 @@ const ProductDetail = () => {
 
       <View style={styles.container}>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <ProductContent />
 =======
         <ProductContent data={data} />
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+        <ProductContent />
+>>>>>>> fc6b8d1 (Add product details feature)
       </View>
       <View
         style={[
@@ -55,14 +70,19 @@ const ProductDetail = () => {
               color: '#000',
             }}>
 <<<<<<< HEAD
+<<<<<<< HEAD
             Checkout
 =======
             Edit
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+            Checkout
+>>>>>>> fc6b8d1 (Add product details feature)
           </Button>
           <Button
             containerStyle={{
               width: '50%',
+<<<<<<< HEAD
 <<<<<<< HEAD
               backgroundColor: '#F68C1E',
             }}>
@@ -72,6 +92,11 @@ const ProductDetail = () => {
             }}>
             Delete
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+              backgroundColor: '#F68C1E',
+            }}>
+            Add to Cart
+>>>>>>> fc6b8d1 (Add product details feature)
           </Button>
         </View>
       </View>

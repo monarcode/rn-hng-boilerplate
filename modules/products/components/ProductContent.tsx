@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
@@ -8,14 +9,15 @@ const ProductContent = () => {
       <Text>ProductContent</Text>
 =======
 import { Image, StyleSheet } from 'react-native';
+=======
+import { StyleSheet, Text, View } from 'react-native';
+>>>>>>> fc6b8d1 (Add product details feature)
 import React from 'react';
-import { Text, View } from '~/components/shared';
-import { formatCurrency, ProductDetails } from '../constants';
-import { ProductContentProps } from '../types';
 
-const ProductContent = ({ data }: ProductContentProps) => {
+const ProductContent = () => {
   return (
     <View>
+<<<<<<< HEAD
       <View style={[styles.contentContainer, { borderTopWidth: 1 }]}>
         <View style={styles.imageContainer}>
           <Image source={data.images[0]} style={styles.productImage} />
@@ -61,12 +63,16 @@ const ProductContent = ({ data }: ProductContentProps) => {
         </View>
       </View>
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+      <Text>ProductContent</Text>
+>>>>>>> fc6b8d1 (Add product details feature)
     </View>
   );
 };
 
 export default ProductContent;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const styles = StyleSheet.create({});
 =======
@@ -136,3 +142,6 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> 36f173b (Add product details ui screen implementation)
+=======
+const styles = StyleSheet.create({});
+>>>>>>> fc6b8d1 (Add product details feature)
