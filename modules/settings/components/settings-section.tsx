@@ -6,7 +6,7 @@ import { THEME } from '~/constants/theme';
 
 const SettingsSection = ({ title, children }: { title: string; children: ReactNode }) => (
   <View style={styles.section}>
-    <Text size="lg" weight="bold" style={styles.sectionTitle}>
+    <Text size="lg" weight="semiBold" style={styles.sectionTitle}>
       {title}
     </Text>
     {children}
