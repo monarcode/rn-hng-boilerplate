@@ -9,6 +9,14 @@ const colors = {
   },
   dark: '#0F172A',
   error: '#E80D0D',
+  toastText: {
+    success: '#00A11F',
+    error: '#A11300',
+  },
+  toastBg: {
+    success: '#DAF1DF',
+    error: '#F1DADA',
+  },
 } as const;
 
 const spacing = {
