@@ -11,7 +11,7 @@ export const ProductDetails: ProductData = {
   updated_at: '2024-08-12T14:30:00Z', // Example ISO date-time string
   name: 'Product 01',
   description:
-    'A fusion Ocee of ripe bananas, pure honey, and succulent raspberries with our bread. Crafted to perfection.',
+    'A fusion of ripe bananas, pure honey, and succulent raspberries with our bread. Crafted to perfection.',
   category: 'Appetizers',
   images: [ProductImage, CakeImage, CheeseCake], // Array of images
   price: 29,

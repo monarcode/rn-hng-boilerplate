@@ -19,9 +19,13 @@ import ProductContent from '~/modules/products/components/ProductContent';
 <<<<<<< HEAD
 =======
 import { ProductDetails } from '~/modules/products/constants';
+<<<<<<< HEAD
 >>>>>>> 9508895 (implement product details ui and update related components)
+=======
+import { ProductDetailProps } from '~/modules/products/types';
+>>>>>>> b705a1b (implemented new changes made on the ui design)
 
-const ProductDetail = () => {
+const ProductDetail = ({ title = 'Organizational' }: ProductDetailProps) => {
   const insets = useSafeAreaInsets();
 
 =======
@@ -41,7 +45,7 @@ const ProductDetail = () => {
     <SafeAreaView style={[styles.safeArea]}>
       <Header
         menu={() => console.log('menu clicked')}
-        search={() => console.log('Seach clicked')}
+        search={() => console.log('Search clicked')}
         notification={() => console.log('notification clicked')}
       />
 
@@ -61,7 +65,7 @@ const ProductDetail = () => {
       </View>
 =======
       <ScrollView contentContainerStyle={styles.container}>
-        <ProductContent data={ProductDetails} title={'user'} />
+        <ProductContent data={ProductDetails} title={title} />
       </ScrollView>
 >>>>>>> 9508895 (implement product details ui and update related components)
       <View
@@ -81,6 +85,7 @@ const ProductDetail = () => {
             }}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             Checkout
 =======
             Edit
@@ -88,10 +93,15 @@ const ProductDetail = () => {
 =======
             Checkout
 >>>>>>> fc6b8d1 (Add product details feature)
+=======
+            {title === 'Organizational' && ' Edit'}
+            {title === 'user' && ' Checkout'}
+>>>>>>> b705a1b (implemented new changes made on the ui design)
           </Button>
           <Button
             containerStyle={{
               width: '50%',
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
               backgroundColor: '#F68C1E',
@@ -107,6 +117,12 @@ const ProductDetail = () => {
             }}>
             Add to Cart
 >>>>>>> fc6b8d1 (Add product details feature)
+=======
+              backgroundColor: title === 'Organizational' ? '#DC2626' : '#F68C1E',
+            }}>
+            {title === 'Organizational' && 'Delete'}
+            {title === 'user' && ' Add to Cart'}
+>>>>>>> b705a1b (implemented new changes made on the ui design)
           </Button>
         </View>
       </View>
@@ -119,7 +135,6 @@ export default ProductDetail;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-
     marginTop: 16,
     marginBottom: 100,
   },
@@ -129,13 +144,11 @@ const styles = StyleSheet.create({
   },
   rowGap: {
     flexDirection: 'row',
-
     gap: 12,
     justifyContent: 'center',
   },
   buttonContainer: {
     position: 'absolute',
-    // bottom: 0,
     paddingHorizontal: 24,
     backgroundColor: '#fff',
     width: '100%',

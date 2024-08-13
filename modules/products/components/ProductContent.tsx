@@ -5,20 +5,29 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 =======
 import React, { useState } from 'react';
-import { View, Text, Pressable, Animated, ScrollView, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  Animated,
+  ScrollView,
+  StyleSheet,
+  Image,
+  ImageSourcePropType,
+} from 'react-native';
 import { ChevronDown, Star } from 'react-native-feather';
 import { useRotationAnimation } from '../hooks/animation';
 import { formatCurrency, stateCityMapping } from '../constants';
 import { TextInput } from '~/components/shared';
 import { ProductContentProps } from '../types';
 
-const ProductContent = ({ data }: ProductContentProps) => {
+const ProductContent = ({ data, title }: ProductContentProps) => {
   const { images } = data;
   const [street, setStreet] = useState<string>('');
   const { rotateIcon, rotate, isRotated } = useRotationAnimation();
   const [selectedState, setSelectedState] = useState<string>('Select State');
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(
+  const [selectedImage, setSelectedImage] = useState<ImageSourcePropType | null>(
     images.length > 0 ? images[0] : null
   );
 
@@ -27,8 +36,8 @@ const ProductContent = ({ data }: ProductContentProps) => {
   const handleImageSelect = (image: string) => {
     setSelectedImage(image);
   };
-  const maxRating = 2000; // Example maximum rating
-  const review = 1500; // Example review rating
+  const maxRating = 2000;
+  const review = 1500;
   const normalizedReview = (review / maxRating) * 5;
 
   const rating = Array(5)
@@ -163,13 +172,16 @@ const ProductContent = () => {
           <View style={[styles.columnContainer, { alignItems: 'flex-end' }]}>
             <Text style={styles.productPrice}>{formatCurrency(20)}</Text>
             <View style={styles.rowGap3}>
-              <View
-                style={
-                  quantity > 0
-                    ? [styles.stockCircle, { backgroundColor: 'green' }]
-                    : [styles.stockCircle, { backgroundColor: 'red' }]
-                }
-              />
+              {title === 'Organizational' && <Text>{quantity}</Text>}
+              {title === 'user' && (
+                <View
+                  style={
+                    quantity > 0
+                      ? [styles.stockCircle, { backgroundColor: 'green' }]
+                      : [styles.stockCircle, { backgroundColor: 'red' }]
+                  }
+                />
+              )}
               <Text style={styles.stockText}>in stock</Text>
             </View>
           </View>
@@ -211,8 +223,8 @@ const ProductContent = () => {
                     style={[
                       styles.variationImageContainer,
                       {
-                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE', // Change border color if selected
-                        borderWidth: selectedImage === image ? 2 : 1, // Change border width if selected
+                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE',
+                        borderWidth: selectedImage === image ? 2 : 1,
                       },
                     ]}>
                     <Image source={image} style={styles.thumbnailImage} />
@@ -248,70 +260,78 @@ const ProductContent = () => {
           </Pressable>
         </View>
       </View>
-      <View style={styles.dropDownContainer}>
-        <View style={styles.rowContainerJb}>
-          <Text style={styles.dropDownLabel}>Delivery Address</Text>
-          <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
-            <Animated.View style={{ transform: [{ rotate }] }}>
-              <ChevronDown width={18} height={18} stroke={'black'} />
-            </Animated.View>
-          </Pressable>
-        </View>
-        {isRotated && (
-          <View style={styles.dropDownContentContainer}>
-            <View style={styles.columGap16}>
-              <View style={styles.dropDownItemContainer}>
-                <View style={styles.rowContainerJb}>
-                  <Text style={styles.dropDownLabel}>{selectedState}</Text>
-                  <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
-                    <ChevronDown width={18} height={18} stroke={'black'} />
-                  </Pressable>
-                </View>
-                <ScrollView>
-                  {states.map((state, index) => (
-                    <Pressable
-                      key={index}
-                      onPress={() => handleStateSelect(state)}
-                      style={styles.optionContainer}>
-                      <Text style={styles.stateOption}>{state}</Text>
-                    </Pressable>
-                  ))}
-                </ScrollView>
-              </View>
-
-              {selectedState !== 'Select State' && cities.length > 0 && (
+      {title === 'user' && (
+        <View style={styles.dropDownContainer}>
+          <View style={styles.rowContainerJb}>
+            <Text style={styles.dropDownLabel}>Delivery Address</Text>
+            <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
+              <Animated.View style={{ transform: [{ rotate }] }}>
+                <ChevronDown width={18} height={18} stroke={'black'} />
+              </Animated.View>
+            </Pressable>
+          </View>
+          {isRotated && (
+            <View style={styles.dropDownContentContainer}>
+              <View style={styles.columGap16}>
                 <View style={styles.dropDownItemContainer}>
                   <View style={styles.rowContainerJb}>
-                    <Text style={styles.dropDownLabel}>{selectedCity || 'Select City'}</Text>
+                    <Text style={styles.dropDownLabel}>{selectedState}</Text>
                     <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
                       <ChevronDown width={18} height={18} stroke={'black'} />
                     </Pressable>
                   </View>
                   <ScrollView>
-                    {cities.map((city, index) => (
+                    {states.map((state, index) => (
                       <Pressable
                         key={index}
-                        onPress={() => handleCitySelect(city)}
+                        onPress={() => handleStateSelect(state)}
                         style={styles.optionContainer}>
-                        <Text style={styles.stateOption}>{city}</Text>
+                        <Text style={styles.stateOption}>{state}</Text>
                       </Pressable>
                     ))}
                   </ScrollView>
                 </View>
-              )}
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Input Street"
-                  value={street}
-                  onChangeText={handleStreetChange}
-                  style={styles.textInput}
-                />
+
+                {selectedState !== 'Select State' && cities.length > 0 && (
+                  <View style={styles.dropDownItemContainer}>
+                    <View style={styles.rowContainerJb}>
+                      <Text style={styles.dropDownLabel}>{selectedCity || 'Select City'}</Text>
+                      <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
+                        <ChevronDown width={18} height={18} stroke={'black'} />
+                      </Pressable>
+                    </View>
+                    <ScrollView>
+                      {cities.map((city, index) => (
+                        <Pressable
+                          key={index}
+                          onPress={() => handleCitySelect(city)}
+                          style={styles.optionContainer}>
+                          <Text style={styles.stateOption}>{city}</Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  </View>
+                )}
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Input Street"
+                    value={street}
+                    onChangeText={handleStreetChange}
+                    style={styles.textInput}
+                  />
+                </View>
               </View>
             </View>
+<<<<<<< HEAD
           </View>
         )}
       </View>
 >>>>>>> 9508895 (implement product details ui and update related components)
+=======
+          )}
+        </View>
+      )}
+>>>>>>> b705a1b (implemented new changes made on the ui design)
     </View>
   );
 };

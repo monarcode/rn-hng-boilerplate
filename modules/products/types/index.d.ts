@@ -1,5 +1,11 @@
+import { ProductDetails } from './../constants/index';
 import { HeaderHero } from '~/modules/products/components/HeaderHero';
-declare interface HeaderProps {
+
+interface TitleProps {
+  title: 'user' | 'Organizational'; // Specific union types for title property
+}
+
+interface HeaderProps {
   menu: () => void; // Function triggered when the menu button is pressed
   search: () => void; // Function triggered when the search button is pressed
   notification: () => void; // Function triggered when the notification button is pressed
@@ -11,8 +17,8 @@ interface DateTime {
 }
 
 interface HeaderHeroProps {
-  title: string;
   goback: () => void; // Function triggered when the Chevron-Left button is pressed
+  title: string;
 }
 
 interface Review {
@@ -42,8 +48,9 @@ interface ProductData {
   deletedAt: string | null;
 }
 
-interface ProductContentProps {
+interface ProductContentProps extends TitleProps {
   data: ProductData;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 interface ProductDetailsProps {
@@ -75,4 +82,8 @@ declare interface ProductContentProps {
 =======
   title: 'user' | 'Organizational'; // Added title property with specific union types
 >>>>>>> 9508895 (implement product details ui and update related components)
+=======
+>>>>>>> b705a1b (implemented new changes made on the ui design)
 }
+
+interface ProductDetailProps extends TitleProps {}
