@@ -3,8 +3,9 @@ import ky from 'ky';
 import useAuthStore from '~/store/auth';
 
 const baseclient = ky.extend({
-  // TODO: Add base url here
   prefixUrl: process.env.EXPO_PUBLIC_API_BASEURL,
+  timeout: 60000,
+  retry: 3,
 });
 
 const http = baseclient.extend({
