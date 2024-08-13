@@ -8,9 +8,7 @@ import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {
-  if (true){
-    return <Redirect href={'/products/categories'} />
-  }
+  const authstore = useAuthStore();
   return (
     <View style={styles.container}>
       <Link href="/(create-product)/create-product">Create Product</Link>
