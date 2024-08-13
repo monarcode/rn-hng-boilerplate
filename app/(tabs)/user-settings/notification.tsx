@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, ScrollView, SectionList, Switch, SafeAreaView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Text, View, Button } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
@@ -13,16 +13,8 @@ type Item = {
 
 const NotificationSettings = () => {
   const insets = useSafeAreaInsets();
-
   const topInset = insets.top;
   const bottomInset = insets.bottom;
-
-
-  //  <Button>
-  //   Save Changes
-  // </Button>
-
-
 
   const notificationSections = [
     {
@@ -101,9 +93,9 @@ const NotificationSettings = () => {
           <Text size="sm" weight="regular">{item.body}</Text>
         </View>
         <Switch
-          trackColor={{ false: '#767577', true: '#81b0ff' }}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
+          trackColor={{ false: '#D0D6D6', true: '#F97316' }}
+          thumbColor={isEnabled ? '#F9F9F9' : '#E6F5F3'}
+          ios_backgroundColor="#F97316"
           onValueChange={toggleSwitch}
           value={isEnabled}
         />
@@ -120,6 +112,19 @@ const NotificationSettings = () => {
         </Text>
         <View />
       </View>
+
+      <Button
+        containerStyle={styles.saveBtn}
+        icon={(
+          <MaterialCommunityIcons
+            name="check" size={20}
+            color="white"
+          />
+        )}
+      >
+        Save Changes
+      </Button>
+
 
       <SectionList
         contentContainerStyle={styles.section}
@@ -147,6 +152,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%'
   },
+  saveBtn: {
+    columnGap: THEME.spacing.sm,
+    width: 140,
+    alignSelf: 'flex-end',
+    marginBottom: -40
+  },
   section: {
     width: '100%'
   },
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(188, 188, 188, 0.40)',
     paddingBottom: 11,
     borderBottomWidth: 0.5,
-    marginTop: 16
+    marginTop: THEME.spacing.md
   },
   sectionBodyCon: {
     flexDirection: 'row',
@@ -171,28 +182,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '70%',
     paddingBottom: 11,
-    marginTop: 16,
+    marginTop: THEME.spacing.md,
     gap: 12,
-  },
-  profileInfo: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: THEME.spacing.xl,
-  },
-  profileImageContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-  },
-  profileImage: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  profileName: {
-    marginBottom: 5,
-  },
-  profileEmail: {
-    color: THEME.colors.neutral[400],
   },
 });
 
