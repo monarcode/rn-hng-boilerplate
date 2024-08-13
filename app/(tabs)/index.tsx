@@ -8,9 +8,7 @@ import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {
-  if (true){
-    return <Redirect href={'/products/categories'} />
-  }
+  const authstore = useAuthStore();
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
