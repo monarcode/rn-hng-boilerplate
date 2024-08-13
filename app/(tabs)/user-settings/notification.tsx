@@ -1,10 +1,15 @@
-import React from 'react';
-import { StyleSheet, ScrollView, SectionList } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, ScrollView, SectionList, Switch, SafeAreaView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { Text, View, Button } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+
+type Item = {
+  header: string,
+  body: string
+}
 
 const NotificationSettings = () => {
   const insets = useSafeAreaInsets();
@@ -16,6 +21,8 @@ const NotificationSettings = () => {
   //  <Button>
   //   Save Changes
   // </Button>
+
+
 
   const notificationSections = [
     {
@@ -83,8 +90,29 @@ const NotificationSettings = () => {
     }
   ];
 
+  const renderBody = ({ item }: { item: Item }) => {
+    const [isEnabled, setEnabled] = useState(false);
+    const toggleSwitch = () => setEnabled(bool => !bool);
+
+    return (
+      <View style={styles.sectionBodyCon}>
+        <View style={styles.sectionBody}>
+          <Text size="md" weight="medium">{item.header}</Text>
+          <Text size="sm" weight="regular">{item.body}</Text>
+        </View>
+        <Switch
+          trackColor={{ false: '#767577', true: '#81b0ff' }}
+          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </View>
+    )
+  }
+
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={[styles.header, { paddingTop: topInset, paddingBottom: bottomInset }]}>
         <FontAwesome name="angle-left" size={24} color="black" />
         <Text size="lg" weight="semiBold">
@@ -96,19 +124,14 @@ const NotificationSettings = () => {
       <SectionList
         contentContainerStyle={styles.section}
         sections={notificationSections}
-        renderItem={({ item }) => (
-          <View style={styles.sectionBody}>
-            <Text size="md" weight="medium">{item.header}</Text>
-            <Text size="sm" weight="regular">{item.body}</Text>
-          </View>
-        )}
+        renderItem={renderBody}
         renderSectionHeader={({ section: { title } }) => (
           <Text style={styles.sectionHeader}>
             {title}
           </Text>
         )}
       />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -137,13 +160,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     marginTop: 16
   },
+  sectionBodyCon: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   sectionBody: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '100%',
+    width: '70%',
     paddingBottom: 11,
     marginTop: 16,
-    gap: 12
+    gap: 12,
   },
   profileInfo: {
     alignItems: 'center',
