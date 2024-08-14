@@ -50,7 +50,30 @@ const createUser = async (payload: any): Promise<AuthSuccessResponse> => {
   }
 };
 
+const changeUserPassword = async (payload: any): Promise<AuthSuccessResponse> => {
+  try {
+    const response = await http
+      .post('auth/update/password', {
+        json: { email: payload.email, new_password: payload.new_password },
+      })
+      .json<AuthSuccessResponse>();
+
+    if ('error' in response) {
+      throw new Error('Something went wrong');
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<AuthLoginResponse>();
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
+
 export const AuthService = {
   loginUser,
   createUser,
+  changeUserPassword,
 };
