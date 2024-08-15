@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import React from 'react';
-import { StyleSheet, ScrollView, Image } from 'react-native';
+import { Image, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
@@ -43,8 +43,8 @@ const UserSettingsScreen = () => {
       </View>
 
       <SettingsSection title="Profile Settings">
-        {/* 
-          To enable navigation when using any of the SettingItem components, 
+        {/*
+          To enable navigation when using any of the SettingItem components,
           you should call the `goto` prop within the SettingItem */}
         <SettingItem
           icon={<Account />}
@@ -52,7 +52,11 @@ const UserSettingsScreen = () => {
           goto={() => router.push('/user/general-profile')}
         />
         <SettingItem icon={<AccountSetting />} title="Account" />
-        <SettingItem icon={<Notification />} title="Notification" goto={() => router.push('/user-settings/notification')} />
+        <SettingItem
+          icon={<Notification />}
+          title="Notification"
+          goto={() => router.push('/user-settings/notification')}
+        />
         <SettingItem icon={<Database />} title="Data and Privacy" />
         <SettingItem icon={<Globe />} title="Language and Region" />
       </SettingsSection>

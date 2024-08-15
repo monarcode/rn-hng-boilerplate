@@ -12,7 +12,7 @@ interface FormTextInputProps<TFieldValues extends FieldValues>
   control: Control<TFieldValues>;
   rules?: any;
   errorMessage?: string;
-  label: string;
+  label?: string;
 }
 
 /**
@@ -70,6 +70,7 @@ function FormInput<TFieldValues extends FieldValues>({
             containerStyle={
               [textInputProps.containerStyle as ViewStyle, error && styles.errorInput] as ViewStyle
             }
+            placeholderTextColor={THEME.colors.neutral[400]}
           />
           {(error || errorMessage) && (
             <Text style={styles.errorText}>{error?.message || errorMessage}</Text>
