@@ -4,6 +4,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { THEME } from '~/constants/theme';
 import { Filter } from 'react-native-feather';
 import Slider from '../../assets/icons/sliders.svg';
+import FilterItems from '../shared/filter';
 const SearchAndFilter = () => {
   return (
     <View style={styles.container}>
@@ -13,9 +14,7 @@ const SearchAndFilter = () => {
           <Slider />
         </View>
       </View>
-      <Pressable style={styles.filterContainer}>
-        <Filter width={15} height={15} color={THEME.colors.white} />
-      </Pressable>
+    <FilterItems/>
     </View>
   );
 };
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: THEME.spacing.sm,
   },
   inputContainer: {
-    width: '80%',
+    width: '85%',
     borderWidth: 1,
     borderColor: THEME.colors.border,
     borderRadius: THEME.spacing.sm,

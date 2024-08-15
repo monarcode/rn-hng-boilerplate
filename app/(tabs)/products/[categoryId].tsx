@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+import { useLocalSearchParams } from 'expo-router';
 
 const ViewProductsByCategory = () => {
   return (

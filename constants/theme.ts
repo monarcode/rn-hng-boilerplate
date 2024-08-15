@@ -18,6 +18,7 @@ const colors = {
     success: '#DAF1DF',
     error: '#F1DADA',
   },
+  borderLight:'#F7F7F7'
 } as const;
 
 const spacing = {
