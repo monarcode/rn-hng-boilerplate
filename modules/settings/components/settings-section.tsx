@@ -18,6 +18,8 @@ export default SettingsSection;
 const styles = StyleSheet.create({
   section: {
     marginBottom: THEME.spacing.xl,
+    borderBottomWidth: 1,
+    borderBottomColor: THEME.colors.border,
   },
   sectionTitle: {
     marginBottom: THEME.spacing.lg,
