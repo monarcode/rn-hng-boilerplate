@@ -30,6 +30,7 @@
     "@rn-primitives/types": "^1.0.3",
     "@rn-primitives/utils": "^1.0.3",
     "@shopify/flash-list": "1.6.4",
+    "@tanstack/react-query": "^5.51.23",
     "expo": "^51.0.0",
     "expo-constants": "~16.0.1",
     "expo-font": "~12.0.9",
