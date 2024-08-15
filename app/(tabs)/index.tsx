@@ -12,6 +12,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Text>Home Screen</Text>
+      <Link href={'/productdetail'}>Go to ProductDetails</Link>
       <Link href="/(create-product)/create-product">Create Product</Link>
       <Link href="/sign-up">Home Screen</Link>
       <Pressable onPress={() => authstore.resetStore()}>

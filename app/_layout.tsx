@@ -76,6 +76,7 @@ function Root() {
             <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
             <Stack.Screen name="(create-product)" options={{ headerShown: false }} />
             <Stack.Screen name="user" options={{ headerShown: false }} />
+            <Stack.Screen name="productdetail" options={{ headerShown: false }} />
           </Stack>
         </GestureHandlerRootView>
       </QueryClientProvider>
