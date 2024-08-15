@@ -4,6 +4,7 @@ import GridIcon from '../../assets/icons/icongrid.svg';
 import { List } from 'react-native-feather';
 import { Pressable, StyleSheet } from 'react-native';
 import { THEME } from '~/constants/theme';
+import GoBack from '../go-back';
 
 type TopHeaderProps = {
     listViewOption: string;
@@ -13,13 +14,14 @@ type TopHeaderProps = {
 const ProductTopHeader = ({ listViewOption, setListViewOption }: TopHeaderProps) => {
     return (
         <View style={styles.container}>
+            <GoBack/>
             <View style={{ gap: THEME.spacing.xs }}>
                 <Text size="3xl" weight="bold">
                     Products
                 </Text>
                 <Text size="lg">View all products</Text>
             </View>
-            <View style={{ flexDirection: 'row', gap: THEME.spacing.sm }}>
+            {/* <View style={{ flexDirection: 'row', gap: THEME.spacing.sm }}>
                 <Pressable
                     style={[
                         styles.listToggleButton,
@@ -48,7 +50,7 @@ const ProductTopHeader = ({ listViewOption, setListViewOption }: TopHeaderProps)
                         stroke={listViewOption == 'grid' ? THEME.colors.white : THEME.colors.border}
                     />
                 </Pressable>
-            </View>
+            </View> */}
         </View>
     );
 };
@@ -56,7 +58,7 @@ const ProductTopHeader = ({ listViewOption, setListViewOption }: TopHeaderProps)
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        gap:THEME.spacing.lg,
         alignItems: 'center',
         borderBottomWidth: 1,
         padding: THEME.spacing.md,
