@@ -1,4 +1,5 @@
 import { Link, Redirect } from 'expo-router';
+import { Link, Redirect } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
