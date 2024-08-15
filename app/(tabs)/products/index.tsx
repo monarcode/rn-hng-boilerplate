@@ -1,7 +1,7 @@
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
-import { View } from '~/components/shared';
+import { Button, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
 const ProductsScreen = () => {
