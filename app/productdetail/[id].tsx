@@ -2,7 +2,7 @@ import { Button, Text, View } from '~/components/shared';
 import React, { useState } from 'react';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, Platform, ScrollView } from 'react-native';
-import Header from '~/modules/products/components/Header';
+
 import HeaderHero from '~/modules/products/components/HeaderHero';
 
 import ProductContent from '~/modules/products/components/ProductContent';
@@ -11,7 +11,7 @@ import { ProductData, ProductDetailProps } from '~/modules/products/types';
 import { useRouter } from 'expo-router';
 
 // Corrected typing for the ProductDetail component
-const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
+const ProductDetail = ({ title = 'Organizational' }: ProductDetailProps) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -43,12 +43,6 @@ const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
 
   return (
     <SafeAreaView style={[styles.safeArea]}>
-      <Header
-        menu={() => console.log('menu clicked')}
-        search={() => console.log('Search clicked')}
-        notification={() => console.log('notification clicked')}
-      />
-
       <HeaderHero title={'Product Description'} goback={goBack} />
 
       <ScrollView contentContainerStyle={styles.container}>
