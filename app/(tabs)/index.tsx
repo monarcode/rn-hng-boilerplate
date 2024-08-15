@@ -13,12 +13,12 @@ import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {
   const authstore = useAuthStore();
-  console.log(authstore.data?.user);
+  console.log(authstore.token);
 
   const { first_name, avatar_url } = authstore.data?.user;
 
   return (
-    <ScrollView style={{flex:1,backgroundColor:THEME.colors.white}}>
+    <ScrollView style={{ flex: 1, backgroundColor: THEME.colors.white }}>
       <View style={styles.container}>
         <HomeHeader {...{ first_name, avatar_url }} />
         <Summary />

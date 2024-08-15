@@ -16,7 +16,7 @@ const ProductItemListTile = (product: ProductProps) => {
         <Image source={{ uri: product.image }} style={styles.image} />
         <View style={styles.textContentContainer}>
           <View>
-            <Text size="2xl" weight="medium">
+            <Text size="xl" weight="medium">
               {product.name}
             </Text>
             <Text size="lg">P001</Text>
@@ -29,7 +29,7 @@ const ProductItemListTile = (product: ProductProps) => {
           </View>
         </View>
       </View>
-      <Text size="2xl" weight="bold">
+      <Text size="xl" weight="bold">
         ${product.price}.00
       </Text>
     </View>
@@ -55,8 +55,9 @@ const styles = StyleSheet.create({
     gap: THEME.spacing.lg,
   },
   image: {
-    width: '45%',
+    width: '40%',
     borderRadius: 10,
+    resizeMode: 'cover',
   },
 });
 
