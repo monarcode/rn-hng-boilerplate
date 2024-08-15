@@ -19,6 +19,19 @@ const http = baseclient.extend({
         return request;
       },
     ],
+    afterResponse: [
+      async (request, options, response) => {
+        if (response.status === 401) {
+          useAuthStore.setState({
+            status: 'unauthenticated',
+            token: null,
+            data: null,
+          });
+        }
+
+        return response;
+      },
+    ],
   },
 });
 
