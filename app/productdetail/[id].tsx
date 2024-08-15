@@ -6,8 +6,8 @@ import Header from '~/modules/products/components/Header';
 import HeaderHero from '~/modules/products/components/HeaderHero';
 
 import ProductContent from '~/modules/products/components/ProductContent';
-import { ProductDetails } from '~/modules/products/constants';
-import { ProductDetailProps } from '~/modules/products/types';
+import { convertImageToArray } from '~/modules/products/constants';
+import { ProductData, ProductDetailProps } from '~/modules/products/types';
 import { useRouter } from 'expo-router';
 
 // Corrected typing for the ProductDetail component
@@ -15,8 +15,30 @@ const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
+  const imageUrl = 'https://picsum.photos/200/300';
+
+  const images = convertImageToArray(imageUrl);
+  console.log(images);
+
   const goBack = () => {
     router.back();
+  };
+
+  const ProductDetails: ProductData = {
+    id: '1',
+    created_at: '2024-08-12T14:30:00Z', // Example ISO date-time string
+    updated_at: '2024-08-12T14:30:00Z', // Example ISO date-time string
+    name: 'Product 01',
+    description:
+      'A fusion of ripe bananas, pure honey, and succulent raspberries with our bread. Crafted to perfection.',
+    category: 'Appetizers',
+    images: images, // Array of images
+    price: 29,
+    cost_price: 20, // Example cost price
+    quantity: 100,
+    size: 'Medium', // Example size
+    stock_status: 'In Stock', // Example stock status
+    deletedAt: null, // Example deletedAt value
   };
 
   return (

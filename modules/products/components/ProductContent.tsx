@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Pressable, Animated, ScrollView, StyleSheet, Image } from 'react-native';
-import { ChevronDown, Star } from 'react-native-feather';
+import { ChevronDown } from 'react-native-feather';
 import { useRotationAnimation } from '../hooks/animation';
 import { formatCurrency, stateCityMapping } from '../constants';
 import { TextInput } from '~/components/shared';
@@ -21,40 +21,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
   const handleImageSelect = (image: string) => {
     setSelectedImage(image);
   };
-  const maxRating = 2000; // Example maximum rating
-  const review = 1500; // Example review rating
-  const normalizedReview = (review / maxRating) * 5;
 
-  const rating = Array(5)
-    .fill(0)
-    .map((_, i) => {
-      if (i < Math.floor(normalizedReview)) {
-        return 1;
-      } else if (i < normalizedReview) {
-        return 0.5;
-      } else {
-        return 0;
-      }
-    });
-
-  const displayRating = () => {
-    if (review < 500) {
-      return '(2.5)';
-    } else if (review < 1000) {
-      return '(3.0)';
-    } else if (review < 1500) {
-      return '(3.5)';
-    } else if (review < 2000) {
-      return '(4.0)';
-    } else if (review < 2500) {
-      return '(4.5)';
-    } else {
-      return '(5.0)';
-    }
-  };
-
-  const description =
-    'A fusion of ripe bananas, pure honey, and succulent raspberries with our bread. Crafted to perfection.';
   const states = Object.keys(stateCityMapping);
   const cities = selectedState !== 'Select State' ? stateCityMapping[selectedState] : [];
 
@@ -77,7 +44,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
       street,
     };
   };
-
+  console.log(selectedImage);
   const selectedAddress = getSelectedAddress();
   // console.log(selectedAddress);
 
@@ -86,7 +53,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
       <View style={styles.imageDisplayContainer}>
         <View style={styles.imageContainer}>
           {selectedImage ? (
-            <Image source={selectedImage} style={styles.largeImage} />
+            <Image source={{ uri: selectedImage }} style={styles.largeImage} />
           ) : (
             <Text style={styles.placeholderText}>No Image Available</Text>
           )}
@@ -115,26 +82,6 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
             </View>
           </View>
         </View>
-        <View style={styles.rgap6}>
-          <View style={{ flexDirection: 'row', gap: 6 }}>
-            {rating.map(
-              (value, index) =>
-                value > 0 && (
-                  <Star
-                    key={index}
-                    width={16}
-                    height={16}
-                    strokeWidth={0}
-                    fill={value === 1 ? '#F6B01D' : '#E0E0E0'}
-                  />
-                )
-            )}
-            <Text style={styles.reviewText}>{displayRating()}</Text>
-          </View>
-          <Pressable>
-            <Text style={styles.linkText}>See reviews</Text>
-          </Pressable>
-        </View>
       </View>
       <View style={styles.variationInfoContainer}>
         <View style={styles.variationColumnContainer}>
@@ -156,7 +103,17 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
                         borderWidth: selectedImage === image ? 2 : 1, // Change border width if selected
                       },
                     ]}>
-                    <Image source={image} style={styles.thumbnailImage} />
+                    <Image
+                      source={{ uri: image }}
+                      style={[
+                        styles.thumbnailImage,
+                        {
+                          width: selectedImage === image ? '80%' : '100%',
+                          height: selectedImage === image ? '80%' : '100%',
+                          borderRadius: selectedImage === image ? 5 : 0,
+                        },
+                      ]}
+                    />
                   </Pressable>
                 ))}
               </ScrollView>
@@ -285,6 +242,7 @@ const styles = StyleSheet.create({
   rowContainerJb: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   rgap6: {
     flexDirection: 'row',
