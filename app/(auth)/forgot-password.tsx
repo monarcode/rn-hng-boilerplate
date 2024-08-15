@@ -1,10 +1,10 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Pressable, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import GoBack from '~/components/go-back';
 import { Button, Text, View } from '~/components/shared';
 import { FormInput } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
@@ -14,9 +14,7 @@ const ForgotPassword = () => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <TouchableOpacity activeOpacity={0.8} onPress={() => router.back()}>
-        <Ionicons name="chevron-back" size={24} color={THEME.colors.dark} />
-      </TouchableOpacity>
+      <GoBack />
 
       <View style={styles.wrapper}>
         <View>
@@ -42,15 +40,11 @@ const ForgotPassword = () => {
           <View>
             <Button children="Send" onPress={handleForgotPassword} />
 
-            <View style={styles.footerText}>
-              <Text size="md" weight="regular" style={{ color: THEME.colors.neutral[300] }}>
-                Remember your password?
-              </Text>
-              <Pressable>
-                <Text size="md" weight="bold" style={{ color: THEME.colors.primary }}>
-                  Login
-                </Text>
-              </Pressable>
+            <View style={styles.footer}>
+              <Text>Remember your password?</Text>
+              <Link style={styles.link} href="/login">
+                Login
+              </Link>
             </View>
           </View>
         </View>
@@ -60,13 +54,14 @@ const ForgotPassword = () => {
 
   async function handleForgotPassword() {
     // TODO: Implement forgot password functionality
-    router.push('/(auth)/otp-verfication');
+    router.push('/otp-verfication');
   }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 30,
     backgroundColor: THEME.colors.white,
     paddingHorizontal: THEME.spacing.gutter,
   },
@@ -86,11 +81,26 @@ const styles = StyleSheet.create({
     rowGap: THEME.spacing.xl,
   },
   footerText: {
-    marginTop: THEME.spacing.md,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     columnGap: THEME.spacing.xs,
+  },
+
+  footer: {
+    flexDirection: 'row',
+    gap: THEME.spacing.sm,
+    justifyContent: 'center',
+    marginTop: THEME.spacing.lg,
+  },
+  link: {
+    color: THEME.colors.primary,
+    fontFamily: THEME.fontFamily.medium,
+  },
+  footnoteContainer: { paddingHorizontal: THEME.spacing.gutter, marginTop: 24 },
+  footnote: {
+    color: THEME.colors.neutral[300],
+    textAlign: 'center',
   },
 });
 

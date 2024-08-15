@@ -68,10 +68,11 @@ function Root() {
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Stack>
-          {/* <Stack.Screen name="products" options={{ headerShown: false }} /> */}
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="(create-product)" options={{ headerShown: false }} />
+          <Stack.Screen name="user" options={{ headerShown: false }} />
           <Stack.Screen name="user" options={{ headerShown: false }} />
         </Stack>
       </GestureHandlerRootView>
