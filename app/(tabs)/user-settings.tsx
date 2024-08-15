@@ -1,12 +1,13 @@
 import { router } from 'expo-router';
 import React from 'react';
-import { StyleSheet, ScrollView, Image } from 'react-native';
+import { StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
 import Account from '~/assets/icons/account.svg';
 import Business from '~/assets/icons/business.svg';
 import Database from '~/assets/icons/database.svg';
+import ExitIcon from '~/assets/icons/exit-icon.svg';
 import Globe from '~/assets/icons/globe.svg';
 import Integrate from '~/assets/icons/integrate.svg';
 import Notification from '~/assets/icons/notification.svg';
@@ -22,9 +23,13 @@ const UserSettingsScreen = () => {
   const topInset = insets.top;
   const bottomInset = insets.bottom;
 
+  const handleNavToNextScreen = () => {
+    router.push({ pathname: '/user/general-profile' });
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={[styles.header, { paddingTop: topInset, paddingBottom: bottomInset }]}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={[styles.header, { marginTop: topInset }]}>
         <Text size="lg" weight="semiBold">
           Settings
         </Text>
@@ -46,24 +51,30 @@ const UserSettingsScreen = () => {
         {/* 
           To enable navigation when using any of the SettingItem components, 
           you should call the `goto` prop within the SettingItem */}
-        <SettingItem
-          icon={<Account />}
-          title="General"
-          goto={() => router.push('/user/general-profile')}
-        />
+        <SettingItem icon={<Account />} title="General" goto={handleNavToNextScreen} />
         <SettingItem icon={<AccountSetting />} title="Account" />
-        <SettingItem icon={<Notification />} title="Notification" />
+        <SettingItem
+          icon={<Notification />}
+          title="Notification"
+          goto={() => router.push('/user/notification')}
+        />
         <SettingItem icon={<Database />} title="Data and Privacy" />
         <SettingItem icon={<Globe />} title="Language and Region" />
       </SettingsSection>
 
-      <SettingsSection title="Organizational Settings">
+      <SettingsSection title="Organizational Setting">
         <SettingItem icon={<Business />} title="Manage Organization" />
         <SettingItem icon={<People />} title="Members" />
         <SettingItem icon={<Notification />} title="Roles and permissions" />
         <SettingItem icon={<Integrate />} title="Integrations" />
         <SettingItem icon={<Wallet />} title="Payment Information" />
       </SettingsSection>
+      <TouchableOpacity style={[styles.logout, { marginBottom: bottomInset }]}>
+        <Text size="md" weight="medium" style={{ color: THEME.colors.error }}>
+          Log Out
+        </Text>
+        <ExitIcon />
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -75,8 +86,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: THEME.spacing.gutter,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   profileInfo: {
     alignItems: 'center',
@@ -97,6 +107,10 @@ const styles = StyleSheet.create({
   },
   profileEmail: {
     color: THEME.colors.neutral[400],
+  },
+  logout: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
