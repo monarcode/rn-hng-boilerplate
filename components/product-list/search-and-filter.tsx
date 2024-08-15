@@ -5,16 +5,21 @@ import { THEME } from '~/constants/theme';
 import { Filter } from 'react-native-feather';
 import Slider from '../../assets/icons/sliders.svg';
 import FilterItems from '../shared/filter';
+import { Search } from 'react-native-feather';
 const SearchAndFilter = () => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Search by price" containerStyle={{ borderWidth: 0 }} inputStyle={{fontSize:16}} />
+        <TextInput
+          placeholder="Search Product"
+          containerStyle={{ borderWidth: 0 }}
+          inputStyle={{ fontSize: 16 }}
+        />
         <View style={styles.slider}>
-          <Slider />
+          <Search width={20} height={20} color={THEME.colors.neutral[400]} />
         </View>
       </View>
-    <FilterItems/>
+      <FilterItems />
     </View>
   );
 };
@@ -31,20 +36,18 @@ const styles = StyleSheet.create({
     borderRadius: THEME.spacing.sm,
   },
   inputContainer: {
-    width: '85%',
+    width: '82%',
     borderWidth: 1,
     borderColor: THEME.colors.border,
     borderRadius: THEME.spacing.sm,
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   slider: {
     position: 'absolute',
     paddingLeft: THEME.spacing.md,
     right: 10,
-    justifyContent:'center',
-    borderLeftWidth: 1,
-    height:'100%',
-    borderColor:THEME.colors.border
+    justifyContent: 'center',
+    height: '100%',
   },
 });
 export default SearchAndFilter;

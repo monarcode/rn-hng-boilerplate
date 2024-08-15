@@ -17,5 +17,5 @@ export type ProductProps={
 export type CategoryProps={
     name:string,
     products:Array<ProductProps>,
-    id:string
+
 }

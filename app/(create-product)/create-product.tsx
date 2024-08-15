@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+  import { Link } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import GoBack from '~/components/go-back';

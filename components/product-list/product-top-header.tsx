@@ -56,27 +56,27 @@ const ProductTopHeader = ({ listViewOption, setListViewOption }: TopHeaderProps)
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        gap:THEME.spacing.lg,
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        padding: THEME.spacing.md,
-        paddingTop: THEME.spacing.xl * 2,
-        borderColor: THEME.colors.border,
-    },
-    listToggleButton: {
-        padding: THEME.spacing.xs,
-        borderWidth: 1,
-        borderColor: THEME.colors.border,
-        borderRadius: 5,
-    },
-    gridToggleButton: {
-        padding: THEME.spacing.xs,
-        borderWidth: 1,
-        borderColor: THEME.colors.border,
-        borderRadius: 5,
-    },
+  container: {
+    flexDirection: 'row',
+    gap: THEME.spacing.lg,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    padding: THEME.spacing.md,
+    paddingTop: THEME.spacing.xl * 2,
+    borderColor: '#DEDEDE',
+  },
+  listToggleButton: {
+    padding: THEME.spacing.xs,
+    borderWidth: 1,
+    borderColor: THEME.colors.border,
+    borderRadius: 5,
+  },
+  gridToggleButton: {
+    padding: THEME.spacing.xs,
+    borderWidth: 1,
+    borderColor: THEME.colors.border,
+    borderRadius: 5,
+  },
 });
 
 export default ProductTopHeader;

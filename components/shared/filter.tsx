@@ -19,5 +19,8 @@ const styles = StyleSheet.create({
     padding: THEME.spacing.sm,
     borderRadius: THEME.spacing.sm,
     borderColor: THEME.colors.neutral[400],
+    width:'15%',
+    justifyContent:'center',
+    alignItems:'center'
   },
 });

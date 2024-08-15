@@ -1,5 +1,5 @@
 export type HomeHeaderProps={
-    avatar_url?:string,
+    avatar_url?:string|null,
     first_name:string
 }
 

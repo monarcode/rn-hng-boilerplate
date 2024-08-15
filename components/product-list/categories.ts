@@ -1,182 +1,74 @@
-export const categories=[
+const ApiData = [
   {
-    "name": "Breakfast",
-    "id": "PXCD556",
-    "products": [
+    name: 'Breakfast',
+    products: [
       {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Bread Cake",
-        "status": "In stock",
-        "price": 19,
-        "id": "PX44857",
-        "quantity": 10,
-        "size": "Small",
-        "category": "Breakfast",
-        "created_at": "2024-08-14T21:05:26.975Z",
-        "updated_at": "2024-08-14T21:05:26.975Z",
-        "cost_price": 5,
-        "delete_at": "2024-08-14T21:05:26.975Z",
-        "description": "Delicious bread cake"
+        category: 'Breakfast',
+        cost_price: 0,
+        created_at: '2024-08-15T12:06:34.536535Z',
+        delete_at: null,
+        description: 'Delicious bread cake, perfect for breakfast.',
+        id: 'bcbf281f-dcac-4750-9d33-af8dcf814501',
+        image: 'https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg',
+        name: 'Bread Cake',
+        price: 19.99,
+        quantity: 10,
+        size: 'Medium',
+        status: 'in stock',
+        updated_at: null,
       },
       {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Muffin",
-        "status": "In stock",
-        "price": 25,
-        "id": "PX44860",
-        "quantity": 15,
-        "size": "Medium",
-        "category": "Breakfast",
-        "created_at": "2024-08-14T21:10:26.975Z",
-        "updated_at": "2024-08-14T21:10:26.975Z",
-        "cost_price": 10,
-        "delete_at": "2024-08-14T21:10:26.975Z",
-        "description": "Delicious small muffin"
-      }
-    ]
+        category: 'Breakfast',
+        cost_price: 0,
+        created_at: '2024-08-15T12:24:35.700134Z',
+        delete_at: null,
+        description: 'Delicious chicken breast, perfect for breakfast.',
+        id: 'ba6fd0eb-1f01-4581-8ba2-4b3f4491bad0',
+        image:
+          'https://www.allrecipes.com/thmb/UgUZpaTRGWIHEk57yWMhMEjffiY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/16160-juicy-grilled-chicken-breasts-ddmfs-5594-hero-3x4-902673c819994c0191442304b40104af.jpg',
+        name: 'Grilled Chicken',
+        price: 49.99,
+        quantity: 10,
+        size: 'Medium',
+        status: 'in stock',
+        updated_at: '2024-08-15T12:50:34.606087Z',
+      },
+    ],
   },
   {
-    "name": "Lunch",
-    "id": "PXCD557",
-    "products": [
+    name: 'Fashion',
+    products: [
       {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Chicken Sandwich",
-        "status": "In stock",
-        "price": 35,
-        "id": "PX44861",
-        "quantity": 20,
-        "size": "Medium",
-        "category": "Lunch",
-        "created_at": "2024-08-14T21:15:26.975Z",
-        "updated_at": "2024-08-14T21:15:26.975Z",
-        "cost_price": 15,
-        "delete_at": "2024-08-14T21:15:26.975Z",
-        "description": "Tasty chicken sandwich"
+        category: 'Fashion',
+        cost_price: 0,
+        created_at: '2024-08-15T12:41:04.101389Z',
+        delete_at: null,
+        description: 'Italian Shoe for men, perfect for formal ocassions',
+        id: 'd5750129-7fec-4253-958c-d89775182347',
+        image: 'https://i.pinimg.com/736x/f6/0c/b5/f60cb5445215f5587edb9b3b8e0c5a97.jpg',
+        name: 'Italia Shoe Men',
+        price: 49.99,
+        quantity: 10,
+        size: 'Medium',
+        status: 'in stock',
+        updated_at: null,
       },
       {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Veggie Wrap",
-        "status": "In stock",
-        "price": 30,
-        "id": "PX44862",
-        "quantity": 25,
-        "size": "Large",
-        "category": "Lunch",
-        "created_at": "2024-08-14T21:20:26.975Z",
-        "updated_at": "2024-08-14T21:20:26.975Z",
-        "cost_price": 12,
-        "delete_at": "2024-08-14T21:20:26.975Z",
-        "description": "Healthy veggie wrap"
-      }
-    ]
+        category: 'Fashion',
+        cost_price: 0,
+        created_at: '2024-08-15T12:44:46.804145Z',
+        delete_at: null,
+        description: 'Suana dress for women, perfect for baddies with flat tummy',
+        id: '2e4fdef3-10e1-4810-80e6-e7d54096fd9c',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPaZNe0vvYehEYnbwAWsMCC8cHodGdhKuIXQ&s',
+        name: 'Suanas',
+        price: 49.99,
+        quantity: 10,
+        size: 'Medium',
+        status: 'in stock',
+        updated_at: null,
+      },
+    ],
   },
-  {
-    "name": "Dinner",
-    "id": "PXCD558",
-    "products": [
-      {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Pasta",
-        "status": "In stock",
-        "price": 50,
-        "id": "PX44863",
-        "quantity": 30,
-        "size": "Large",
-        "category": "Dinner",
-        "created_at": "2024-08-14T21:25:26.975Z",
-        "updated_at": "2024-08-14T21:25:26.975Z",
-        "cost_price": 20,
-        "delete_at": "2024-08-14T21:25:26.975Z",
-        "description": "Creamy pasta"
-      },
-      {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Grilled Chicken",
-        "status": "In stock",
-        "price": 70,
-        "id": "PX44864",
-        "quantity": 40,
-        "size": "Medium",
-        "category": "Dinner",
-        "created_at": "2024-08-14T21:30:26.975Z",
-        "updated_at": "2024-08-14T21:30:26.975Z",
-        "cost_price": 30,
-        "delete_at": "2024-08-14T21:30:26.975Z",
-        "description": "Juicy grilled chicken"
-      }
-    ]
-  },
-  {
-    "name": "Snacks",
-    "id": "PXCD559",
-    "products": [
-      {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Potato Chips",
-        "status": "In stock",
-        "price": 15,
-        "id": "PX44865",
-        "quantity": 50,
-        "size": "Small",
-        "category": "Snacks",
-        "created_at": "2024-08-14T21:35:26.975Z",
-        "updated_at": "2024-08-14T21:35:26.975Z",
-        "cost_price": 7,
-        "delete_at": "2024-08-14T21:35:26.975Z",
-        "description": "Crispy potato chips"
-      },
-      {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Nachos",
-        "status": "In stock",
-        "price": 20,
-        "id": "PX44866",
-        "quantity": 60,
-        "size": "Medium",
-        "category": "Snacks",
-        "created_at": "2024-08-14T21:40:26.975Z",
-        "updated_at": "2024-08-14T21:40:26.975Z",
-        "cost_price": 10,
-        "delete_at": "2024-08-14T21:40:26.975Z",
-        "description": "Cheesy nachos"
-      }
-    ]
-  },
-  {
-    "name": "Dessert",
-    "id": "PXCD560",
-    "products": [
-      {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Ice Cream",
-        "status": "In stock",
-        "price": 30,
-        "id": "PX44867",
-        "quantity": 70,
-        "size": "Large",
-        "category": "Dessert",
-        "created_at": "2024-08-14T21:45:26.975Z",
-        "updated_at": "2024-08-14T21:45:26.975Z",
-        "cost_price": 12,
-        "delete_at": "2024-08-14T21:45:26.975Z",
-        "description": "Creamy ice cream"
-      },
-      {
-        "image": "https://www.yummytummyaarthi.com/wp-content/uploads/2023/05/bread-cake-1.jpeg",
-        "name": "Chocolate Cake",
-        "status": "In stock",
-        "price": 45,
-        "id": "PX44868",
-        "quantity": 80,
-        "size": "Medium",
-        "category": "Dessert",
-        "created_at": "2024-08-14T21:50:26.975Z",
-        "updated_at": "2024-08-14T21:50:26.975Z",
-        "cost_price": 18,
-        "delete_at": "2024-08-14T21:50:26.975Z",
-        "description": "Rich chocolate cake"
-      }
-    ]
-  }
-]
+];

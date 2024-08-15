@@ -13,13 +13,22 @@ import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {
   const authstore = useAuthStore();
-  console.log(authstore.token);
 
+  if (!authstore.data) {
+    return <Redirect href={'/(auth)/login'} />;
+  }
   const { first_name, avatar_url } = authstore.data?.user;
-
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: THEME.colors.white }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: THEME.colors.white }}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+        <Pressable
+          onPress={() => {
+            authstore.resetStore();
+          }}>
+          <Text>Logout</Text>
+        </Pressable>
         <HomeHeader {...{ first_name, avatar_url }} />
         <Summary />
         <Chart />

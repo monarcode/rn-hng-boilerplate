@@ -22,15 +22,18 @@ const ProductItemListTile = (product: ProductProps) => {
             <Text size="lg">P001</Text>
           </View>
           <View>
-            <Text size="xl" weight="semiBold">
+            <Text size="xl" weight="semiBold" style={{ color: THEME.colors.neutral[300] }}>
               Status:
             </Text>
-            <Text>{product.status}</Text>
+            <View style={styles.statusContainer}>
+              <View style={styles.indicator}></View>
+              <Text>{product.status}</Text>
+            </View>
           </View>
         </View>
       </View>
       <Text size="xl" weight="bold">
-        ${product.price}.00
+        ${parseFloat(`${product.price}`)}
       </Text>
     </View>
   );
@@ -39,12 +42,12 @@ const ProductItemListTile = (product: ProductProps) => {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: '#F7F7F7',
+    borderColor: '#f1f1f1',
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: 0.85 * width,
+    width: 0.89 * width,
     padding: THEME.spacing.sm,
   },
   contentWrapperContainer: {
@@ -55,9 +58,20 @@ const styles = StyleSheet.create({
     gap: THEME.spacing.lg,
   },
   image: {
-    width: '40%',
-    borderRadius: 10,
+    width: 0.3 * width,
+    borderRadius: 5,
     resizeMode: 'cover',
+  },
+  indicator: {
+    height: 6,
+    width: 6,
+    borderRadius: 1000,
+    backgroundColor: '#6DC347',
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
   },
 });
 
