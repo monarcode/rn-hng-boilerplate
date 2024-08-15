@@ -52,7 +52,7 @@ const UserSettingsScreen = () => {
           goto={() => router.push('/user/general-profile')}
         />
         <SettingItem icon={<AccountSetting />} title="Account" />
-        <SettingItem icon={<Notification />} title="Notification" />
+        <SettingItem icon={<Notification />} title="Notification" goto={() => router.push('/user-settings/notification')} />
         <SettingItem icon={<Database />} title="Data and Privacy" />
         <SettingItem icon={<Globe />} title="Language and Region" />
       </SettingsSection>

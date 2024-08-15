@@ -115,7 +115,7 @@ function FormSelect<TFieldValues extends FieldValues>({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   errorInput: {
     borderColor: THEME.colors.error,
