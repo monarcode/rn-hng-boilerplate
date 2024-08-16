@@ -1,19 +1,22 @@
-import { Link, Redirect, router, Stack } from 'expo-router';
+import { Redirect, router, Stack } from 'expo-router';
 import React from 'react';
-import { Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Bell } from 'react-native-feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Toast from 'react-native-toast-message';
 
+import Ellipse from '~/assets/icons/ellipse.svg';
 import Chart from '~/components/home-screen-organisation/chart';
 import Summary from '~/components/home-screen-organisation/summary';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
+import useProfileStore from '~/store/profile';
 
 const HomeScreen = () => {
   const authstore = useAuthStore();
+  const profileData = useProfileStore((state) => state.data);
+  const userData = useAuthStore((state) => state.data?.user);
   const { top } = useSafeAreaInsets();
 
   if (!authstore.data) {
@@ -44,15 +47,24 @@ const HomeScreen = () => {
                       style={styles.image}
                       activeOpacity={0.7}
                       onPress={() => router.navigate('/user-settings')}>
-                      <Image
-                        resizeMode="cover"
-                        style={{ width: '100%', height: '100%' }}
-                        source={
-                          avatar_url
-                            ? { uri: avatar_url }
-                            : require('../../assets/images/default-profile.png')
-                        }
-                      />
+                      <View style={styles.profileImageContainer}>
+                        {profileData?.avatar_url ? (
+                          <Image
+                            source={{ uri: `${profileData?.avatar_url}?${new Date().getTime()}` }}
+                            style={styles.profileImage}
+                          />
+                        ) : (
+                          <>
+                            <Ellipse />
+                            <View style={styles.initialsContainer}>
+                              <Text size="xl" weight="medium">
+                                {userData?.first_name[0]}
+                                {userData?.last_name[0]}
+                              </Text>
+                            </View>
+                          </>
+                        )}
+                      </View>
                     </TouchableOpacity>
 
                     <View style={styles.textRow}>
@@ -61,7 +73,7 @@ const HomeScreen = () => {
                       </Text>
 
                       <Text size="xl" weight="semiBold">
-                        {first_name}
+                        {profileData?.user_name || userData?.first_name}
                       </Text>
                     </View>
                   </View>
@@ -116,6 +128,27 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     gap: THEME.spacing.sm,
+    alignItems: 'center',
+  },
+  profileImageContainer: {
+    width: 60,
+    height: 60,
+  },
+  profileImage: {
+    width: '100%',
+    aspectRatio: 1,
+    borderRadius: 40,
+  },
+  profileName: {
+    marginBottom: 5,
+  },
+  initialsContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   textRow: {

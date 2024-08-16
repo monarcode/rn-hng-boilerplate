@@ -1,4 +1,4 @@
-import { router, Stack } from 'expo-router';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { ListRenderItem, Pressable, StyleSheet, ScrollView, Image } from 'react-native';
 import { Plus } from 'react-native-feather';
@@ -6,7 +6,6 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useProducts } from './../../../hooks/products/organization/fetchProducts';
 import { ProductTopHeader, SearchAndFilter } from '~/components/product-list';
 import CategoryItem from '~/components/product-list/category-item';
-import ProductItemGridTile from '~/components/product-list/product-item-grid';
 import { View, Text } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
@@ -41,7 +40,7 @@ const ListCategories = () => {
         <ProductTopHeader listViewOption={listView} setListViewOption={setListView} />
         <SearchAndFilter />
         <ScrollView showsVerticalScrollIndicator={false}>
-          {data?.length > 0 ? (
+          {data?.length && data.length > 0 ? (
             <View style={{ padding: THEME.spacing.md }}>
               {data && (
                 <FlatList
