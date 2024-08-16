@@ -1,7 +1,7 @@
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React from 'react';
 import { StyleSheet, ScrollView, SectionList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { Text, View, Button } from '~/components/shared';
 import { THEME } from '~/constants/theme';
