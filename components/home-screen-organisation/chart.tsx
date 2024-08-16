@@ -28,11 +28,16 @@ const Chart = () => {
           hideRules
           barWidth={18}
           spacing={25}
-          hideOrigin
           xAxisThickness={0}
           yAxisThickness={0}
+          yAxisLabelPrefix="$"
+          yAxisLabelSuffix="K"
+          maxValue={45}
+          stepValue={15}
         />
       </View>
+
+      <View></View>
     </View>
   );
 };

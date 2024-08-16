@@ -81,7 +81,7 @@ const UserSettingsScreen = () => {
         <SettingsSection title="Profile Settings">
           {/*
           To enable navigation when using any of the SettingItem components,
-          you should call the `goto` prop within the SettingItem */}
+          you should call the goto prop within the SettingItem */}
           <SettingItem
             icon={<Account />}
             title="General"

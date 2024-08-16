@@ -38,11 +38,7 @@ const ViewProductsByCategory = () => {
             keyExtractor={(item) => item.id} 
             renderItem={({ item }) => (
               <ProductItemListTile
-                name={item.name}
-                price={item.price}
-                image={item.image}
-                description={item.description}
-                status={item.status}
+              {...item}
               />
             )}
             contentContainerStyle={{ gap: THEME.spacing.lg }}
