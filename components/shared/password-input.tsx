@@ -127,7 +127,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           onChangeText={onChangeText}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          placeholderTextColor={THEME.colors.dark}
+          placeholderTextColor={THEME.colors.neutral[400]}
           secureTextEntry={!isPasswordVisible}
         />
         <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIconContainer}>

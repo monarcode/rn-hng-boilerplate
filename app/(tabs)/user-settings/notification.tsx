@@ -1,27 +1,32 @@
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useState } from 'react';
 import { StyleSheet, SectionList, Switch, SafeAreaView } from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-import { Text, View, Button } from '~/components/shared';
-import { THEME } from '~/constants/theme';
-import notificationSections from '~/constants/notification';
 import GoBack from '~/components/go-back';
+import { Text, View, Button } from '~/components/shared';
+import notificationSections from '~/constants/notification';
+import { THEME } from '~/constants/theme';
 
 type Item = {
-  header: string,
-  body: string
-}
+  header: string;
+  body: string;
+};
 
 const NotificationSettings = () => {
+  const [isEnabled, setEnabled] = useState<boolean>(false);
+
   const renderBody = ({ item }: { item: Item }) => {
-    const [isEnabled, setEnabled] = useState(false);
-    const toggleSwitch = () => setEnabled(bool => !bool);
+    const toggleSwitch = () => setEnabled((bool) => !bool);
 
     return (
       <View style={styles.sectionBodyCon}>
         <View style={styles.sectionBody}>
-          <Text size="md" weight="medium">{item.header}</Text>
-          <Text size="sm" weight="regular">{item.body}</Text>
+          <Text size="md" weight="medium">
+            {item.header}
+          </Text>
+          <Text size="sm" weight="regular">
+            {item.body}
+          </Text>
         </View>
         <Switch
           trackColor={{ false: '#D0D6D6', true: '#F97316' }}
@@ -31,8 +36,8 @@ const NotificationSettings = () => {
           value={isEnabled}
         />
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,16 +51,9 @@ const NotificationSettings = () => {
 
       <Button
         containerStyle={styles.saveBtn}
-        icon={(
-          <MaterialCommunityIcons
-            name="check" size={20}
-            color="white"
-          />
-        )}
-      >
+        icon={<MaterialCommunityIcons name="check" size={20} color="white" />}>
         Save Changes
       </Button>
-
 
       <SectionList
         contentContainerStyle={styles.section}
@@ -91,10 +89,10 @@ const styles = StyleSheet.create({
     columnGap: THEME.spacing.sm,
     width: 140,
     alignSelf: 'flex-end',
-    marginBottom: -40
+    marginBottom: -40,
   },
   section: {
-    width: '100%'
+    width: '100%',
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -104,13 +102,13 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(188, 188, 188, 0.40)',
     paddingBottom: 11,
     borderBottomWidth: 0.5,
-    marginTop: THEME.spacing.md
+    marginTop: THEME.spacing.md,
   },
   sectionBodyCon: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   sectionBody: {
     flexDirection: 'column',
