@@ -1,5 +1,9 @@
 import { ProductDetails } from './../constants/index';
 import { HeaderHero } from '~/modules/products/components/HeaderHero';
+import { z } from 'zod';
+import { createAddressSchema } from '../validation-schema/address';
+
+export type CreateAddressSchema = z.infer<typeof createAddressSchema>;
 
 interface TitleProps {
   title: 'user' | 'Organizational'; // Specific union types for title property
