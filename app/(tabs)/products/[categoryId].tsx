@@ -1,12 +1,12 @@
-import { StyleSheet, Pressable, Image, TouchableOpacity } from 'react-native';
-
+import { StyleSheet, Pressable, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import { useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
+
 import { useProducts } from '~/hooks/products/organization/fetchProducts';
 import useAuthStore from '~/store/auth';
 import ProductItemListTile from '~/components/product-list/product-item-list';
-import { SearchAndFilter} from '~/components/product-list';
+import { SearchAndFilter } from '~/components/product-list';
 import { Plus } from 'react-native-feather';
 import { router } from 'expo-router';
 import GoBack from '~/components/go-back';
@@ -16,7 +16,7 @@ const ViewProductsByCategory = () => {
   const orgId = authstore.data?.organisations[0].organisation_id;
   const { categoryId } = useLocalSearchParams();
   const { data } = useProducts(orgId);
-  const category = data?.find((item) => item.name == categoryId);
+  const category = data?.find((item) => item.name === categoryId);
   // console.log(category);
 
   return (
@@ -25,14 +25,30 @@ const ViewProductsByCategory = () => {
         <GoBack />
         <Text size="3xl" weight="bold">{category?.name}</Text>
         <TouchableOpacity
-          onPress={() => { /* menu logic */}}>
+          onPress={() => { /* menu logic */ }}>
           <Image source={require('~/assets/menu.png')} />
         </TouchableOpacity>
       </View>
       <SearchAndFilter />
-      <View style={styles.itemListStyle}>
-      <ProductItemListTile {...category?.products[0]} />
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{ padding: THEME.spacing.md }}>
+          <FlatList
+            scrollEnabled={false}
+            data={category?.products} 
+            keyExtractor={(item) => item.id} 
+            renderItem={({ item }) => (
+              <ProductItemListTile
+                name={item.name}
+                price={item.price}
+                image={item.image}
+                description={item.description}
+                status={item.status}
+              />
+            )}
+            contentContainerStyle={{ gap: THEME.spacing.lg }}
+          />
+        </View>
+      </ScrollView>
       <Pressable
         style={styles.floatingButton}
         onPress={() => {
@@ -73,8 +89,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   itemListStyle: {
-    padding: THEME.spacing.md
-  }
+    padding: THEME.spacing.md,
+  },
 });
 
 export default ViewProductsByCategory;
