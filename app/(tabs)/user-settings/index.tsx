@@ -63,7 +63,7 @@ const UserSettingsScreen = () => {
 
       <SettingsSection title="Organizational Settings">
         <SettingItem icon={<Business />} title="Manage Organization" />
-        <SettingItem icon={<People />} title="Members" />
+        <SettingItem icon={<People />} title="Members" goto={() => router.push('/user/members')} />
         <SettingItem icon={<Notification />} title="Roles and permissions" />
         <SettingItem icon={<Integrate />} title="Integrations" />
         <SettingItem icon={<Wallet />} title="Payment Information" />

@@ -54,7 +54,7 @@ const fetchProducts = async (orgId: string | undefined): Promise<CategoryProps[]
   } catch (error) {
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json<CreateProductResponse>();
-      throw new Error(errorBody.name || `HTTP error ${error.response.status}`);
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
     }
     throw error;
   }

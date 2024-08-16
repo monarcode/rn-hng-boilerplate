@@ -2,10 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Dollar from '../../../assets/dollar.svg';
-import { Plus } from 'react-native-feather';
+import { Plus, X } from 'react-native-feather';
 
 import { CreateProductSchema } from '../types/create-product';
 import { createProductSchema } from '../validation-schema/create-product';
@@ -16,9 +16,33 @@ import { THEME } from '~/constants/theme';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
+import * as ImagePicker from 'expo-image-picker';
 
 const CreateProductForm = () => {
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState({
+    fileName: '',
+    uri: '',
+  });
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage({
+        fileName: result.assets[0].fileName as string,
+        uri: result?.assets[0].uri,
+      });
+    }
+  };
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
   });
@@ -27,14 +51,11 @@ const CreateProductForm = () => {
 
   const onCreate = async (data: CreateProductSchema) => {
     const reqBody = {
-      products: [
-        {
-          ...data,
-          image_url: '',
-          size: '',
-        },
-      ],
+      ...data,
+      image_url: image.uri,
+      size: 'normal',
     };
+
     setLoading(true);
 
     try {
@@ -49,7 +70,11 @@ const CreateProductForm = () => {
           },
         });
         form.reset();
-        // router.replace('/');
+        setImage({
+          fileName: '',
+          uri: '',
+        });
+        router.replace('/(tabs)/products');
       }
     } catch (error) {
       console.log(error);
@@ -69,19 +94,59 @@ const CreateProductForm = () => {
 
   return (
     <View style={styles.wrapper}>
+      <View>
+        <View style={styles.uploadContainer}>
+          {image.uri && (
+            <Image
+              source={{ uri: image.uri }}
+              resizeMode="center"
+              style={{ width: 200, height: 200, marginTop: 10 }}
+            />
+          )}
+          <Button containerStyle={styles.uploadButton} onPress={pickImage}>
+            {!image.uri && (
+              <Text style={styles.uploadButtonText} weight="medium">
+                Upload New
+              </Text>
+            )}
+          </Button>
+          {!image.uri && <Text style={styles.subtext}>Upload product image</Text>}
+        </View>
+      </View>
+      {image.fileName && (
+        <View style={[styles.uploadButton, styles.nameCont]}>
+          <Text style={styles.uploadButtonText} numberOfLines={1} ellipsizeMode="tail">
+            {image.fileName}
+          </Text>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              setImage({
+                fileName: '',
+                uri: '',
+              })
+            }>
+            <X color={'red'} width={20} />
+          </TouchableWithoutFeedback>
+        </View>
+      )}
       <FormInput control={form.control} name="name" label="Title" placeholder="Product Name" />
-      <FormInput
-        control={form.control}
-        name="description"
-        label="Description"
-        placeholder="Enter product description"
-        containerStyle={{ height: 80, textAlign: 'left', textAlignVertical: 'top' }}
-        style={{
-          flex: 1,
-        }}
-        // inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
-        multiline
-      />
+      <View>
+        <FormInput
+          control={form.control}
+          name="description"
+          label="Description"
+          placeholder=""
+          containerStyle={{ height: 80 }}
+          style={{
+            flex: 1,
+          }}
+          inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
+          multiline
+        />
+        <Text weight="light" size="sm">
+          Maximum of 72 characters
+        </Text>
+      </View>
       <FormSelect
         name="category"
         control={form.control}
@@ -116,22 +181,10 @@ const CreateProductForm = () => {
           ))}
         </View>
       </View>
-      <View>
-        <Text style={styles.label} size="md">
-          Media
-        </Text>
-        <View style={styles.uploadContainer}>
-          <Button containerStyle={styles.uploadButton}>
-            <Text style={styles.uploadButtonText} weight="medium">
-              Upload New
-            </Text>
-          </Button>
-          <Text style={styles.subtext}>Accepts images, videos or 3D models</Text>
-        </View>
-      </View>
 
       <View style={styles.buttonGroup}>
         <Button
+          onPress={() => router.replace('/(tabs)/products')}
           variant="outline"
           containerStyle={styles.cancelButton}
           textStyle={styles.cancelButtonText}>
@@ -186,6 +239,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FAFAFA',
     borderStyle: 'dashed',
+    overflow: 'hidden',
   },
   uploadButton: {
     backgroundColor: THEME.colors.white,
@@ -216,6 +270,12 @@ const styles = StyleSheet.create({
   addButton: {
     flex: 1,
     marginLeft: 5,
+  },
+  nameCont: {
+    padding: THEME.spacing.sm,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 
