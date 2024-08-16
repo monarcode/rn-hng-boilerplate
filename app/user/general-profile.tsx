@@ -23,6 +23,7 @@ import { editProfileFormSchema } from '~/modules/settings/validation-schema/edit
 import { ProfileService } from '~/services/edit-profile';
 import useAuthStore from '~/store/auth';
 import useProfileStore from '~/store/profile';
+import { convertImageToBase64 } from '~/utils/image-file-converter';
 import { pickImage } from '~/utils/profile-image-handler';
 
 type ImageState = {
@@ -80,7 +81,16 @@ const GeneralProfileSettings = () => {
         facebook_link: profileData?.facebook_link || '',
         linkedin_link: profileData?.linkedin_link || '',
       });
-      setSelectedImage({ uri: profileData.avatar_url || null, status: 'idle' });
+      console.log('Profile Data Avatar URL:', profileData.avatar_url);
+      if (profileData.avatar_url && !profileData.avatar_url.startsWith('data:image')) {
+        convertImageToBase64(profileData.avatar_url).then((base64Image) => {
+          if (base64Image) {
+            setSelectedImage({ uri: base64Image, status: 'idle' });
+          }
+        });
+      } else {
+        setSelectedImage({ uri: profileData.avatar_url || null, status: 'idle' });
+      }
     }
   }, [profileData]);
   const updateProfileMutation = useMutation({
@@ -97,8 +107,8 @@ const GeneralProfileSettings = () => {
         // Update the store with the new profile data
         profileStore.updateProfile(response.data);
 
-              // Log the updated store data to ensure it's being set
-      console.log('Profile Store Updated:', profileStore.data);
+        // Log the updated store data to ensure it's being set
+        console.log('Profile Store Updated:', profileStore.data);
         Toast.show({
           type: 'success',
           props: { title: 'Success', description: 'Profile updated successfully' },
@@ -169,21 +179,28 @@ const GeneralProfileSettings = () => {
       if (imageUri) {
         setSelectedImage({ uri: imageUri, status: 'loading' });
 
-        const response = await updateProfilePictureMutation.mutateAsync({
-          email: userData?.email || '',
-          photo: imageUri,
-        });
+        const base64Image = await convertImageToBase64(imageUri);
 
-        if (response?.status_code === 200) {
-          // Update the avatar_url in the profile store
-          setSelectedImage({ uri: imageUri, status: 'success' });
-          profileStore.uploadPicture(imageUri);
+        if (base64Image) {
+          const response = await updateProfilePictureMutation.mutateAsync({
+            email: userData?.email || '',
+            photo: base64Image,
+          });
+
+          if (response?.status_code === 200) {
+            setSelectedImage({ uri: base64Image, status: 'success' });
+            profileStore.uploadPicture(base64Image);
+            console.log('Updated image (base64):', base64Image.substring(0, 50) + '...');
+          } else {
+            throw new Error('Failed to update profile picture');
+          }
         } else {
-          throw new Error('Failed to update profile picture');
+          throw new Error('Failed to convert image to base64');
         }
       }
     } catch (error) {
       setSelectedImage((prev) => ({ ...prev, status: 'error', error: 'Failed to pick image' }));
+      console.error('Error in handleImagePick:', error);
     }
   };
 
@@ -301,7 +318,13 @@ const GeneralProfileSettings = () => {
           <View style={styles.photoSection}>
             <View style={styles.photoPlaceholder}>
               {selectedImage.uri ? (
-                <Image source={{ uri: selectedImage.uri }} style={styles.profileImage} />
+                <Image
+                  source={{ uri: selectedImage.uri }}
+                  style={styles.profileImage}
+                  onError={(error) =>
+                    console.error('Image loading error:', error.nativeEvent.error)
+                  }
+                />
               ) : (
                 <>
                   <Ellipse />
