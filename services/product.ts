@@ -3,10 +3,10 @@ import { http } from '~/libs/ky';
 import { CreateProductResponse, GetProductResponse } from '~/types/product/product';
 import { CategoryProps } from '~/components/product-list/types';
 
-const createProduct = async (payload: any): Promise<CreateProductResponse> => {
+const createProduct = async (payload: any, orgId: string): Promise<CreateProductResponse> => {
   try {
     const response = await http
-      .post('products/add-products', {
+      .post(`organisations/${orgId}/products`, {
         json: { ...payload },
       })
       .json<CreateProductResponse>();
@@ -17,9 +17,11 @@ const createProduct = async (payload: any): Promise<CreateProductResponse> => {
 
     return response;
   } catch (error) {
+    console.log(error);
+
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json<CreateProductResponse>();
-      throw new Error(errorBody.name || `HTTP error ${error.response.status}`);
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
     }
     throw error;
   }

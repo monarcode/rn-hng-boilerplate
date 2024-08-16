@@ -22,6 +22,8 @@ const CreateProductForm = () => {
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
   });
+  const data = useAuthStore();
+  const orgId = data.data?.organisations[0]?.organisation_id;
 
   const onCreate = async (data: CreateProductSchema) => {
     const reqBody = {
@@ -36,7 +38,7 @@ const CreateProductForm = () => {
     setLoading(true);
 
     try {
-      const response = await ProductService.createProduct(reqBody);
+      const response = await ProductService.createProduct(reqBody, orgId as string);
 
       if (response) {
         Toast.show({
@@ -85,9 +87,10 @@ const CreateProductForm = () => {
         control={form.control}
         label="Category"
         options={[
-          { label: 'Category 1', value: 'category 1' },
-          { label: 'Category 2', value: 'category 2' },
-          { label: 'Category 3', value: 'category 3' },
+          { label: 'Food', value: 'Food' },
+          { label: 'Fashion', value: 'Fashion' },
+          { label: 'Device', value: 'Device' },
+          { label: 'Household Items', value: 'Household Items' },
         ]}
         placeholder="Select"
       />
