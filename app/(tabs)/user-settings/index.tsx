@@ -50,25 +50,25 @@ const UserSettingsScreen = () => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.profileInfo}>
-          {profileData?.avatar_url ? (
-            <View style={styles.profileImageContainer}>
+          <View style={styles.profileImageContainer}>
+            {profileData?.avatar_url ? (
               <Image
                 source={{ uri: `${profileData?.avatar_url}?${new Date().getTime()}` }}
                 style={styles.profileImage}
                 key={userAvatar}
               />
-            </View>
-          ) : (
-            <>
-              <Ellipse />
-              <View style={styles.initialsContainer}>
-                <Text size="xl" weight="medium">
-                  {userData?.first_name[0]}
-                  {userData?.last_name[0]}
-                </Text>
-              </View>
-            </>
-          )}
+            ) : (
+              <>
+                <Ellipse />
+                <View style={styles.initialsContainer}>
+                  <Text size="xl" weight="medium">
+                    {userData?.first_name[0]}
+                    {userData?.last_name[0]}
+                  </Text>
+                </View>
+              </>
+            )}
+          </View>
 
           <View style={{ marginLeft: THEME.spacing.md }}>
             <Text size="lg" weight="semiBold" style={styles.profileName}>
