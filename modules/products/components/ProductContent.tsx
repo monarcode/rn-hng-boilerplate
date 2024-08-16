@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, Animated, ScrollView, StyleSheet, Image } from 'react-native';
 import { ChevronDown } from 'react-native-feather';
 import { useRotationAnimation } from '../hooks/animation';
-import { formatCurrency, stateCityMapping } from '../constants';
+import {
+  convertImageToArray,
+  createUniqueId,
+  formatCurrency,
+  stateCityMapping,
+} from '../constants';
 import { TextInput } from '~/components/shared';
-import { ProductContentProps } from '../types';
+import { CreateAddressSchema, ProductContentProps } from '../types';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createAddressSchema } from '../validation-schema/address';
 
 const ProductContent = ({ data, title }: ProductContentProps) => {
-  const { images } = data;
+  const images = convertImageToArray(data.image);
   const [street, setStreet] = useState<string>('');
   const { rotateIcon, rotate, isRotated } = useRotationAnimation();
   const [selectedState, setSelectedState] = useState<string>('Select State');
@@ -15,8 +23,6 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(
     images.length > 0 ? images[0] : null
   );
-
-  const quantity = 20;
 
   const handleImageSelect = (image: string) => {
     setSelectedImage(image);
@@ -44,9 +50,13 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
       street,
     };
   };
-  console.log(selectedImage);
+
+  const form = useForm<CreateAddressSchema>({
+    resolver: zodResolver(createAddressSchema),
+  });
   const selectedAddress = getSelectedAddress();
-  // console.log(selectedAddress);
+
+  const uniqueId = createUniqueId(data.name, data.id);
 
   return (
     <View style={styles.container}>
@@ -62,17 +72,17 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
       <View style={styles.infoContainer}>
         <View style={styles.rowContainerJb}>
           <View style={[styles.columnContainer, { alignItems: 'flex-start' }]}>
-            <Text style={styles.productName}>Product 01</Text>
-            <Text style={styles.productUniqueId}>P002</Text>
+            <Text style={styles.productName}>{data.name}</Text>
+            <Text style={styles.productUniqueId}>{uniqueId}</Text>
           </View>
           <View style={[styles.columnContainer, { alignItems: 'flex-end' }]}>
-            <Text style={styles.productPrice}>{formatCurrency(20)}</Text>
+            <Text style={styles.productPrice}>{formatCurrency(data.price)}</Text>
             <View style={styles.rowGap3}>
-              {title === 'Organizational' && <Text>{quantity}</Text>}
+              {title === 'Organizational' && <Text>{data.quantity}</Text>}
               {title === 'user' && (
                 <View
                   style={
-                    quantity > 0
+                    data.quantity > 0
                       ? [styles.stockCircle, { backgroundColor: 'green' }]
                       : [styles.stockCircle, { backgroundColor: 'red' }]
                   }

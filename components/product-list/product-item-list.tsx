@@ -1,41 +1,52 @@
-import { Image, StyleSheet } from 'react-native';
+import { Image, Pressable, StyleSheet } from 'react-native';
 import { View, Text } from '../shared';
 import React from 'react';
 import { ProductProps } from './types';
 import { THEME } from '~/constants/theme';
 import { Dimensions } from 'react-native';
+import { useRouter } from 'expo-router';
+import { createUniqueId } from '~/modules/products/constants';
 
 const { width } = Dimensions.get('window');
 
 const ProductItemListTile = (product: ProductProps) => {
   let date = new Date(product.created_at);
   let date_modified = date.toDateString();
+  const router = useRouter();
+
+  function moreDetails(productId: string) {
+    router.push(`/productdetail/${productId}`);
+  }
+
+  const uniqueId = createUniqueId(product.name, product.id);
   return (
-    <View style={styles.container}>
-      <View style={styles.contentWrapperContainer}>
-        <Image source={{ uri: product.image }} style={styles.image} />
-        <View style={styles.textContentContainer}>
-          <View>
-            <Text size="xl" weight="medium">
-              {product.name}
-            </Text>
-            <Text size="lg">P001</Text>
-          </View>
-          <View>
-            <Text size="xl" weight="semiBold" style={{ color: THEME.colors.neutral[300] }}>
-              Status:
-            </Text>
-            <View style={styles.statusContainer}>
-              <View style={styles.indicator}></View>
-              <Text>{product.status}</Text>
+    <Pressable onPressIn={() => moreDetails(product.id)}>
+      <View style={styles.container}>
+        <View style={styles.contentWrapperContainer}>
+          <Image source={{ uri: product.image }} style={styles.image} />
+          <View style={styles.textContentContainer}>
+            <View>
+              <Text size="xl" weight="medium">
+                {product.name}
+              </Text>
+              <Text size="lg">{uniqueId}</Text>
+            </View>
+            <View>
+              <Text size="xl" weight="semiBold" style={{ color: THEME.colors.neutral[300] }}>
+                Status:
+              </Text>
+              <View style={styles.statusContainer}>
+                <View style={styles.indicator}></View>
+                <Text>{product.status}</Text>
+              </View>
             </View>
           </View>
         </View>
+        <Text size="xl" weight="bold">
+          ${parseFloat(`${product.price}`)}
+        </Text>
       </View>
-      <Text size="xl" weight="bold">
-        ${parseFloat(`${product.price}`)}
-      </Text>
-    </View>
+    </Pressable>
   );
 };
 
