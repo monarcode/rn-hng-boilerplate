@@ -6,8 +6,10 @@ import { HomeHeaderProps } from './type';
 import { View, Text } from '../shared';
 
 import { THEME } from '~/constants/theme';
+import useProfileStore from '~/store/profile';
 
 const HomeHeader = (user: HomeHeaderProps) => {
+  const profileData = useProfileStore((state) => state.data);
   return (
     <View style={styles.container}>
       <View style={styles.detailsContainer}>
@@ -23,7 +25,7 @@ const HomeHeader = (user: HomeHeaderProps) => {
             Welcome Back!
           </Text>
           <Text size="2xl" weight="medium">
-            {user.first_name}
+            {profileData?.user_name || user?.first_name}
           </Text>
         </View>
       </View>
