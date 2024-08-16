@@ -3,7 +3,7 @@ import ky from 'ky';
 import useAuthStore from '~/store/auth';
 
 const baseclient = ky.extend({
-  prefixUrl: process.env.EXPO_PUBLIC_API_BASEURL,
+  prefixUrl: 'https://api-csharp.boilerplate.hng.tech/api/v1/',
   timeout: 60000,
   retry: 3,
 });
