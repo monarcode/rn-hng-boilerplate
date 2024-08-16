@@ -47,24 +47,24 @@ const HomeScreen = () => {
                       style={styles.image}
                       activeOpacity={0.7}
                       onPress={() => router.navigate('/user-settings')}>
-                      {profileData?.avatar_url ? (
-                        <View style={styles.profileImageContainer}>
+                      <View style={styles.profileImageContainer}>
+                        {profileData?.avatar_url ? (
                           <Image
                             source={{ uri: `${profileData?.avatar_url}?${new Date().getTime()}` }}
                             style={styles.profileImage}
                           />
-                        </View>
-                      ) : (
-                        <>
-                          <Ellipse />
-                          <View style={styles.initialsContainer}>
-                            <Text size="xl" weight="medium">
-                              {userData?.first_name[0]}
-                              {userData?.last_name[0]}
-                            </Text>
-                          </View>
-                        </>
-                      )}
+                        ) : (
+                          <>
+                            <Ellipse />
+                            <View style={styles.initialsContainer}>
+                              <Text size="xl" weight="medium">
+                                {userData?.first_name[0]}
+                                {userData?.last_name[0]}
+                              </Text>
+                            </View>
+                          </>
+                        )}
+                      </View>
                     </TouchableOpacity>
 
                     <View style={styles.textRow}>
@@ -131,11 +131,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImageContainer: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
   },
   profileImage: {
-    width: '80%',
+    width: '100%',
     aspectRatio: 1,
     borderRadius: 40,
   },
