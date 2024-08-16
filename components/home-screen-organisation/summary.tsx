@@ -1,10 +1,12 @@
-import { StyleSheet } from 'react-native';
-import { View, Text } from '../shared';
 import React from 'react';
-import { THEME } from '~/constants/theme';
-import SummaryCard from './summary-card';
+import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+
+import SummaryCard from './summary-card';
 import { SummaryProps } from './type';
+import { View, Text } from '../shared';
+
+import { THEME } from '~/constants/theme';
 
 const Summary = () => {
   const summary = [
@@ -22,10 +24,10 @@ const Summary = () => {
   return (
     <View style={styles.container}>
       <View style={{ gap: THEME.spacing.xs }}>
-        <Text size="3xl" weight="bold">
+        <Text size="2xl" weight="bold">
           Dashboard
         </Text>
-        <Text size="xl" style={{ color: THEME.colors.neutral[300] }}>
+        <Text size="md" style={{ color: THEME.colors.neutral[300] }}>
           This Month's Summary
         </Text>
       </View>
@@ -33,7 +35,7 @@ const Summary = () => {
         data={summary}
         renderItem={({ item, index }) => <SummaryCard {...item} />}
         contentContainerStyle={{ gap: THEME.spacing.sm }}
-        horizontal={true}
+        horizontal
         showsHorizontalScrollIndicator={false}
       />
     </View>
@@ -45,6 +47,6 @@ export default Summary;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    gap: THEME.spacing.md,
+    gap: 20,
   },
 });

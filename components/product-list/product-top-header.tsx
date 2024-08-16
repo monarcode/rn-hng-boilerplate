@@ -1,27 +1,28 @@
 import React from 'react';
-import { View, Text } from '../shared';
-import GridIcon from '../../assets/icons/icongrid.svg';
-import { List } from 'react-native-feather';
 import { Pressable, StyleSheet } from 'react-native';
-import { THEME } from '~/constants/theme';
+import { List } from 'react-native-feather';
+
+import GridIcon from '../../assets/icons/icongrid.svg';
 import GoBack from '../go-back';
+import { View, Text } from '../shared';
+
+import { THEME } from '~/constants/theme';
 
 type TopHeaderProps = {
-    listViewOption: string;
-    setListViewOption: React.Dispatch<'list' | 'grid'>;
+  listViewOption: string;
+  setListViewOption: React.Dispatch<'list' | 'grid'>;
 };
 
 const ProductTopHeader = ({ listViewOption, setListViewOption }: TopHeaderProps) => {
-    return (
-        <View style={styles.container}>
-            <GoBack/>
-            <View style={{ gap: THEME.spacing.xs }}>
-                <Text size="3xl" weight="bold">
-                    Products
-                </Text>
-                <Text size="lg">View all products</Text>
-            </View>
-            {/* <View style={{ flexDirection: 'row', gap: THEME.spacing.sm }}>
+  return (
+    <View style={styles.container}>
+      <View style={{ gap: THEME.spacing.sm }}>
+        <Text size="2xl" weight="bold">
+          Products
+        </Text>
+        <Text size="md">View all products</Text>
+      </View>
+      {/* <View style={{ flexDirection: 'row', gap: THEME.spacing.sm }}>
                 <Pressable
                     style={[
                         styles.listToggleButton,
@@ -51,14 +52,14 @@ const ProductTopHeader = ({ listViewOption, setListViewOption }: TopHeaderProps)
                     />
                 </Pressable>
             </View> */}
-        </View>
-    );
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    gap: THEME.spacing.lg,
+    gap: THEME.spacing.gutter,
     alignItems: 'center',
     borderBottomWidth: 1,
     padding: THEME.spacing.md,

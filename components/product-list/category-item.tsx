@@ -1,12 +1,13 @@
-import { View, Text } from '../shared';
-import React from 'react';
-import { CategoryProps } from './types';
-import { FlatList } from 'react-native';
-import ProductItemGridTile from './product-item-grid';
-import { Dimensions } from 'react-native';
-import { THEME } from '~/constants/theme';
-import ProductItemListTile from './product-item-list';
 import { Link } from 'expo-router';
+import React from 'react';
+import { FlatList, Dimensions } from 'react-native';
+
+import ProductItemGridTile from './product-item-grid';
+import ProductItemListTile from './product-item-list';
+import { CategoryProps } from './types';
+import { View, Text } from '../shared';
+
+import { THEME } from '~/constants/theme';
 
 const { width } = Dimensions.get('window');
 
@@ -36,7 +37,7 @@ const CategoryItem = (category: CategoryProps) => {
         contentContainerStyle={{ gap: THEME.spacing.sm + 2 }}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        horizontal={true}
+        horizontal
         snapToInterval={0.95 * width}
       />
     </View>

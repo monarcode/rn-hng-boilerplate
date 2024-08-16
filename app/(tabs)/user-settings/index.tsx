@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import React from 'react';
 import { Image, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -23,52 +23,76 @@ const UserSettingsScreen = () => {
   const bottomInset = insets.bottom;
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={[styles.header, { paddingTop: topInset, paddingBottom: bottomInset }]}>
-        <Text size="lg" weight="semiBold">
-          Settings
-        </Text>
-      </View>
+    <>
+      <Stack.Screen
+        options={{
+          headerBackTitleVisible: false,
+          headerTitle: '',
+          header(props) {
+            return (
+              <View
+                style={{
+                  width: '100%',
+                  paddingTop: topInset,
+                  paddingBottom: 4,
+                  elevation: 1,
+                  borderWidth: 1,
+                  backgroundColor: THEME.colors.white,
+                  borderColor: THEME.colors.borderLight,
+                }}
+              />
+            );
+          },
+        }}
+      />
 
-      <View style={styles.profileInfo}>
-        <View style={styles.profileImageContainer}>
-          <Image source={require('~/assets/profile.png')} style={styles.profileImage} />
-        </View>
-        <View style={{ marginLeft: THEME.spacing.md }}>
-          <Text size="lg" weight="semiBold" style={styles.profileName}>
-            DesignKid
+      <ScrollView style={styles.container}>
+        <View style={[styles.header, { paddingTop: 20, paddingBottom: 8 }]}>
+          <Text size="3xl" weight="semiBold">
+            Settings
           </Text>
-          <Text style={styles.profileEmail}>engr.emmysammy1234@gmail.com</Text>
         </View>
-      </View>
 
-      <SettingsSection title="Profile Settings">
-        {/*
+        <View style={styles.profileInfo}>
+          <View style={styles.profileImageContainer}>
+            <Image source={require('~/assets/profile.png')} style={styles.profileImage} />
+          </View>
+          <View style={{ marginLeft: THEME.spacing.md }}>
+            <Text size="lg" weight="semiBold" style={styles.profileName}>
+              DesignKid
+            </Text>
+            <Text style={styles.profileEmail}>engr.emmysammy1234@gmail.com</Text>
+          </View>
+        </View>
+
+        <SettingsSection title="Profile Settings">
+          {/*
           To enable navigation when using any of the SettingItem components,
           you should call the `goto` prop within the SettingItem */}
-        <SettingItem
-          icon={<Account />}
-          title="General"
-          goto={() => router.push('/user/general-profile')}
-        />
-        <SettingItem icon={<AccountSetting />} title="Account" />
-        <SettingItem
-          icon={<Notification />}
-          title="Notification"
-          goto={() => router.push('/user-settings/notification')}
-        />
-        <SettingItem icon={<Database />} title="Data and Privacy" />
-        <SettingItem icon={<Globe />} title="Language and Region" />
-      </SettingsSection>
+          <SettingItem
+            icon={<Account />}
+            title="General"
+            goto={() => router.push('/user/general-profile')}
+          />
+          <SettingItem icon={<AccountSetting />} title="Account" />
+          <SettingItem
+            icon={<Notification />}
+            title="Notification"
+            goto={() => router.push('/user-settings/notification')}
+          />
+          <SettingItem icon={<Database />} title="Data and Privacy" />
+          <SettingItem icon={<Globe />} title="Language and Region" />
+        </SettingsSection>
 
-      <SettingsSection title="Organizational Settings">
-        <SettingItem icon={<Business />} title="Manage Organization" />
-        <SettingItem icon={<People />} title="Members" />
-        <SettingItem icon={<Notification />} title="Roles and permissions" />
-        <SettingItem icon={<Integrate />} title="Integrations" />
-        <SettingItem icon={<Wallet />} title="Payment Information" />
-      </SettingsSection>
-    </ScrollView>
+        <SettingsSection title="Organizational Settings">
+          <SettingItem icon={<Business />} title="Manage Organization" />
+          <SettingItem icon={<People />} title="Members" />
+          <SettingItem icon={<Notification />} title="Roles and permissions" />
+          <SettingItem icon={<Integrate />} title="Integrations" />
+          <SettingItem icon={<Wallet />} title="Payment Information" />
+        </SettingsSection>
+      </ScrollView>
+    </>
   );
 };
 
