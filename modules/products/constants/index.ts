@@ -1,9 +1,3 @@
-import ProductImage from './../../../assets/images/image.png';
-import CakeImage from './../../../assets/images/cakecream.png';
-import CheeseCake from './../../../assets/images/cheesecake.png';
-
-export { ProductImage, CakeImage, CheeseCake };
-
 export function formatCurrency(value: number): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -23,3 +17,12 @@ export function convertImageToArray(image: string | undefined): string[] {
   if (!image) return [];
   return [image];
 }
+
+export const createUniqueId = (productName: string, productId: string): string => {
+  const firstName = productName.split(' ')[0];
+
+  const firstTwo = productId.substring(0, 2);
+  const lastTwo = productId.slice(-2);
+
+  return `${firstName}${firstTwo}${lastTwo}`;
+};
