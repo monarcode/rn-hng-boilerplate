@@ -20,7 +20,7 @@ const ProductItemListTile = (product: ProductProps) => {
 
   const uniqueId = createUniqueId(product.name, product.id);
   return (
-    <Pressable onPressIn={() => moreDetails(product.id)}>
+    <Pressable onLongPress={() => moreDetails(product.id)}>
       <View style={styles.container}>
         <View style={styles.contentWrapperContainer}>
           <Image source={{ uri: product.image }} style={styles.image} />

@@ -1,11 +1,9 @@
 import { router, Stack } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, ScrollView,Image } from 'react-native';
+import { ListRenderItem, Pressable, StyleSheet, ScrollView, Image } from 'react-native';
 import { Plus } from 'react-native-feather';
 import { FlatList } from 'react-native-gesture-handler';
-
 import { useProducts } from './../../../hooks/products/organization/fetchProducts';
-
 import { ProductTopHeader, SearchAndFilter } from '~/components/product-list';
 import CategoryItem from '~/components/product-list/category-item';
 import ProductItemGridTile from '~/components/product-list/product-item-grid';
@@ -23,12 +21,20 @@ const ListCategories = () => {
   const { data, isError, isLoading } = useProducts(orgId);
   if (isLoading) {
     return (
-      <View>
-        <Text>Loading</Text>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text size="2xl" weight="semiBold">
+          Loading
+        </Text>
       </View>
     );
   }
-      
+
   return (
     <>
       <View style={styles.container}>
