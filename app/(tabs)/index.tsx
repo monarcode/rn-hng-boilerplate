@@ -1,7 +1,11 @@
-import { Link } from 'expo-router';
+import { Link, Redirect } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
+import Chart from '~/components/home-screen-organisation/chart';
+import HomeHeader from '~/components/home-screen-organisation/home-header';
+import Summary from '~/components/home-screen-organisation/summary';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
@@ -10,38 +14,37 @@ import useAuthStore from '~/store/auth';
 const HomeScreen = () => {
   const authstore = useAuthStore();
 
+  if (!authstore.data) {
+    return <Redirect href={'/(auth)/login'} />;
+  }
+  const { first_name, avatar_url } = authstore.data?.user;
   return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Link href={'/productdetail'}>Go to ProductDetails</Link>
-      <Link href="/(create-product)/create-product">Create Product</Link>
-      <Link href="/sign-up">Home Screen</Link>
-      <Pressable onPress={() => authstore.resetStore()}>
-        <Text>Reset</Text>
-      </Pressable>
-      <Pressable
-        onPress={() =>
-          Toast.show({
-            type: 'error',
-            props: {
-              title: 'Success',
-              description: 'This is a toast message',
-            },
-          })
-        }>
-        <Text>Toast</Text>
-      </Pressable>
-    </View>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: THEME.colors.white }}
+      showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
+        <Pressable
+          onPress={() => {
+            authstore.resetStore();
+          }}>
+          <Text>Logout</Text>
+        </Pressable>
+        <HomeHeader {...{ first_name, avatar_url }} />
+        <Summary />
+        <Chart />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: THEME.spacing.xl + 20,
     alignItems: 'center',
     paddingHorizontal: THEME.spacing.gutter,
     backgroundColor: THEME.colors.white,
+    gap: THEME.spacing.md,
   },
 });
 
