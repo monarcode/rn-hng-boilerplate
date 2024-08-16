@@ -1,9 +1,8 @@
-import { Link } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import GoBack from '~/components/go-back';
-import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
-import { Button, Text, View } from '~/components/shared';
+import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import CreateProductForm from '~/modules/products/components/create-product-form';
 
