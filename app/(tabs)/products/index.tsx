@@ -1,9 +1,6 @@
-import { router, Stack } from 'expo-router';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { View, ListRenderItem, Pressable, StyleSheet, ScrollView, Image } from 'react-native';
-import { Plus, ShoppingCart } from 'react-native-feather';
-import { useState } from 'react';
-import { Pressable, StyleSheet, ScrollView } from 'react-native';
+import { Pressable, StyleSheet, ScrollView, Image } from 'react-native';
 import { Plus } from 'react-native-feather';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -11,7 +8,6 @@ import { useProducts } from './../../../hooks/products/organization/fetchProduct
 
 import { ProductTopHeader, SearchAndFilter } from '~/components/product-list';
 import CategoryItem from '~/components/product-list/category-item';
-import ProductItemGridTile from '~/components/product-list/product-item-grid';
 import { View, Text } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
@@ -31,14 +27,14 @@ const ListCategories = () => {
       </View>
     );
   }
-      
+
   return (
     <>
       <View style={styles.container}>
         <ProductTopHeader listViewOption={listView} setListViewOption={setListView} />
         <SearchAndFilter />
         <ScrollView showsVerticalScrollIndicator={false}>
-          {data?.length > 0 ? (
+          {data?.length && data.length > 0 ? (
             <View style={{ padding: THEME.spacing.md }}>
               {data && (
                 <FlatList
