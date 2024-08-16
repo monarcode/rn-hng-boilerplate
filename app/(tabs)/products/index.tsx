@@ -1,9 +1,6 @@
 import { router, Stack } from 'expo-router';
 import React, { useState } from 'react';
-import { View, ListRenderItem, Pressable, StyleSheet, ScrollView, Image } from 'react-native';
-import { Plus, ShoppingCart } from 'react-native-feather';
-import { useState } from 'react';
-import { Pressable, StyleSheet, ScrollView } from 'react-native';
+import { Pressable, StyleSheet, ScrollView,Image } from 'react-native';
 import { Plus } from 'react-native-feather';
 import { FlatList } from 'react-native-gesture-handler';
 

@@ -1,9 +1,7 @@
-import { router, Stack } from 'expo-router';
-import React from 'react';
-import { Image, ScrollView, StyleSheet } from 'react-native'
+import { router } from 'expo-router';
 import React, { useRef } from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
 import Account from '~/assets/icons/account.svg';
@@ -42,79 +40,48 @@ const UserSettingsScreen = () => {
     router.replace('/login');
   };
   return (
-    <>
-      <Stack.Screen
-        options={{
-          headerBackTitleVisible: false,
-          headerTitle: '',
-          header(props) {
-            return (
-              <View
-                style={{
-                  width: '100%',
-                  paddingTop: topInset,
-                  paddingBottom: 4,
-                  elevation: 1,
-                  borderWidth: 1,
-                  backgroundColor: THEME.colors.white,
-                  borderColor: THEME.colors.borderLight,
-                }}
-              />
-            );
-          },
-        }}
-      />
-
-      <ScrollView style={styles.container}>
-        <View style={[styles.header, { paddingTop: 20, paddingBottom: 8 }]}>
-          <Text size="3xl" weight="semiBold">
-            Settings
-          </Text>
-        </View>
-
-      <View style={styles.profileInfo}>
-        <View style={styles.profileImageContainer}>
-          {profileData?.avatar_url ? (
-            <Image
-              source={{ uri: `${userData?.avatar_url}?${new Date().getTime()}` }}
-              style={styles.profileImage}
-              key={userAvatar}
-            />
-          ) : (
-            <>
-              <Ellipse />
-              <View style={styles.initialsContainer}>
-                <Text size="xl" weight="medium">
-                  {userData?.first_name[0]}
-                  {userData?.last_name[0]}
-                </Text>
-              </View>
-            </>
-          )}
-        </View>
-        <View style={{ marginLeft: THEME.spacing.md }}>
-          <Text size="lg" weight="semiBold" style={styles.profileName}>
-            {profileData?.user_name || userData?.first_name}
-          </Text>
-          <Text style={styles.profileEmail}>{userData?.email}</Text>
-        </View>
-
+    <SafeAreaView
+      edges={['top', 'bottom']}
+      style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+      <View style={[styles.header]}>
+        <Text size="xl" weight="semiBold">
+          Settings
+        </Text>
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.profileInfo}>
           <View style={styles.profileImageContainer}>
-            <Image source={require('~/assets/profile.png')} style={styles.profileImage} />
+            {profileData?.avatar_url ? (
+              <Image
+                source={{ uri: `${profileData?.avatar_url}?${new Date().getTime()}` }}
+                style={styles.profileImage}
+                key={userAvatar}
+              />
+            ) : (
+              <>
+                <Ellipse />
+                <View style={styles.initialsContainer}>
+                  <Text size="xl" weight="medium">
+                    {userData?.first_name[0]}
+                    {userData?.last_name[0]}
+                  </Text>
+                </View>
+              </>
+            )}
           </View>
+
           <View style={{ marginLeft: THEME.spacing.md }}>
             <Text size="lg" weight="semiBold" style={styles.profileName}>
-              DesignKid
+              {profileData?.user_name || userData?.first_name}
             </Text>
-            <Text style={styles.profileEmail}>engr.emmysammy1234@gmail.com</Text>
+            <Text style={styles.profileEmail}>{userData?.email}</Text>
           </View>
         </View>
 
         <SettingsSection title="Profile Settings">
           {/*
           To enable navigation when using any of the SettingItem components,
-          you should call the `goto` prop within the SettingItem */}
+          you should call the goto prop within the SettingItem */}
           <SettingItem
             icon={<Account />}
             title="General"
@@ -132,45 +99,40 @@ const UserSettingsScreen = () => {
 
         <SettingsSection title="Organizational Settings">
           <SettingItem icon={<Business />} title="Manage Organization" />
-          <SettingItem icon={<People />} title="Members" />
+          <SettingItem
+            icon={<People />}
+            title="Members"
+            goto={() => router.push('/user/members')}
+          />
           <SettingItem icon={<Notification />} title="Roles and permissions" />
           <SettingItem icon={<Integrate />} title="Integrations" />
           <SettingItem icon={<Wallet />} title="Payment Information" />
         </SettingsSection>
-      </ScrollView>
-    </>
-      
-      <SettingsSection title="Organizational Settings">
-        <SettingItem icon={<Business />} title="Manage Organization" />
-        <SettingItem icon={<People />} title="Members" goto={() => router.push('/user/members')} />
-        <SettingItem icon={<Notification />} title="Roles and permissions" />
-        <SettingItem icon={<Integrate />} title="Integrations" />
-        <SettingItem icon={<Wallet />} title="Payment Information" />
-      </SettingsSection>
-      <TouchableOpacity
-        style={[styles.logout, { marginBottom: bottomInset }]}
-        onPress={handleLogout}>
-        <Text size="md" weight="medium" style={{ color: THEME.colors.error }}>
-          Log Out
-        </Text>
-        <ExitIcon />
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.logout, { marginBottom: bottomInset }]}
+          onPress={handleLogout}>
+          <Text size="md" weight="medium" style={{ color: THEME.colors.error }}>
+            Log Out
+          </Text>
+          <ExitIcon />
+        </TouchableOpacity>
 
-      <Dialog
-        ref={dialogRef}
-        title="Confirm Logout"
-        description="Are you sure you want to log out?"
-        showCloseButton={false}>
-        <View style={styles.dialogButtons}>
-          <TouchableOpacity onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButton}>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={confirmLogout}>
-            <Text style={styles.confirmButton}>Confirm</Text>
-          </TouchableOpacity>
-        </View>
-      </Dialog>
-    </ScrollView>
+        <Dialog
+          ref={dialogRef}
+          title="Confirm Logout"
+          description="Are you sure you want to log out?"
+          showCloseButton={false}>
+          <View style={styles.dialogButtons}>
+            <TouchableOpacity onPress={() => dialogRef.current?.close()}>
+              <Text style={styles.cancelButton}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={confirmLogout}>
+              <Text style={styles.confirmButton}>Confirm</Text>
+            </TouchableOpacity>
+          </View>
+        </Dialog>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -197,6 +159,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: '100%',
     aspectRatio: 1,
+    borderRadius: 40,
   },
   profileName: {
     marginBottom: 5,
