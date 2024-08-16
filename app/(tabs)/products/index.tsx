@@ -26,7 +26,6 @@ const ListCategories = () => {
     );
   }
 
-
   return (
     <View style={styles.container}>
       <ProductTopHeader listViewOption={listView} setListViewOption={setListView} />
