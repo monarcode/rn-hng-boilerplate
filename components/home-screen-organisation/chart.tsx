@@ -1,11 +1,12 @@
-import { StyleSheet } from 'react-native';
-import { View, Text } from '../shared';
 import React from 'react';
+import { StyleSheet, Dimensions } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
+
 import { chartData } from './chart-data';
-import { THEME } from '~/constants/theme';
-import { Dimensions } from 'react-native';
+import { View, Text } from '../shared';
 import FilterItems from '../shared/filter';
+
+import { THEME } from '~/constants/theme';
 
 const { width } = Dimensions.get('window');
 
@@ -41,12 +42,15 @@ export default Chart;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    gap: THEME.spacing.lg,
+    gap: THEME.spacing.md,
+    marginTop: 24,
   },
   chartContainer: {
     borderColor: THEME.colors.borderLight,
     borderWidth: 1,
-    padding: THEME.spacing.md,
-    alignItems:'center'
+    paddingHorizontal: THEME.spacing.md,
+    paddingVertical: THEME.spacing.md,
+    alignItems: 'center',
+    borderRadius: 16,
   },
 });

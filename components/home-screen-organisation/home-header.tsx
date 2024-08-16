@@ -1,8 +1,10 @@
-import { Image, StyleSheet } from 'react-native';
-import { View, Text } from '../shared';
 import React from 'react';
-import { HomeHeaderProps } from './type';
+import { Image, StyleSheet } from 'react-native';
 import { Bell } from 'react-native-feather';
+
+import { HomeHeaderProps } from './type';
+import { View, Text } from '../shared';
+
 import { THEME } from '~/constants/theme';
 
 const HomeHeader = (user: HomeHeaderProps) => {
@@ -26,8 +28,8 @@ const HomeHeader = (user: HomeHeaderProps) => {
         </View>
       </View>
       <View>
-        <Bell color={'black'} />
-        <View style={styles.notification}></View>
+        <Bell color="black" />
+        <View style={styles.notification} />
       </View>
     </View>
   );

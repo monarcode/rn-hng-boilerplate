@@ -7,17 +7,17 @@ const CustomBottomTabs = (props: BottomTabBarProps) => {
   return <BottomTab {...props} />;
 };
 
+const screenOptions = {
+  headerShown: false,
+};
+
 export default function TabLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-      }}
-      tabBar={CustomBottomTabs}>
+    <Tabs screenOptions={{}} tabBar={CustomBottomTabs}>
       <Tabs.Screen name="index" key="index" />
-      <Tabs.Screen name="products" key="products" />
+      <Tabs.Screen name="products" key="products" options={screenOptions} />
       <Tabs.Screen name="cart" key="cart" />
-      <Tabs.Screen name="user-settings" key="user-settings" />
+      <Tabs.Screen name="user-settings" key="user-settings" options={screenOptions} />
     </Tabs>
   );
 }

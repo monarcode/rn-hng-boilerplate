@@ -78,7 +78,7 @@ function Root() {
             <Stack.Screen name="user" options={{ headerShown: false }} />
             <Stack.Screen name="products" options={{ headerShown: false }} />
             <Stack.Screen name="productdetail" options={{ headerShown: false }} />
-        </Stack>
+          </Stack>
         </GestureHandlerRootView>
       </QueryClientProvider>
       <Toast config={toastConfig} />

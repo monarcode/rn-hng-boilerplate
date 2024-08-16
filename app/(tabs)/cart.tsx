@@ -1,31 +1,13 @@
+import { Stack } from 'expo-router';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, FlatList } from 'react-native';
 
-import { THEME } from '~/constants/theme';
 import Cancel from '~/assets/icons/cancel.svg';
-import { Button } from '~/components/shared';
+import { Button, Text } from '~/components/shared';
+import { THEME } from '~/constants/theme';
 
 const CartScreen = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 'P001',
-      name: 'Product 1',
-      price: 19.0,
-      quantity: 1,
-    },
-    {
-      id: 'P002',
-      name: 'Product 2',
-      price: 19.0,
-      quantity: 1,
-    },
-    {
-      id: 'P003',
-      name: 'Product 3',
-      price: 19.0,
-      quantity: 1,
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
 
   const increaseQuantity = (itemId: string) => {
     const updatedCart = cartItems.map((item) =>
@@ -46,7 +28,10 @@ const CartScreen = () => {
     setCartItems(updatedCart);
   };
 
-  const renderItem = ({ item}: { item: { id: string; name: string; price: number; quantity: number };
+  const renderItem = ({
+    item,
+  }: {
+    item: { id: string; name: string; price: number; quantity: number };
   }) => (
     <View style={styles.cartItem}>
       <Image source={require('~/assets/mycart.png')} style={styles.productImage} />
@@ -81,51 +66,69 @@ const CartScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => {/* go back navigation logic */ }}>
-          <Image source={require('~/assets/angle-back.png')} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>My Cart</Text>
-        <TouchableOpacity onPress={() => {/* menu logic */ }}>
-          <Image source={require('~/assets/menu.png')} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Cart Content */}
-      <FlatList
-        data={cartItems}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+    <>
+      <Stack.Screen
+        options={{
+          headerTitle: 'My Cart',
+          headerTitleStyle: {
+            fontSize: 20,
+            color: THEME.colors.dark,
+          },
+          headerTitleAlign: 'left',
+        }}
       />
-      <View style={styles.bottomContainer}>
-        <View style={styles.promoCodeContainer}>
-          <TouchableOpacity style={styles.promoButton}>
-            <Text style={styles.promoCodeText}>Promo Code</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.applyButton}>
-            <Text style={styles.applyText}>Apply</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.summaryContainer}>
-          <Text style={styles.summaryText}>Sub Total</Text>
-          <Text style={styles.summaryText}>$38.00</Text>
-        </View>
-        <View style={styles.summaryContainer}>
-          <Text style={styles.summaryText}>Delivery Fee</Text>
-          <Text style={styles.summaryText}>$150.00</Text>
-        </View>
-        <View style={styles.summaryContainer}>
-          <Text style={styles.summaryText}>Discount</Text>
-          <Text style={styles.summaryText}>$10.00</Text>
-        </View>
-        <View style={styles.borderLine}></View>
-        <TouchableOpacity style={styles.checkoutButton}>
-          <Text style={styles.checkoutText}>Checkout $198.00</Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        {cartItems.length === 0 ? (
+          <View style={{ flex: 1, alignItems: 'center', marginTop: '20%' }}>
+            <View style={{ width: 400, height: 200 }}>
+              <Image
+                resizeMode="contain"
+                style={{ width: '100%', height: '100%' }}
+                source={require('../../assets/images/emptyCart.png')}
+              />
+            </View>
+
+            <Text size="md" weight="medium" style={{ marginTop: 30 }}>
+              No products yet, please add product
+            </Text>
+          </View>
+        ) : (
+          <>
+            <FlatList
+              data={cartItems}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+            />
+            <View style={styles.bottomContainer}>
+              <View style={styles.promoCodeContainer}>
+                <TouchableOpacity style={styles.promoButton}>
+                  <Text style={styles.promoCodeText}>Promo Code</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.applyButton}>
+                  <Text style={styles.applyText}>Apply</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.summaryContainer}>
+                <Text style={styles.summaryText}>Sub Total</Text>
+                <Text style={styles.summaryText}>$38.00</Text>
+              </View>
+              <View style={styles.summaryContainer}>
+                <Text style={styles.summaryText}>Delivery Fee</Text>
+                <Text style={styles.summaryText}>$150.00</Text>
+              </View>
+              <View style={styles.summaryContainer}>
+                <Text style={styles.summaryText}>Discount</Text>
+                <Text style={styles.summaryText}>$10.00</Text>
+              </View>
+              <View style={styles.borderLine} />
+              <TouchableOpacity style={styles.checkoutButton}>
+                <Text style={styles.checkoutText}>Checkout $198.00</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
       </View>
-    </View>
+    </>
   );
 };
 
@@ -237,6 +240,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
+    columnGap: 8,
   },
   promoCodeText: {
     fontSize: 16,
@@ -244,20 +248,24 @@ const styles = StyleSheet.create({
   },
   applyButton: {
     backgroundColor: THEME.colors.apply,
-    paddingHorizontal: 50,
-    paddingVertical: 10,
+    flex: 1,
+    textAlign: 'center',
+    alignItems: 'center',
+    paddingVertical: 12,
     borderRadius: 10,
   },
   promoButton: {
     backgroundColor: THEME.colors.white,
-    paddingHorizontal: 60,
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderRadius: 10,
-    elevation: 5, 
+    elevation: 5,
     borderWidth: 1,
-    borderColor: THEME.colors.border, 
+    flex: 1,
+    textAlign: 'center',
+    alignItems: 'center',
+    borderColor: THEME.colors.border,
   },
-  
+
   applyText: {
     color: THEME.colors.white,
     fontSize: 16,

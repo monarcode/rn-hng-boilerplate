@@ -1,4 +1,7 @@
-import { Link, router } from 'expo-router';
+import { router, Stack } from 'expo-router';
+import React, { useState } from 'react';
+import { View, ListRenderItem, Pressable, StyleSheet, ScrollView, Image } from 'react-native';
+import { Plus, ShoppingCart } from 'react-native-feather';
 import { useState } from 'react';
 import { Pressable, StyleSheet, ScrollView } from 'react-native';
 import { Plus } from 'react-native-feather';
@@ -28,31 +31,49 @@ const ListCategories = () => {
       </View>
     );
   }
-
+      
   return (
-    <View style={styles.container}>
-      <ProductTopHeader listViewOption={listView} setListViewOption={setListView} />
-      <SearchAndFilter />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ padding: THEME.spacing.md }}>
-          {data && (
-            <FlatList
-              scrollEnabled={false}
-              data={data}
-              renderItem={({ item, index }) => <CategoryItem {...item} />}
-              contentContainerStyle={{ gap: THEME.spacing.lg }}
-            />
+    <>
+      <View style={styles.container}>
+        <ProductTopHeader listViewOption={listView} setListViewOption={setListView} />
+        <SearchAndFilter />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {data?.length > 0 ? (
+            <View style={{ padding: THEME.spacing.md }}>
+              {data && (
+                <FlatList
+                  scrollEnabled={false}
+                  data={data}
+                  renderItem={({ item, index }) => <CategoryItem {...item} />}
+                  contentContainerStyle={{ gap: THEME.spacing.lg }}
+                />
+              )}
+            </View>
+          ) : (
+            <View style={{ flex: 1, alignItems: 'center', marginTop: '20%' }}>
+              <View style={{ width: 400, height: 200 }}>
+                <Image
+                  resizeMode="contain"
+                  style={{ width: '100%', height: '100%' }}
+                  source={require('../../../assets/images/emptyCart.png')}
+                />
+              </View>
+
+              <Text size="md" weight="medium" style={{ marginTop: 30 }}>
+                No products yet, please add product
+              </Text>
+            </View>
           )}
-        </View>
-      </ScrollView>
-      <Pressable
-        style={styles.floatingButton}
-        onPress={() => {
-          router.push('/(create-product)/create-product');
-        }}>
-        <Plus width={25} height={25} color={THEME.colors.white} />
-      </Pressable>
-    </View>
+        </ScrollView>
+        <Pressable
+          style={styles.floatingButton}
+          onPress={() => {
+            router.push('/(create-product)/create-product');
+          }}>
+          <Plus width={25} height={25} color={THEME.colors.white} />
+        </Pressable>
+      </View>
+    </>
   );
 };
 
