@@ -1,22 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet } from 'react-native';
-import Toast from 'react-native-toast-message';
-import Dollar from '../../../assets/dollar.svg';
 import { Plus, X } from 'react-native-feather';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 
+import Dollar from '../../../assets/dollar.svg';
 import { CreateProductSchema } from '../types/create-product';
 import { createProductSchema } from '../validation-schema/create-product';
 
 import { Button, Text, View } from '~/components/shared';
 import { FormInput, FormSelect } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
-import * as ImagePicker from 'expo-image-picker';
 
 const CreateProductForm = () => {
   const [loading, setLoading] = useState(false);
@@ -25,9 +25,11 @@ const CreateProductForm = () => {
     uri: '',
   });
 
+  console.log('product image:', image.uri);
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
@@ -125,7 +127,7 @@ const CreateProductForm = () => {
                 uri: '',
               })
             }>
-            <X color={'red'} width={20} />
+            <X color="red" width={20} />
           </TouchableWithoutFeedback>
         </View>
       )}
@@ -176,7 +178,7 @@ const CreateProductForm = () => {
         <View style={styles.variationContainer}>
           {[...Array(4)].map((_, index) => (
             <TouchableWithoutFeedback style={styles.variationBox} key={index}>
-              <Plus color={'#71717A'} width={18} />
+              <Plus color="#71717A" width={18} />
             </TouchableWithoutFeedback>
           ))}
         </View>
