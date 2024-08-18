@@ -1,23 +1,39 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useState } from 'react';
 import { StyleSheet, SectionList, Switch, SafeAreaView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import GoBack from '~/components/go-back';
-import { Text, View, Button } from '~/components/shared';
+import { Button, Text, View } from '~/components/shared';
 import notificationSections from '~/constants/notification';
 import { THEME } from '~/constants/theme';
 
 type Item = {
   header: string;
   body: string;
+  status: true | false;
 };
 
 const NotificationSettings = () => {
-  const [isEnabled, setEnabled] = useState<boolean>(false);
+  const [notificationData, setNotificationData] = useState(notificationSections);
 
-  const renderBody = ({ item }: { item: Item }) => {
-    const toggleSwitch = () => setEnabled((bool) => !bool);
+  const toggleSwitch = (sectionIndex: number, itemIndex: number) => {
+    setNotificationData((prevState) => {
+      const newState = [...prevState];
+      newState[sectionIndex].data[itemIndex].status =
+        !newState[sectionIndex].data[itemIndex].status;
+      return newState;
+    });
+  };
 
+  const renderBody = ({
+    item,
+    sectionIndex,
+    itemIndex,
+  }: {
+    item: any;
+    sectionIndex: number;
+    itemIndex: number;
+  }) => {
     return (
       <View style={styles.sectionBodyCon}>
         <View style={styles.sectionBody}>
@@ -30,14 +46,16 @@ const NotificationSettings = () => {
         </View>
         <Switch
           trackColor={{ false: '#D0D6D6', true: '#F97316' }}
-          thumbColor={isEnabled ? '#F9F9F9' : '#E6F5F3'}
+          thumbColor={item.status ? '#F9F9F9' : '#E6F5F3'}
           ios_backgroundColor="#F97316"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
+          onValueChange={() => toggleSwitch(sectionIndex, itemIndex)}
+          value={item.status}
         />
       </View>
     );
   };
+
+  const { top } = useSafeAreaInsets();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,16 +67,18 @@ const NotificationSettings = () => {
         <View />
       </View>
 
-      <Button
-        containerStyle={styles.saveBtn}
-        icon={<MaterialCommunityIcons name="check" size={20} color="white" />}>
-        Save Changes
-      </Button>
+      <View style={[styles.saveBtn, { marginTop: top * 2 }]}>
+        <Button children="Save Changes" />
+      </View>
 
       <SectionList
         contentContainerStyle={styles.section}
-        sections={notificationSections}
-        renderItem={renderBody}
+        keyExtractor={(item, index) => item.header + index}
+        sections={notificationData}
+        renderItem={({ item, index, section }) =>
+          renderBody({ item, sectionIndex: notificationData.indexOf(section), itemIndex: index })
+        }
+        showsVerticalScrollIndicator={false}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeader}>
             <Text size="xl" weight="semiBold">
@@ -74,8 +94,9 @@ const NotificationSettings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
     backgroundColor: THEME.colors.white,
-    paddingHorizontal: THEME.spacing.gutter,
+    paddingHorizontal: 20,
     paddingVertical: THEME.spacing.gutter,
   },
   header: {
@@ -86,10 +107,10 @@ const styles = StyleSheet.create({
     paddingVertical: THEME.spacing.sm,
   },
   saveBtn: {
-    columnGap: THEME.spacing.sm,
     width: 140,
-    alignSelf: 'flex-end',
-    marginBottom: -40,
+    position: 'absolute',
+    right: 20,
+    zIndex: 20,
   },
   section: {
     width: '100%',
@@ -100,15 +121,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     borderColor: 'rgba(188, 188, 188, 0.40)',
+    backgroundColor: THEME.colors.white,
     paddingBottom: 11,
     borderBottomWidth: 0.5,
-    marginTop: THEME.spacing.md,
+    paddingTop: THEME.spacing.md,
+    paddingHorizontal: 20,
   },
   sectionBodyCon: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   sectionBody: {
     flexDirection: 'column',
