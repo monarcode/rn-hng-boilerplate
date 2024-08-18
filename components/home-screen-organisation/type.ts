@@ -8,3 +8,9 @@ export type SummaryProps={
     amount:string,
     increase:number
 }
+
+export type SalesCardProps={
+    name:string
+    email:string
+    amount:number
+}

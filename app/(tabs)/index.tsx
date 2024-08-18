@@ -12,17 +12,20 @@ import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
 import useProfileStore from '~/store/profile';
-
+import { useDashboard } from '~/hooks/dashboard/dashboard';
+import RecentSales from '~/components/home-screen-organisation/recent-sales';
 const HomeScreen = () => {
   const authstore = useAuthStore();
   const profileData = useProfileStore((state) => state.data);
   const userData = useAuthStore((state) => state.data?.user);
   const { top } = useSafeAreaInsets();
+  const {data,isError,isLoading}=useDashboard(authstore.data?.user.id)
 
   if (!authstore.data) {
     return <Redirect href="/(auth)/login" />;
   }
-  const { first_name, avatar_url } = authstore.data?.user;
+
+  
   return (
     <>
       <Stack.Screen
@@ -96,6 +99,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
           <Summary />
           <Chart />
+          <RecentSales/>
         </View>
       </ScrollView>
     </>
@@ -105,9 +109,10 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: THEME.spacing.gutter,
+    paddingTop: THEME.spacing.lg,
     paddingHorizontal: THEME.spacing.md,
     backgroundColor: THEME.colors.white,
+    gap: THEME.spacing.md,
     // gap: THEME.spacing.lg,
   },
   headerContainer: {

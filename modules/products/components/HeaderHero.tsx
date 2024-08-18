@@ -12,7 +12,9 @@ const HeaderHero = ({ title, goback }: HeaderHeroProps) => {
           <ChevronLeft width={18} height={18} color={'#141414'} />
         </Pressable>
         <View>
-          <Text style={styles.heroTitle}>{title}</Text>
+          <Text style={styles.heroTitle} size="2xl">
+            {title}
+          </Text>
         </View>
       </View>
     </View>
@@ -29,11 +31,11 @@ const styles = StyleSheet.create({
   },
   container: {
     marginLeft: 24,
-    marginTop: 5,
+    marginTop: 20,
   },
   heroTitle: {
     fontFamily: 'Inter_600SemiBold',
-    fontSize: 18,
+    fontSize: 20,
     lineHeight: 21.78,
     color: '#000000',
   },

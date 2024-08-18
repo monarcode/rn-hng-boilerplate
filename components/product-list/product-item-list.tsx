@@ -20,33 +20,35 @@ const ProductItemListTile = (product: ProductProps) => {
 
   const uniqueId = createUniqueId(product.name, product.id);
   return (
-    <Pressable onLongPress={() => moreDetails(product.id)}>
-      <View style={styles.container}>
-        <View style={styles.contentWrapperContainer}>
+    <View style={styles.container}>
+      <View style={styles.contentWrapperContainer}>
+        <Pressable
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+          onPress={() => moreDetails(product.id)}>
           <Image source={{ uri: product.image }} style={styles.image} />
-          <View style={styles.textContentContainer}>
-            <View>
-              <Text size="xl" weight="medium">
-                {product.name}
-              </Text>
-              <Text size="lg">{uniqueId}</Text>
-            </View>
-            <View>
-              <Text size="xl" weight="semiBold" style={{ color: THEME.colors.neutral[300] }}>
-                Status:
-              </Text>
-              <View style={styles.statusContainer}>
-                <View style={styles.indicator}></View>
-                <Text>{product.status}</Text>
-              </View>
+        </Pressable>
+        <View style={styles.textContentContainer}>
+          <View>
+            <Text size="xl" weight="medium">
+              {product.name}
+            </Text>
+            <Text size="lg">{uniqueId}</Text>
+          </View>
+          <View>
+            <Text size="xl" weight="semiBold" style={{ color: THEME.colors.neutral[300] }}>
+              Status:
+            </Text>
+            <View style={styles.statusContainer}>
+              <View style={styles.indicator}></View>
+              <Text>{product.status}</Text>
             </View>
           </View>
         </View>
-        <Text size="xl" weight="bold">
-          ${parseFloat(`${product.price}`)}
-        </Text>
       </View>
-    </Pressable>
+      <Text size="xl" weight="bold">
+        ${parseFloat(`${product.price}`)}
+      </Text>
+    </View>
   );
 };
 
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
     width: 0.3 * width,
     borderRadius: 5,
     resizeMode: 'cover',
+    height:0.2*width
   },
   indicator: {
     height: 6,
