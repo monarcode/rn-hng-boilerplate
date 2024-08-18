@@ -1,3 +1,4 @@
+import * as FileSystem from 'expo-file-system';
 import { HTTPError } from 'ky';
 
 import { http } from '~/libs/ky';
@@ -8,18 +9,13 @@ import {
   ProfileUpdateResponse,
 } from '~/types/profile/profile';
 
-const updateProfile = async (
-  email: string,
-  newData: Partial<ProfileData>
-): Promise<ProfileUpdateResponse> => {
+const updateProfile = async (email: string, payload: any): Promise<ProfileUpdateResponse> => {
   try {
     const response = await http
       .put(`profile/${email}`, {
-        json: newData,
+        json: { ...payload },
       })
       .json<ProfileUpdateResponse>();
-
-    console.log(response);
 
     if ('error' in response) {
       throw new Error('Something went wrong');
@@ -30,23 +26,51 @@ const updateProfile = async (
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json<ProfileUpdateResponse>();
       throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
-
-      console.log(errorBody.message);
     }
     throw error;
   }
 };
 
-const uploadPicture = async (email: string, photo: any): Promise<ProfilePictureResponse> => {
+const uploadPicture = async (email: string, photo: string): Promise<ProfilePictureResponse> => {
   try {
+    // Read the file as base64
+    const base64 = await FileSystem.readAsStringAsync(photo, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    // Create a Blob from the base64 string
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', `data:image/jpeg;base64,${base64}`, true);
+      xhr.send(null);
+    });
+
+    // Extract the file name from the photo path
+    const fileName = photo.split('/').pop() || 'image.jpg';
+
+    // Create FormData
     const formData = new FormData();
-    formData.append('picture', photo);
+    formData.append('picture', blob, fileName);
+    formData.append('email', email);
+    console.log('formData:', formData);
+
     const response = await http
       .put(`profile/${email}/picture`, {
         body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .json<ProfilePictureResponse>();
 
+    console.log(response);
     if ('error' in response) {
       throw new Error('Something went wrong');
     }
@@ -55,6 +79,7 @@ const uploadPicture = async (email: string, photo: any): Promise<ProfilePictureR
   } catch (error) {
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json<ProfilePictureResponse>();
+      console.error('picture: ', errorBody);
       throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
     }
     throw error;
