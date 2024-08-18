@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -17,23 +17,22 @@ import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
 import { Button, View, Text, Dialog } from '~/components/shared';
 import { FormInput, FormSelect } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
+import { useDeleteProfilePicture } from '~/hooks/settings/deleteProfilePicture';
+import { useFetchProfile } from '~/hooks/settings/fetchProfile';
+import { useUpdateProfileDetails } from '~/hooks/settings/updateProfileDetails';
+import { useUpdateProfilePicture } from '~/hooks/settings/updateProfilePicture';
 import { queryClient } from '~/libs/query';
 import { EditProfileFormData } from '~/modules/settings/types/edit-profile';
 import { editProfileFormSchema } from '~/modules/settings/validation-schema/edit-profile';
 import { ProfileService } from '~/services/edit-profile';
 import useAuthStore from '~/store/auth';
-import useProfileStore from '~/store/profile';
+import { ProfileData } from '~/types/profile/profile';
 import { pickImage } from '~/utils/profile-image-handler';
 
 type ImageState = {
-  uri: string | null;
+  uri: string | undefined;
   status: 'idle' | 'loading' | 'success' | 'error';
   error?: string;
-};
-
-type UpdateProfileVariables = {
-  email: string;
-  newData: Partial<EditProfileFormData>;
 };
 
 const GeneralProfileSettings = () => {
@@ -41,180 +40,55 @@ const GeneralProfileSettings = () => {
   const bottomInset = insets.bottom;
 
   const [selectedImage, setSelectedImage] = useState<ImageState>({
-    uri: null,
+    uri: '',
     status: 'idle',
   });
+
+  const { mutate: deleteProfilePicture } = useDeleteProfilePicture();
+  const { mutate: updateProfilePicture } = useUpdateProfilePicture();
+  const { data, isLoading } = useFetchProfile();
+  const { mutate: updateProfile } = useUpdateProfileDetails();
 
   const [loading, setLoading] = useState<boolean>(false);
   const form = useForm<EditProfileFormData>({
     resolver: zodResolver(editProfileFormSchema),
     defaultValues: {
-      user_name: '',
-      pronoun: '',
-      job_title: '',
-      department: '',
-      bio: '',
-      twitter_link: '',
-      facebook_link: '',
-      linkedin_link: '',
+      user_name: data?.data?.profile?.user_name || '',
+      pronoun: data?.data?.profile?.pronoun || '',
+      job_title: data?.data?.profile?.job_title || '',
+      department: data?.data?.profile?.department || '',
+      bio: data?.data?.profile?.bio || '',
+      twitter_link: data?.data?.profile?.twitter_link || '',
+      facebook_link: data?.data?.profile?.facebook_link || '',
+      linkedin_link: data?.data?.profile?.linkedin_link || '',
     },
   });
 
   const authStore = useAuthStore();
-  const userData = authStore.data?.user; // Get user data from the store
-
-  const profileStore = useProfileStore();
-  const profileData = profileStore.data;
+  const userData = authStore.data?.user;
 
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
 
-  useEffect(() => {
-    if (profileData) {
-      form.reset({
-        user_name: profileData?.user_name || '',
-        pronoun: profileData?.pronoun || '',
-        job_title: profileData?.job_title || '',
-        department: profileData?.department || '',
-        bio: profileData?.bio || '',
-        twitter_link: profileData?.twitter_link || '',
-        facebook_link: profileData?.facebook_link || '',
-        linkedin_link: profileData?.linkedin_link || '',
-      });
-      setSelectedImage({ uri: profileData.avatar_url || null, status: 'idle' });
-    }
-  }, [profileData]);
-  const updateProfileMutation = useMutation({
-    mutationFn: async ({ email, newData }: UpdateProfileVariables) => {
-      try {
-        const response = await ProfileService.updateProfile(email, newData);
-        return response; // Return the response for further processing in onSuccess
-      } catch (error) {
-        throw new Error('Failed to update profile'); // Ensure that errors are properly thrown
-      }
-    },
-    onSuccess: (response) => {
-      if (response && response.status_code === 200) {
-        // Update the store with the new profile data
-        profileStore.updateProfile(response.data);
-
-              // Log the updated store data to ensure it's being set
-      console.log('Profile Store Updated:', profileStore.data);
-        Toast.show({
-          type: 'success',
-          props: { title: 'Success', description: 'Profile updated successfully' },
-        });
-
-        queryClient.invalidateQueries({ queryKey: ['profile'] });
-      } else {
-        Toast.show({
-          type: 'error',
-          props: { title: 'Error', description: 'Failed to update profile' },
-        });
-      }
-    },
-    onError: (error: Error) => {
-      console.error('Error', error);
-      Toast.show({
-        type: 'error',
-        props: { title: 'Error', description: error.message || 'Failed to update profile' },
-      });
-    },
-  });
-
-  const updateProfilePictureMutation = useMutation({
-    mutationFn: async ({ email, photo }: { email: string; photo: any }) => {
-      try {
-        const response = await ProfileService.uploadPicture(email, photo);
-        return response; // Return the response for further processing in onSuccess
-      } catch (error) {
-        throw new Error('Failed to update profile picture'); // Ensure that errors are properly thrown
-      }
-    },
-    onSuccess: (response) => {
-      if (response && response.status_code === 200) {
-        // Update the store with the new avatar URL
-        profileStore.uploadPicture(response.data.avatar_url);
-
-        Toast.show({
-          type: 'success',
-          props: { title: 'Success', description: 'Profile picture updated successfully' },
-        });
-
-        queryClient.invalidateQueries({ queryKey: ['profile'] });
-      } else {
-        Toast.show({
-          type: 'error',
-          props: { title: 'Error', description: 'Failed to update profile picture' },
-        });
-      }
-    },
-    onError: (error: Error) => {
-      console.error('Error', error);
-      Toast.show({
-        type: 'error',
-        props: { title: 'Error', description: error.message || 'Failed to update profile picture' },
-      });
-    },
-  });
-
-  /**
-   * Handles the image pick process.
-   *
-   * @returns {Promise<void>} A promise that resolves once the image pick process is completed.
-   * @throws {Error} If the profile picture update fails.
-   */
-  const handleImagePick = async () => {
-    try {
-      const imageUri = await pickImage();
-      if (imageUri) {
-        setSelectedImage({ uri: imageUri, status: 'loading' });
-
-        const response = await updateProfilePictureMutation.mutateAsync({
-          email: userData?.email || '',
-          photo: imageUri,
-        });
-
-        if (response?.status_code === 200) {
-          // Update the avatar_url in the profile store
-          setSelectedImage({ uri: imageUri, status: 'success' });
-          profileStore.uploadPicture(imageUri);
-        } else {
-          throw new Error('Failed to update profile picture');
-        }
-      }
-    } catch (error) {
-      setSelectedImage((prev) => ({ ...prev, status: 'error', error: 'Failed to pick image' }));
-    }
-  };
-
   const handleRemovePhoto = async () => {
-    setSelectedImage({ uri: null, status: 'loading' });
-
+    setSelectedImage({ uri: undefined, status: 'loading' });
     try {
-      const response = await ProfileService.deletePicture(userData?.email || '');
-
-      if (response?.status_code === 200) {
-        profileStore.deletePicture();
-        Toast.show({
-          type: 'success',
-          props: { title: 'Success', description: 'Profile picture removed successfully' },
-        });
-      } else {
-        throw new Error(response?.message || 'Failed to remove image');
-      }
+      deleteProfilePicture(userData?.email || '');
+      Toast.show({
+        type: 'success',
+        props: { title: 'Success', description: 'Profile picture removed successfully' },
+      });
     } catch (error) {
       setSelectedImage((prev) => ({
         ...prev,
         status: 'error',
         error: 'Failed to remove image',
       }));
-
       Toast.show({
         type: 'error',
         props: { title: 'Error', description: 'Failed to remove image' },
       });
     } finally {
-      setSelectedImage({ uri: null, status: 'idle' });
+      setSelectedImage({ uri: undefined, status: 'idle' });
       queryClient.invalidateQueries({ queryKey: ['profile'] });
     }
   };
@@ -232,53 +106,103 @@ const GeneralProfileSettings = () => {
         {} as Partial<EditProfileFormData>
       );
 
-      const updatedData: Partial<EditProfileFormData & { avatar_url?: string }> = {
+      const updatedData: any = {
         ...cleanedData,
-        avatar_url: profileStore.data?.avatar_url,
+        avatar_url: selectedImage.uri,
       };
+      console.log(updatedData);
 
-      const response = await updateProfileMutation.mutateAsync({
+      await updateProfile({
         email: userData?.email || '',
         newData: updatedData,
       });
 
-      if (response && response.status_code === 200) {
-        // Update both ProfileStore and AuthStore
-        profileStore.updateProfile(response.data);
-
-        console.log('Profile Store Updated:', profileStore.data);
-
-        setIsSuccessDialogOpen(true);
-      } else {
-        throw new Error('Failed to update profile');
-      }
+      setIsSuccessDialogOpen(true);
     } catch (error) {
-      Toast.show({
-        type: 'error',
-        props: { title: 'Error', description: 'Failed to update profile' },
-      });
+      // Error is handled in the mutation's onError callback
     } finally {
       setLoading(false);
     }
   };
 
-  const resetForm = useCallback(() => {
+  const handleImagePick = async (): Promise<void> => {
+    try {
+      const imageUri = await pickImage();
+      if (imageUri) {
+
+        updateProfilePicture(
+          { email: userData?.email || '', photo: imageUri },
+          {
+            onSuccess: (response) => {
+              if (response && response.status_code === 200) {
+                setSelectedImage({ uri: imageUri, status: 'success' });
+                Toast.show({
+                  type: 'success',
+                  props: { title: 'Success', description: 'Profile picture updated successfully' },
+                });
+              } else {
+                throw new Error('Failed to update profile picture');
+              }
+            },
+            onError: (error) => {
+              console.error('Error updating profile picture:', error);
+              Toast.show({
+                type: 'error',
+                props: { title: 'Error', description: 'Failed to update profile picture' },
+              });
+              setSelectedImage((prev) => ({
+                ...prev,
+                status: 'error',
+                error: 'Failed to update image',
+              }));
+            },
+          }
+        );
+      }
+    } catch (error) {
+      console.error('Error picking image:', error);
+      setSelectedImage((prev) => ({ ...prev, status: 'error', error: 'Failed to pick image' }));
+      Toast.show({
+        type: 'error',
+        props: { title: 'Error', description: 'Failed to pick image' },
+      });
+    }
+  };
+  const resetForm = useCallback(async () => {
     // Reset to initial values or empty strings
     form.reset({
-      user_name: profileData?.user_name || '',
-      pronoun: profileData?.pronoun || '',
-      job_title: profileData?.job_title || '',
-      department: profileData?.department || '',
-      bio: profileData?.bio || '',
-      twitter_link: profileData?.twitter_link || '',
-      facebook_link: profileData?.facebook_link || '',
-      linkedin_link: profileData?.linkedin_link || '',
+      user_name: data?.data?.profile?.user_name || '',
+      pronoun: data?.data?.profile?.pronoun || '',
+      job_title: data?.data?.profile?.job_title || '',
+      department: data?.data?.profile?.department || '',
+      bio: data?.data?.profile?.bio || '',
+      twitter_link: data?.data?.profile?.twitter_link || '',
+      facebook_link: data?.data?.profile?.facebook_link || '',
+      linkedin_link: data?.data?.profile?.linkedin_link || '',
     });
+    try {
+      deleteProfilePicture(userData?.email || '');
+    } catch (error) {
+      setSelectedImage((prev) => ({
+        ...prev,
+        status: 'error',
+        error: 'Failed to remove image',
+      }));
+
+      Toast.show({
+        type: 'error',
+        props: { title: 'Error', description: 'Failed to remove image' },
+      });
+    } finally {
+      setSelectedImage({ uri: '', status: 'idle' });
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    }
   }, []);
 
   const handleDialogClose = () => {
     setIsSuccessDialogOpen(false);
     // Navigate back to the settings screen
+
     router.back();
   };
 

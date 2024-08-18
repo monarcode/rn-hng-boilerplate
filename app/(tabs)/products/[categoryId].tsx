@@ -1,15 +1,14 @@
+import { useLocalSearchParams, router } from 'expo-router';
 import { StyleSheet, Pressable, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { Plus } from 'react-native-feather';
+
+import GoBack from '~/components/go-back';
+import { SearchAndFilter } from '~/components/product-list';
+import ProductItemListTile from '~/components/product-list/product-item-list';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import { useLocalSearchParams } from 'expo-router';
-
 import { useProducts } from '~/hooks/products/organization/fetchProducts';
 import useAuthStore from '~/store/auth';
-import ProductItemListTile from '~/components/product-list/product-item-list';
-import { SearchAndFilter } from '~/components/product-list';
-import { Plus } from 'react-native-feather';
-import { router } from 'expo-router';
-import GoBack from '~/components/go-back';
 
 const ViewProductsByCategory = () => {
   const authstore = useAuthStore();
@@ -17,15 +16,18 @@ const ViewProductsByCategory = () => {
   const { categoryId } = useLocalSearchParams();
   const { data } = useProducts(orgId);
   const category = data?.find((item) => item.name === categoryId);
-  // console.log(category);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <GoBack />
-        <Text size="3xl" weight="bold">{category?.name}</Text>
+        <Text size="3xl" weight="bold">
+          {category?.name}
+        </Text>
         <TouchableOpacity
-          onPress={() => { /* menu logic */ }}>
+          onPress={() => {
+            /* menu logic */
+          }}>
           <Image source={require('~/assets/menu.png')} />
         </TouchableOpacity>
       </View>
@@ -34,13 +36,9 @@ const ViewProductsByCategory = () => {
         <View style={{ padding: THEME.spacing.md }}>
           <FlatList
             scrollEnabled={false}
-            data={category?.products} 
-            keyExtractor={(item) => item.id} 
-            renderItem={({ item }) => (
-              <ProductItemListTile
-              {...item}
-              />
-            )}
+            data={category?.products}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <ProductItemListTile {...item} />}
             contentContainerStyle={{ gap: THEME.spacing.lg }}
           />
         </View>

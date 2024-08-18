@@ -1,13 +1,14 @@
-import { Button, View } from '~/components/shared';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, Platform, ScrollView } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Button, View } from '~/components/shared';
+import { useProducts } from '~/hooks/products/organization/fetchProducts';
 import HeaderHero from '~/modules/products/components/HeaderHero';
 import ProductContent from '~/modules/products/components/ProductContent';
 import { ProductData, ProductDetailProps } from '~/modules/products/types';
-import { useLocalSearchParams, useRouter } from 'expo-router';
 import useAuthStore from '~/store/auth';
-import { useProducts } from '~/hooks/products/organization/fetchProducts';
 
 const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
   const router = useRouter();
@@ -37,7 +38,7 @@ const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
 
   return (
     <SafeAreaView style={[styles.safeArea]}>
-      <HeaderHero title={'Product Description'} goback={goBack} />
+      <HeaderHero title="Product Description" goback={goBack} />
 
       <ScrollView contentContainerStyle={styles.container}>
         <ProductContent data={product} title={title} />

@@ -7,25 +7,25 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Ellipse from '~/assets/icons/ellipse.svg';
 import Chart from '~/components/home-screen-organisation/chart';
+import RecentSales from '~/components/home-screen-organisation/recent-sales';
 import Summary from '~/components/home-screen-organisation/summary';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import useAuthStore from '~/store/auth';
-import useProfileStore from '~/store/profile';
 import { useDashboard } from '~/hooks/dashboard/dashboard';
-import RecentSales from '~/components/home-screen-organisation/recent-sales';
+import { useFetchProfile } from '~/hooks/settings/fetchProfile';
+import useAuthStore from '~/store/auth';
+
 const HomeScreen = () => {
   const authstore = useAuthStore();
-  const profileData = useProfileStore((state) => state.data);
+  const { data: profileData } = useFetchProfile();
   const userData = useAuthStore((state) => state.data?.user);
   const { top } = useSafeAreaInsets();
-  const {data,isError,isLoading}=useDashboard(authstore.data?.user.id)
+  const { data, isError, isLoading } = useDashboard(authstore.data?.user.id);
 
   if (!authstore.data) {
     return <Redirect href="/(auth)/login" />;
   }
 
-  
   return (
     <>
       <Stack.Screen
@@ -51,18 +51,20 @@ const HomeScreen = () => {
                       activeOpacity={0.7}
                       onPress={() => router.navigate('/user-settings')}>
                       <View style={styles.profileImageContainer}>
-                        {profileData?.avatar_url ? (
+                        {profileData?.data.avatar_url ? (
                           <Image
-                            source={{ uri: `${profileData?.avatar_url}?${new Date().getTime()}` }}
+                            source={{
+                              uri: `${profileData?.data.avatar_url}?${new Date().getTime()}`,
+                            }}
                             style={styles.profileImage}
                           />
                         ) : (
                           <>
-                            <Ellipse />
+                            <Ellipse width={55} height={55} />
                             <View style={styles.initialsContainer}>
                               <Text size="xl" weight="medium">
-                                {userData?.first_name[0]}
-                                {userData?.last_name[0]}
+                                {userData?.first_name[0].toUpperCase()}
+                                {userData?.last_name[0].toUpperCase()}
                               </Text>
                             </View>
                           </>
@@ -76,7 +78,10 @@ const HomeScreen = () => {
                       </Text>
 
                       <Text size="xl" weight="semiBold">
-                        {profileData?.user_name || userData?.first_name}
+                        {profileData?.data?.profile?.user_name
+                          ? profileData?.data?.profile?.user_name.charAt(0).toUpperCase() +
+                            profileData?.data?.profile?.user_name.slice(1).toLowerCase()
+                          : userData?.first_name}
                       </Text>
                     </View>
                   </View>
@@ -99,7 +104,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
           <Summary />
           <Chart />
-          <RecentSales/>
+          <RecentSales />
         </View>
       </ScrollView>
     </>
@@ -136,13 +141,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImageContainer: {
-    width: 60,
-    height: 60,
+    width: 58,
+    height: 58,
   },
   profileImage: {
     width: '100%',
     aspectRatio: 1,
-    borderRadius: 40,
   },
   profileName: {
     marginBottom: 5,

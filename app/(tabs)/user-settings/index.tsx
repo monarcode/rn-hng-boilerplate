@@ -16,17 +16,16 @@ import People from '~/assets/icons/people.svg';
 import Wallet from '~/assets/icons/wallet.svg';
 import { Dialog, DialogRef, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+import { useFetchProfile } from '~/hooks/settings/fetchProfile';
 import { SettingItem, SettingsSection } from '~/modules/settings/components';
 import useAuthStore from '~/store/auth';
-import useProfileStore from '~/store/profile';
-
 const UserSettingsScreen = () => {
   const insets = useSafeAreaInsets();
   const dialogRef = useRef<DialogRef>(null);
   const resetStore = useAuthStore((state) => state.resetStore);
-  const profileData = useProfileStore((state) => state.data);
   const userData = useAuthStore((state) => state.data?.user);
   const userAvatar = useAuthStore((state) => state.data?.user?.avatar_url);
+  const { data, isError, isLoading } = useFetchProfile();
 
   const topInset = insets.top;
   const bottomInset = insets.bottom;
@@ -37,6 +36,7 @@ const UserSettingsScreen = () => {
 
   const confirmLogout = () => {
     resetStore();
+    if (!data?.data) return;
     router.replace('/login');
   };
   return (
@@ -51,9 +51,9 @@ const UserSettingsScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.profileInfo}>
           <View style={styles.profileImageContainer}>
-            {profileData?.avatar_url ? (
+            {data?.data.avatar_url ? (
               <Image
-                source={{ uri: `${profileData?.avatar_url}?${new Date().getTime()}` }}
+                source={{ uri: `${data?.data?.avatar_url}?${new Date().getTime()}` }}
                 style={styles.profileImage}
                 key={userAvatar}
               />
@@ -72,7 +72,7 @@ const UserSettingsScreen = () => {
 
           <View style={{ marginLeft: THEME.spacing.md }}>
             <Text size="lg" weight="semiBold" style={styles.profileName}>
-              {profileData?.user_name || userData?.first_name}
+              {data?.data?.profile?.user_name || `${userData?.first_name} ${userData?.last_name}`}
             </Text>
             <Text style={styles.profileEmail}>{userData?.email}</Text>
           </View>

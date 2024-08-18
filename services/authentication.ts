@@ -1,7 +1,35 @@
 import { HTTPError } from 'ky';
 
 import { http } from '~/libs/ky';
-import { AuthLoginResponse, AuthSuccessResponse } from '~/types/auth/login';
+import {
+  AuthLoginResponse,
+  AuthSuccessResponse,
+  ErrorResponse,
+  UserDetailsResponse,
+} from '~/types/auth/login';
+
+const getUserDetails = async (): Promise<UserDetailsResponse> => {
+  try {
+    const response = await http.get('auth/@me').json<UserDetailsResponse>();
+
+    if ('error' in response) {
+      throw new Error('Something went wrong');
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<ErrorResponse>();
+
+      if (error.response.status === 401) {
+        throw new Error(errorBody.detail || 'Unauthorized');
+      }
+
+      throw new Error(errorBody.detail || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
 
 const loginUser = async ({
   email,
@@ -76,4 +104,5 @@ export const AuthService = {
   loginUser,
   createUser,
   changeUserPassword,
+  getUserDetails,
 };

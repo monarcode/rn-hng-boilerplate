@@ -32,3 +32,38 @@ export type AuthLoginResponse = {
   error: string;
   status_code: number;
 };
+
+export type UserDetailsResponse = {
+  data: {
+    fullname: string;
+    id: string;
+    email: string;
+    profile: {
+      first_name: string;
+      last_name: string;
+      phone_number: string;
+      avatar_url: string;
+      user_id: string;
+      user_name: string;
+      pronoun: string;
+      job_title: string;
+      bio: string;
+      department: string;
+      facebook_link: string;
+      twitter_link: string;
+      linkedin_link: string;
+    };
+    avatar_url: string;
+  };
+  message: string;
+  status_code: number;
+};
+
+export type ErrorResponse = {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+  [key: string]: string | number; // For additional properties
+};

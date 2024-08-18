@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, StatusBar, SafeAreaView } from 'react-native';
+import { ChevronLeft } from 'react-native-feather';
+
+import Dollar from '../../assets/dollar.svg';
+
 import { Button, Select, Text, TextInput } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import Dollar from '../../assets/dollar.svg';
-import { ChevronLeft } from 'react-native-feather';
 
 const CreateProductScreen = () => {
   const [description, setDescription] = useState('');
