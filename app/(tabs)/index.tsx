@@ -78,9 +78,9 @@ const HomeScreen = () => {
                       </Text>
 
                       <Text size="xl" weight="semiBold">
-                        {profileData?.data.profile.user_name
-                          ? profileData?.data.profile.user_name.charAt(0).toUpperCase() +
-                            profileData?.data.profile.user_name.slice(1).toLowerCase()
+                        {profileData?.data?.profile?.user_name
+                          ? profileData?.data?.profile?.user_name.charAt(0).toUpperCase() +
+                            profileData?.data?.profile?.user_name.slice(1).toLowerCase()
                           : userData?.first_name}
                       </Text>
                     </View>
