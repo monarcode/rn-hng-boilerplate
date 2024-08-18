@@ -1,7 +1,8 @@
 import { HTTPError } from 'ky';
+
+import { CategoryProps } from '~/components/product-list/types';
 import { http } from '~/libs/ky';
 import { CreateProductResponse, GetProductResponse } from '~/types/product/product';
-import { CategoryProps } from '~/components/product-list/types';
 
 const createProduct = async (payload: any, orgId: string): Promise<CreateProductResponse> => {
   try {
@@ -34,16 +35,16 @@ const fetchProducts = async (orgId: string | undefined): Promise<CategoryProps[]
       throw new Error('Something went wrong');
     }
     const data = response.data;
-    let sortedArray: Array<CategoryProps> = [];
+    let sortedArray: CategoryProps[] = [];
     data.forEach((product) => {
-      let existingCategory = sortedArray.find(
+      const existingCategory = sortedArray.find(
         (category) => category.name.toLowerCase() == product.category.toLowerCase()
       );
       if (!existingCategory) {
         sortedArray.push({ name: product.category, products: [product] });
       } else {
         sortedArray = sortedArray.map((category) => {
-          if (category.name.toLowerCase() == product.category.toLowerCase()) {
+          if (category.name.toLowerCase() === product.category.toLowerCase()) {
             return { name: category.name, products: [...category.products, product] };
           }
           return category;
