@@ -12,7 +12,7 @@ export const pickImage = async () => {
         description: 'Sorry, we need camera roll permissions to make this work!',
       },
     });
-    return null;
+    return undefined;
   }
 
   const result = await ImagePicker.launchImageLibraryAsync({
@@ -26,5 +26,5 @@ export const pickImage = async () => {
     return result.assets[0].uri;
   }
 
-  return null;
+  return undefined;
 };
