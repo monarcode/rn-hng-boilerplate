@@ -47,6 +47,6 @@ export default Summary;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    gap: 20,
+    gap: 15,
   },
 });

@@ -35,9 +35,51 @@ const Chart = () => {
           maxValue={45}
           stepValue={15}
         />
-      </View>
 
-      <View></View>
+        <View style={styles.descriptions}>
+          {/* description very good*/}
+          <View style={styles.descriptionContainer}>
+            <View
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 1000,
+                backgroundColor: '#EDEFF5',
+              }}></View>
+            <Text size="md" weight="semiBold" style={{ color: THEME.colors.neutral[400] }}>
+              Very Good
+            </Text>
+          </View>
+
+          {/* description good*/}
+          <View style={styles.descriptionContainer}>
+            <View
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 1000,
+                backgroundColor: '#F59E64',
+              }}></View>
+            <Text size="md" weight="semiBold" style={{ color: THEME.colors.neutral[400] }}>
+              Good
+            </Text>
+          </View>
+
+          {/* description very good*/}
+          <View style={styles.descriptionContainer}>
+            <View
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 1000,
+                backgroundColor: '#F97316',
+              }}></View>
+            <Text size="md" weight="semiBold" style={{ color: THEME.colors.neutral[400] }}>
+              Poor
+            </Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -57,5 +99,16 @@ const styles = StyleSheet.create({
     paddingVertical: THEME.spacing.md,
     alignItems: 'center',
     borderRadius: 16,
+    gap:20
+  },
+  descriptionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  descriptions: {
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    width:'67%'
   },
 });
