@@ -7,12 +7,12 @@ import SalesCard from './sales-card';
 const RecentSales = () => {
     const Sales = [
       {
-        name: 'Prince Emelife',
+        name: 'Prince Edward',
         email: 'special@test.mail',
         amount: 3000,
       },
       {
-        name: 'Felix Hope',
+        name: 'Ebenezer Hope',
         email: 'special@test.mail',
         amount: 2500,
       },
