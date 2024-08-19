@@ -1,12 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import React, { useCallback, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import Toast from 'react-native-toast-message';
 
 import Ellipse from '~/assets/icons/ellipse.svg';
 import InstagramLogo from '~/assets/icons/ig-icon.svg';
@@ -17,42 +13,24 @@ import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
 import { Button, View, Text, Dialog } from '~/components/shared';
 import { FormInput, FormSelect } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
-import { useDeleteProfilePicture } from '~/hooks/settings/deleteProfilePicture';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
-import { useUpdateProfileDetails } from '~/hooks/settings/updateProfileDetails';
-import { useUpdateProfilePicture } from '~/hooks/settings/updateProfilePicture';
-import { queryClient } from '~/libs/query';
+import { useProfileForm } from '~/hooks/settings/general-profile/profile-form';
+import { useProfileImage } from '~/hooks/settings/general-profile/profile-image';
 import { EditProfileFormData } from '~/modules/settings/types/edit-profile';
-import { editProfileFormSchema } from '~/modules/settings/validation-schema/edit-profile';
-import { ProfileService } from '~/services/edit-profile';
 import useAuthStore from '~/store/auth';
-import { ProfileData } from '~/types/profile/profile';
-import { pickImage } from '~/utils/profile-image-handler';
-
-type ImageState = {
-  uri: string | undefined;
-  status: 'idle' | 'loading' | 'success' | 'error';
-  error?: string;
-};
 
 const GeneralProfileSettings = () => {
   const insets = useSafeAreaInsets();
   const bottomInset = insets.bottom;
-
-  const [selectedImage, setSelectedImage] = useState<ImageState>({
-    uri: '',
-    status: 'idle',
-  });
-
-  const { mutate: deleteProfilePicture } = useDeleteProfilePicture();
-  const { mutate: updateProfilePicture } = useUpdateProfilePicture();
   const { data, isLoading } = useFetchProfile();
-  const { mutate: updateProfile } = useUpdateProfileDetails();
+  const authStore = useAuthStore();
+  const userData = authStore.data?.user;
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const form = useForm<EditProfileFormData>({
-    resolver: zodResolver(editProfileFormSchema),
-    defaultValues: {
+  const { selectedImage, handleImagePick, handleRemovePhoto } = useProfileImage(
+    userData?.email || ''
+  );
+  const { form, onSaveChanges, resetForm, loading } = useProfileForm(
+    {
       user_name: data?.data?.profile?.user_name || '',
       pronoun: data?.data?.profile?.pronoun || '',
       job_title: data?.data?.profile?.job_title || '',
@@ -62,147 +40,19 @@ const GeneralProfileSettings = () => {
       facebook_link: data?.data?.profile?.facebook_link || '',
       linkedin_link: data?.data?.profile?.linkedin_link || '',
     },
-  });
-
-  const authStore = useAuthStore();
-  const userData = authStore.data?.user;
+    userData?.email || ''
+  );
 
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
 
-  const handleRemovePhoto = async () => {
-    setSelectedImage({ uri: undefined, status: 'loading' });
-    try {
-      deleteProfilePicture(userData?.email || '');
-      Toast.show({
-        type: 'success',
-        props: { title: 'Success', description: 'Profile picture removed successfully' },
-      });
-    } catch (error) {
-      setSelectedImage((prev) => ({
-        ...prev,
-        status: 'error',
-        error: 'Failed to remove image',
-      }));
-      Toast.show({
-        type: 'error',
-        props: { title: 'Error', description: 'Failed to remove image' },
-      });
-    } finally {
-      setSelectedImage({ uri: undefined, status: 'idle' });
-      queryClient.invalidateQueries({ queryKey: ['profile'] });
-    }
-  };
-
-  const onSaveChanges = async (data: EditProfileFormData) => {
-    try {
-      setLoading(true);
-      const cleanedData: Partial<EditProfileFormData> = Object.entries(data).reduce(
-        (acc, [key, value]) => {
-          if (value !== '' && value !== undefined) {
-            acc[key as keyof EditProfileFormData] = value;
-          }
-          return acc;
-        },
-        {} as Partial<EditProfileFormData>
-      );
-
-      const updatedData: any = {
-        ...cleanedData,
-        avatar_url: selectedImage.uri,
-      };
-      console.log(updatedData);
-
-      await updateProfile({
-        email: userData?.email || '',
-        newData: updatedData,
-      });
-
+  const handleSaveChanges = async (formData: EditProfileFormData) => {
+    const success = await onSaveChanges(formData);
+    if (success) {
       setIsSuccessDialogOpen(true);
-    } catch (error) {
-      // Error is handled in the mutation's onError callback
-    } finally {
-      setLoading(false);
     }
   };
-
-  const handleImagePick = async (): Promise<void> => {
-    try {
-      const imageUri = await pickImage();
-      if (imageUri) {
-
-        updateProfilePicture(
-          { email: userData?.email || '', photo: imageUri },
-          {
-            onSuccess: (response) => {
-              if (response && response.status_code === 200) {
-                setSelectedImage({ uri: imageUri, status: 'success' });
-                Toast.show({
-                  type: 'success',
-                  props: { title: 'Success', description: 'Profile picture updated successfully' },
-                });
-              } else {
-                throw new Error('Failed to update profile picture');
-              }
-            },
-            onError: (error) => {
-              console.error('Error updating profile picture:', error);
-              Toast.show({
-                type: 'error',
-                props: { title: 'Error', description: 'Failed to update profile picture' },
-              });
-              setSelectedImage((prev) => ({
-                ...prev,
-                status: 'error',
-                error: 'Failed to update image',
-              }));
-            },
-          }
-        );
-      }
-    } catch (error) {
-      console.error('Error picking image:', error);
-      setSelectedImage((prev) => ({ ...prev, status: 'error', error: 'Failed to pick image' }));
-      Toast.show({
-        type: 'error',
-        props: { title: 'Error', description: 'Failed to pick image' },
-      });
-    }
-  };
-  const resetForm = useCallback(async () => {
-    // Reset to initial values or empty strings
-    form.reset({
-      user_name: data?.data?.profile?.user_name || '',
-      pronoun: data?.data?.profile?.pronoun || '',
-      job_title: data?.data?.profile?.job_title || '',
-      department: data?.data?.profile?.department || '',
-      bio: data?.data?.profile?.bio || '',
-      twitter_link: data?.data?.profile?.twitter_link || '',
-      facebook_link: data?.data?.profile?.facebook_link || '',
-      linkedin_link: data?.data?.profile?.linkedin_link || '',
-    });
-    try {
-      deleteProfilePicture(userData?.email || '');
-    } catch (error) {
-      setSelectedImage((prev) => ({
-        ...prev,
-        status: 'error',
-        error: 'Failed to remove image',
-      }));
-
-      Toast.show({
-        type: 'error',
-        props: { title: 'Error', description: 'Failed to remove image' },
-      });
-    } finally {
-      setSelectedImage({ uri: '', status: 'idle' });
-      queryClient.invalidateQueries({ queryKey: ['profile'] });
-    }
-  }, []);
-
   const handleDialogClose = () => {
     setIsSuccessDialogOpen(false);
-    // Navigate back to the settings screen
-
     router.back();
   };
 
@@ -357,9 +207,9 @@ const GeneralProfileSettings = () => {
               Cancel
             </Button>
             <Button
-              onPress={form.handleSubmit(onSaveChanges)}
+              onPress={form.handleSubmit(handleSaveChanges)}
               containerStyle={{ flex: 1 }}
-              loading={loading}>
+              loading={loading === true}>
               Save Changes
             </Button>
           </View>
