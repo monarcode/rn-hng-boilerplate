@@ -1,9 +1,9 @@
 import * as FileSystem from 'expo-file-system';
 import { HTTPError } from 'ky';
+import { Platform } from 'react-native';
 
 import { http } from '~/libs/ky';
 import {
-  ProfileData,
   ProfileDeletePictureResponse,
   ProfilePictureResponse,
   ProfileUpdateResponse,
@@ -33,40 +33,22 @@ const updateProfile = async (email: string, payload: any): Promise<ProfileUpdate
 
 const uploadPicture = async (email: string, photo: string): Promise<ProfilePictureResponse> => {
   try {
-    // Read the file as base64
-    const base64 = await FileSystem.readAsStringAsync(photo, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-
-    // Create a Blob from the base64 string
-    const blob = await new Promise<Blob>((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
-      };
-      xhr.responseType = 'blob';
-      xhr.open('GET', `data:image/jpeg;base64,${base64}`, true);
-      xhr.send(null);
-    });
-
-    // Extract the file name from the photo path
-    const fileName = photo.split('/').pop() || 'image.jpg';
-
-    // Create FormData
     const formData = new FormData();
-    formData.append('picture', blob, fileName);
-    formData.append('email', email);
+
+    const filename = Platform.OS === 'ios' ? 'photo.jpg' : 'photo';
+
+    formData.append('DisplayPhoto', {
+      uri: photo,
+      name: filename,
+      type: 'image/jpeg',
+    } as any);
+
     console.log('formData:', formData);
 
     const response = await http
       .put(`profile/${email}/picture`, {
         body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        // Remove the Content-Type header
       })
       .json<ProfilePictureResponse>();
 
