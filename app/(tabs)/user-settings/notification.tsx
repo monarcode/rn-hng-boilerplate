@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { StyleSheet, SectionList, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, SectionList, SafeAreaView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 
 import GoBack from '~/components/go-back';
 import RenderSetting from '~/components/notification-settings';
@@ -30,6 +30,9 @@ const NotificationSettings = () => {
     mutationFn: () => NotificationSettingsService.setNotifications(notificationData),
     onSuccess: (res) => {
       dialogRef.current?.open()
+    },
+    onError: (err) => {
+      Alert.alert('Server error', 'An error occured while saving settings')
     }
   })
 
