@@ -2,7 +2,6 @@ import { useMutation } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 
 import { queryClient } from '~/libs/query';
-import { EditProfileFormData } from '~/modules/settings/types/edit-profile';
 import { ProfileService } from '~/services/edit-profile';
 
 export interface UpdateProfileVariables {

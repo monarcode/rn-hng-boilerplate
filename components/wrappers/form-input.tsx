@@ -11,6 +11,7 @@ interface FormTextInputProps<TFieldValues extends FieldValues>
   name: FieldPath<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: any;
+  multiline?: boolean;
   errorMessage?: string;
   label?: string;
 }
@@ -52,6 +53,7 @@ function FormInput<TFieldValues extends FieldValues>({
   name,
   control,
   rules,
+  multiline = false,
   errorMessage,
   ...textInputProps
 }: FormTextInputProps<TFieldValues>): React.ReactElement {
@@ -70,6 +72,9 @@ function FormInput<TFieldValues extends FieldValues>({
             containerStyle={
               [textInputProps.containerStyle as ViewStyle, error && styles.errorInput] as ViewStyle
             }
+            multiline={multiline}
+            textAlignVertical={multiline ? 'top' : 'center'}
+            textAlign="left"
           />
           {(error || errorMessage) && (
             <Text style={styles.errorText}>{error?.message || errorMessage}</Text>

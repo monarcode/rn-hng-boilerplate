@@ -21,7 +21,6 @@ const HomeScreen = () => {
   const userData = useAuthStore((state) => state.data?.user);
   const { top } = useSafeAreaInsets();
   const { data, isError, isLoading } = useDashboard(authstore.data?.user.id);
-
   if (!authstore.data) {
     return <Redirect href="/(auth)/login" />;
   }
@@ -63,8 +62,8 @@ const HomeScreen = () => {
                             <Ellipse width={55} height={55} />
                             <View style={styles.initialsContainer}>
                               <Text size="xl" weight="medium">
-                                {userData?.first_name[0].toUpperCase()}
-                                {userData?.last_name[0].toUpperCase()}
+                                {userData?.first_name[0]}
+                                {userData?.last_name[0]}
                               </Text>
                             </View>
                           </>
@@ -81,7 +80,7 @@ const HomeScreen = () => {
                         {profileData?.data?.profile?.user_name
                           ? profileData?.data?.profile?.user_name.charAt(0).toUpperCase() +
                             profileData?.data?.profile?.user_name.slice(1).toLowerCase()
-                          : userData?.first_name}
+                          : userData?.first_name + ' ' + userData?.last_name}
                       </Text>
                     </View>
                   </View>

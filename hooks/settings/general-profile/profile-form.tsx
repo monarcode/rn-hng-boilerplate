@@ -18,6 +18,7 @@ export const useProfileForm = (initialData: Partial<EditProfileFormData>, userEm
   const onSaveChanges = async (data: EditProfileFormData) => {
     try {
       setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const cleanedData: Partial<EditProfileFormData> = Object.entries(data).reduce(
         (acc, [key, value]) => {
           if (value !== '' && value !== undefined) {
