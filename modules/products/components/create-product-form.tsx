@@ -158,11 +158,11 @@ const CreateProductForm = () => {
           style={{
             flex: 1,
           }}
-          inputStyle={{ textAlign: 'left', textAlignVertical: 'top', height: 75 }}
+          inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
           multiline
         />
         <Text weight="light" size="sm" style={{ marginTop: 5 }}>
-          {t('Maximum of 72 characters')}
+          Maximum of 72 characters
         </Text>
       </View>
 
@@ -172,7 +172,15 @@ const CreateProductForm = () => {
         label="Standard Price"
         placeholder="0.00"
         keyboardType="numeric"
+        keyboardType="numeric"
         icon={<Dollar width={20} height={20} />}
+      />
+      <FormInput
+        control={form.control}
+        name="quantity"
+        keyboardType="numeric"
+        label="Quantity"
+        placeholder="0.00 pcs"
       />
       <FormInput
         control={form.control}
