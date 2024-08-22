@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet } from 'react-native';
-import { Plus, X } from 'react-native-feather';
+import { X } from 'react-native-feather';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 
