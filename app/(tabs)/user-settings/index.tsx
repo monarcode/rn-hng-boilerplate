@@ -10,10 +10,8 @@ import Database from '~/assets/icons/database.svg';
 import Ellipse from '~/assets/icons/ellipse.svg';
 import ExitIcon from '~/assets/icons/exit-icon.svg';
 import Globe from '~/assets/icons/globe.svg';
-import Integrate from '~/assets/icons/integrate.svg';
 import Notification from '~/assets/icons/notification.svg';
 import People from '~/assets/icons/people.svg';
-import Wallet from '~/assets/icons/wallet.svg';
 import { Dialog, DialogRef, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
@@ -83,17 +81,16 @@ const UserSettingsScreen = () => {
           To enable navigation when using any of the SettingItem components,
           you should call the goto prop within the SettingItem */}
           <SettingItem
-            icon={<Account />}
-            title="General"
+            icon={<AccountSetting />}
+            title="Account"
             goto={() => router.push('/user/general-profile')}
           />
-          <SettingItem icon={<AccountSetting />} title="Account" />
           <SettingItem
             icon={<Notification />}
             title="Notification"
             goto={() => router.push('/user-settings/notification')}
           />
-          <SettingItem icon={<Database />} title="Data and Privacy" />
+          <SettingItem icon={<Database />} title="Change Password" />
           <SettingItem icon={<Globe />} title="Language and Region" />
         </SettingsSection>
 
@@ -104,9 +101,9 @@ const UserSettingsScreen = () => {
             title="Members"
             goto={() => router.push('/user/members')}
           />
-          <SettingItem icon={<Notification />} title="Roles and permissions" />
-          <SettingItem icon={<Integrate />} title="Integrations" />
-          <SettingItem icon={<Wallet />} title="Payment Information" />
+        </SettingsSection>
+        <SettingsSection title="Payment Settings">
+          <SettingItem icon={<Business />} title="Subscription" />
         </SettingsSection>
         <TouchableOpacity
           style={[styles.logout, { marginBottom: bottomInset }]}
