@@ -5,13 +5,10 @@ import { ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Ellipse from '~/assets/icons/ellipse.svg';
-import InstagramLogo from '~/assets/icons/ig-icon.svg';
-import LinkedInLogo from '~/assets/icons/linkedin-icon.svg';
-import XLogo from '~/assets/icons/x-icon.svg';
 import GoBack from '~/components/go-back';
 import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
-import { Button, View, Text, Dialog } from '~/components/shared';
-import { FormInput, FormSelect } from '~/components/wrappers';
+import { Button, View, Text } from '~/components/shared';
+import { FormInput } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
 import { useProfileForm } from '~/hooks/settings/general-profile/profile-form';
@@ -32,28 +29,18 @@ const GeneralProfileSettings = () => {
   const { form, onSaveChanges, resetForm, loading } = useProfileForm(
     {
       user_name: data?.data?.profile?.user_name || '',
-      pronoun: data?.data?.profile?.pronoun || '',
-      job_title: data?.data?.profile?.job_title || '',
-      department: data?.data?.profile?.department || '',
       bio: data?.data?.profile?.bio || '',
-      twitter_link: data?.data?.profile?.twitter_link || '',
-      facebook_link: data?.data?.profile?.facebook_link || '',
-      linkedin_link: data?.data?.profile?.linkedin_link || '',
     },
     userData?.email || ''
   );
 
-  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+  const [isBioOpen, setIsBioOpen] = useState(false);
 
   const handleSaveChanges = async (formData: EditProfileFormData) => {
     const success = await onSaveChanges(formData);
     if (success) {
-      setIsSuccessDialogOpen(true);
+      router.back();
     }
-  };
-  const handleDialogClose = () => {
-    setIsSuccessDialogOpen(false);
-    router.back();
   };
 
   return (
@@ -115,32 +102,6 @@ const GeneralProfileSettings = () => {
               placeholder="Enter username"
             />
 
-            <FormSelect
-              name="pronoun"
-              control={form.control}
-              label="Pronouns"
-              options={[
-                { label: 'He/Him', value: 'he' },
-                { label: 'She/Her', value: 'she' },
-                { label: 'Others', value: 'others' },
-              ]}
-              placeholder="Select"
-            />
-
-            <FormInput
-              name="job_title"
-              control={form.control}
-              label="Your job title"
-              placeholder="Enter job title"
-            />
-
-            <FormInput
-              name="department"
-              control={form.control}
-              label="Department or team"
-              placeholder="Enter department or team"
-            />
-
             <View style={{ rowGap: 9 }}>
               <Text size="md" weight="regular">
                 Your email address
@@ -153,53 +114,33 @@ const GeneralProfileSettings = () => {
             </View>
 
             <View style={{ rowGap: 9 }}>
-              <View style={styles.row}>
+              <TouchableOpacity style={styles.row} onPress={() => setIsBioOpen((prev) => !prev)}>
                 <Text size="xl" weight="semiBold">
                   Bio
                 </Text>
-                <Ionicons name="chevron-down" size={14} color={THEME.colors.black} />
-              </View>
-              <FormInput
-                name="bio"
-                control={form.control}
-                placeholder="Type your message here"
-                numberOfLines={4}
-                multiline
-                containerStyle={{ width: '100%', height: 80, alignItems: 'flex-start' }}
-                textAlign="left"
-              />
-              <Text size="sm" style={styles.characterLimit}>
-                Maximum of 64 characters
-              </Text>
+                <Ionicons
+                  name={isBioOpen ? 'chevron-up' : 'chevron-down'}
+                  size={14}
+                  color={THEME.colors.black}
+                />
+              </TouchableOpacity>
+              {isBioOpen && (
+                <>
+                  <FormInput
+                    name="bio"
+                    control={form.control}
+                    placeholder="Type your message here"
+                    numberOfLines={4}
+                    multiline
+                    containerStyle={{ width: '100%', height: 80, alignItems: 'flex-start' }}
+                    textAlign="left"
+                  />
+                  <Text size="sm" style={styles.characterLimit}>
+                    Maximum of 64 characters
+                  </Text>
+                </>
+              )}
             </View>
-
-            <View style={{ rowGap: 9 }}>
-              <View style={styles.row}>
-                <Text size="xl" weight="semiBold">
-                  Connect Socials
-                </Text>
-                <Ionicons name="chevron-down" size={14} color={THEME.colors.black} />
-              </View>
-              <FormInput
-                name="twitter_link"
-                control={form.control}
-                placeholder="Add X Link"
-                icon={<XLogo width={16} height={16} color={THEME.colors.black} />}
-              />
-            </View>
-            <FormInput
-              name="facebook_link"
-              control={form.control}
-              placeholder="Add Instagram Link"
-              icon={<InstagramLogo width={20} height={20} color={THEME.colors.black} />}
-            />
-
-            <FormInput
-              name="linkedin_link"
-              control={form.control}
-              placeholder="Add LinkedIn Link"
-              icon={<LinkedInLogo width={20} height={20} color={THEME.colors.black} />}
-            />
           </View>
 
           <View style={[styles.actions, { marginBottom: bottomInset }]}>
@@ -209,19 +150,10 @@ const GeneralProfileSettings = () => {
             <Button
               onPress={form.handleSubmit(handleSaveChanges)}
               containerStyle={{ flex: 1 }}
-              loading={loading === true}>
+              loading={loading}>
               Save Changes
             </Button>
           </View>
-          <Dialog
-            open={isSuccessDialogOpen}
-            onOpenChange={setIsSuccessDialogOpen}
-            title="Profile Updated!"
-            description="Your profile has been successfully updated.">
-            <Button onPress={handleDialogClose} containerStyle={styles.continueButton}>
-              Continue
-            </Button>
-          </Dialog>
         </ScrollView>
       </SafeAreaView>
     </KeyboardWrapper>
@@ -231,6 +163,7 @@ const GeneralProfileSettings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: THEME.spacing.md,
     backgroundColor: THEME.colors.white,
   },
   contentContainer: {
