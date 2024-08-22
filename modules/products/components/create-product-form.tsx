@@ -125,6 +125,19 @@ const CreateProductForm = () => {
         </View>
       )}
       <FormInput control={form.control} name="name" label="Title" placeholder="Product Name" />
+
+      <FormSelect
+        name="category"
+        control={form.control}
+        label="Category"
+        options={[
+          { label: 'Food', value: 'Food' },
+          { label: 'Fashion', value: 'Fashion' },
+          { label: 'Device', value: 'Device' },
+          { label: 'Household Items', value: 'Household Items' },
+        ]}
+        placeholder="Select"
+      />
       <View>
         <FormInput
           control={form.control}
@@ -142,27 +155,22 @@ const CreateProductForm = () => {
           Maximum of 72 characters
         </Text>
       </View>
-      <FormSelect
-        name="category"
-        control={form.control}
-        label="Category"
-        options={[
-          { label: 'Food', value: 'Food' },
-          { label: 'Fashion', value: 'Fashion' },
-          { label: 'Device', value: 'Device' },
-          { label: 'Household Items', value: 'Household Items' },
-        ]}
-        placeholder="Select"
-      />
 
       <FormInput
         control={form.control}
         name="price"
         label="Standard Price"
         placeholder="0.00"
+        keyboardType="numeric"
         icon={<Dollar width={20} height={20} />}
       />
-      <FormInput control={form.control} name="quantity" label="Quantity" placeholder="0.00 pcs" />
+      <FormInput
+        control={form.control}
+        name="quantity"
+        keyboardType="numeric"
+        label="Quantity"
+        placeholder="0.00 pcs"
+      />
 
       {/* <View>
         <Text style={styles.label} size="md">
