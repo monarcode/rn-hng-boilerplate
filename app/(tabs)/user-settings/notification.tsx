@@ -9,6 +9,7 @@ import { THEME } from '~/constants/theme';
 import { NotificationSettingsService } from '~/services/notification-settings';
 import useAuthStore from '~/store/auth';
 import getNotificationSections from '~/constants/notification';
+import CheckIcon from '~/assets/icons/check.svg';
 
 const NotificationSettings = () => {
   const authstore = useAuthStore();
@@ -82,6 +83,7 @@ const NotificationSettings = () => {
           />
           <View style={styles.saveBtn}>
             <Button
+              icon={<CheckIcon />}
               loading={settingsMutation.isPending}
               onPress={() => settingsMutation.mutate()}
               children="Save Changes"
