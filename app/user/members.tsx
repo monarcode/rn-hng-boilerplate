@@ -7,13 +7,14 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';
 import { Button, Select, Text } from '~/components/shared';
-import { Search, Copy, Share2 } from 'react-native-feather';
+import { Search, X, Share, Share2 } from 'react-native-feather';
 
 // Define Props interface for a single member
 interface Member {
@@ -144,7 +145,7 @@ const Members = () => {
           <View style={{ flex: 0.25 }}>
             <View style={{ flexDirection: 'row' }}>
               <Share2 color="black" width={40} />
-              <Copy color="black" width={40} />
+              <X color="red" width={40} />
             </View>
           </View>
         </View>
