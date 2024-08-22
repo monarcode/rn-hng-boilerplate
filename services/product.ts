@@ -61,7 +61,24 @@ const fetchProducts = async (orgId: string | undefined): Promise<CategoryProps[]
   }
 };
 
+const deleteProduct = async (productId: string): Promise<void> => {
+  try {
+    console.log(`Attempting to delete product: ${productId}`);
+
+    await http.delete(`products/${productId}`);
+
+    console.log('Product deleted successfully');
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      console.error(`HTTP Error: ${error.response.status} - ${error.response.statusText}`);
+      throw new Error(`Failed to delete product: ${error.response.statusText}`);
+    }
+    console.error('Unexpected Error:', error);
+    throw error;
+  }
+};
 export const ProductService = {
   createProduct,
   fetchProducts,
+  deleteProduct,
 };

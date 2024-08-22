@@ -1,3 +1,5 @@
+import { ProductData } from '../types';
+
 export function formatCurrency(value: number): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -25,4 +27,14 @@ export const createUniqueId = (productName: string, productId: string): string =
   const lastTwo = productId.slice(-2);
 
   return `${firstName}${firstTwo}${lastTwo}`;
+};
+
+export const findProductById = (data: ProductData[], id: string) => {
+  for (const category of data) {
+    const product = category.products.find((product) => product.id === id);
+    if (product) {
+      return product;
+    }
+  }
+  return null;
 };
