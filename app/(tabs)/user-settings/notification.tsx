@@ -1,22 +1,36 @@
-import React, { useRef, useState } from 'react';
-import { StyleSheet, SectionList, Switch, SafeAreaView, TouchableOpacity } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Modal from '~/app/modal';
+import React, { useEffect, useRef, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { StyleSheet, SectionList, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import GoBack from '~/components/go-back';
+import RenderSetting from '~/components/notification-settings';
 import { Dialog, DialogRef, Text, View, Button } from '~/components/shared';
-import notificationSections from '~/constants/notification';
 import { THEME } from '~/constants/theme';
-
-type Item = {
-  header: string;
-  body: string;
-  status: true | false;
-};
+import { NotificationSettingsService } from '~/services/notification-settings';
+import useAuthStore from '~/store/auth';
+import getNotificationSections from '~/constants/notification';
 
 const NotificationSettings = () => {
+  const authstore = useAuthStore();
   const dialogRef = useRef<DialogRef>(null);
-  const [notificationData, setNotificationData] = useState(notificationSections);
+  const [notificationData, setNotificationData] = useState(getNotificationSections)
+
+  const { data: fetchedData, isLoading } = useQuery({
+    queryKey: ['fetchNotification', authstore.data?.user.id],
+    queryFn: () => NotificationSettingsService.getNotifications(authstore.data?.user.id)
+  })
+
+  useEffect(() => {
+    if (fetchedData)
+      setNotificationData(getNotificationSections(fetchedData?.data))
+  }, [fetchedData])
+
+  const settingsMutation = useMutation({
+    mutationFn: () => NotificationSettingsService.setNotifications(notificationData),
+    onSuccess: (res) => {
+      dialogRef.current?.open()
+    }
+  })
 
   const toggleSwitch = (sectionIndex: number, itemIndex: number) => {
     setNotificationData((prevState) => {
@@ -27,66 +41,55 @@ const NotificationSettings = () => {
     });
   };
 
-  const renderBody = ({
-    item,
-    sectionIndex,
-    itemIndex,
-  }: {
-    item: any;
-    sectionIndex: number;
-    itemIndex: number;
-  }) => {
-    return (
-      <View style={styles.sectionBodyCon}>
-        <View style={styles.sectionBody}>
-          <Text size="md" weight="medium">
-            {item.header}
-          </Text>
-          <Text size="sm" weight="regular">
-            {item.body}
-          </Text>
-        </View>
-        <Switch
-          trackColor={{ false: '#D0D6D6', true: '#F97316' }}
-          thumbColor={item.status ? '#F9F9F9' : '#E6F5F3'}
-          ios_backgroundColor="#F97316"
-          onValueChange={() => toggleSwitch(sectionIndex, itemIndex)}
-          value={item.status}
-        />
-      </View>
-    );
-  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.header]}>
-        <GoBack />
-        <Text size="lg" weight="semiBold">
-          Notification
-        </Text>
-        <View />
-      </View>
 
-      <SectionList
-        contentContainerStyle={styles.section}
-        keyExtractor={(item, index) => item.header + index}
-        sections={notificationData}
-        renderItem={({ item, index, section }) =>
-          renderBody({ item, sectionIndex: notificationData.indexOf(section), itemIndex: index })
-        }
-        showsVerticalScrollIndicator={false}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.sectionHeader}>
-            <Text size="xl" weight="semiBold">
-              {title}
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      ) : (
+        <>
+          <View style={[styles.header]}>
+            <GoBack />
+            <Text size="lg" weight="semiBold">
+              Notification
             </Text>
+            <View />
           </View>
-        )}
-      />
 
-      <View style={styles.saveBtn}>
-        <Button onPress={() => dialogRef.current?.open()} children="Save Changes" />
-      </View>
+          <SectionList
+            contentContainerStyle={styles.section}
+            keyExtractor={(item, index) => item.header + index}
+            sections={notificationData}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index, section }) => (
+              <RenderSetting
+                item={item}
+                toggleSwitch={toggleSwitch}
+                sectionIndex={notificationData.indexOf(section)}
+                itemIndex={index}
+              />
+            )}
+            renderSectionHeader={({ section: { title } }) => (
+              <View style={styles.sectionHeader}>
+                <Text size="xl" weight="semiBold">
+                  {title}
+                </Text>
+              </View>
+            )}
+          />
+          <View style={styles.saveBtn}>
+            <Button
+              loading={settingsMutation.isPending}
+              onPress={() => settingsMutation.mutate()}
+              children="Save Changes"
+            />
+          </View>
+        </>
+      )}
+
 
       <Dialog
         ref={dialogRef}
@@ -96,7 +99,7 @@ const NotificationSettings = () => {
       >
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText} >Cancel</Text>
+            <Text style={styles.cancelButtonText} >Done</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
@@ -139,21 +142,6 @@ const styles = StyleSheet.create({
     paddingTop: THEME.spacing.md,
     paddingHorizontal: 20,
   },
-  sectionBodyCon: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  sectionBody: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '75%',
-    paddingBottom: 11,
-    marginTop: THEME.spacing.md,
-    gap: 12,
-  },
   dialogButtons: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -169,6 +157,12 @@ const styles = StyleSheet.create({
     color: THEME.colors.white,
     fontSize: THEME.fontSize.lg,
     fontWeight: 500
+  },
+  loadingContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
