@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { StyleSheet, SectionList, Switch, SafeAreaView } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, SectionList, Switch, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Modal from '~/app/modal';
 
 import GoBack from '~/components/go-back';
-import { Button, Text, View } from '~/components/shared';
+import { Dialog, DialogRef, Text, View, Button } from '~/components/shared';
 import notificationSections from '~/constants/notification';
 import { THEME } from '~/constants/theme';
 
@@ -14,6 +15,7 @@ type Item = {
 };
 
 const NotificationSettings = () => {
+  const dialogRef = useRef<DialogRef>(null);
   const [notificationData, setNotificationData] = useState(notificationSections);
 
   const toggleSwitch = (sectionIndex: number, itemIndex: number) => {
@@ -55,8 +57,6 @@ const NotificationSettings = () => {
     );
   };
 
-  const { top } = useSafeAreaInsets();
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.header]}>
@@ -65,10 +65,6 @@ const NotificationSettings = () => {
           Notification
         </Text>
         <View />
-      </View>
-
-      <View style={[styles.saveBtn, { marginTop: top * 2 }]}>
-        <Button children="Save Changes" />
       </View>
 
       <SectionList
@@ -87,6 +83,23 @@ const NotificationSettings = () => {
           </View>
         )}
       />
+
+      <View style={styles.saveBtn}>
+        <Button onPress={() => dialogRef.current?.open()} children="Save Changes" />
+      </View>
+
+      <Dialog
+        ref={dialogRef}
+        title="Notification Updated"
+        description="Notification preferences updated successfully. Remember, you can always adjust these settings again later"
+        showCloseButton={false}
+      >
+        <View style={styles.dialogButtons}>
+          <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
+            <Text style={styles.cancelButtonText} >Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </Dialog>
     </SafeAreaView>
   );
 };
@@ -102,15 +115,14 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: THEME.spacing.sm,
     width: '100%',
     paddingVertical: THEME.spacing.sm,
   },
   saveBtn: {
-    width: 140,
-    position: 'absolute',
-    right: 20,
-    zIndex: 20,
+    width: '100%',
+    paddingHorizontal: THEME.spacing.md,
+    marginVertical: 10
   },
   section: {
     width: '100%',
@@ -142,6 +154,22 @@ const styles = StyleSheet.create({
     marginTop: THEME.spacing.md,
     gap: 12,
   },
+  dialogButtons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: THEME.spacing.md,
+  },
+  cancelButton: {
+    paddingHorizontal: THEME.spacing.md,
+    paddingVertical: THEME.spacing.sm,
+    borderRadius: THEME.spacing.sm,
+    backgroundColor: THEME.colors.primary,
+  },
+  cancelButtonText: {
+    color: THEME.colors.white,
+    fontSize: THEME.fontSize.lg,
+    fontWeight: 500
+  }
 });
 
 export default NotificationSettings;
