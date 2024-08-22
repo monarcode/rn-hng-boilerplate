@@ -9,62 +9,55 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 
 import Dollar from '../../../assets/dollar.svg';
-import { CreateProductSchema } from '../types/create-product';
+import { CreateProductSchema, ProductDetailType } from '../types/create-product';
 import { createProductSchema } from '../validation-schema/create-product';
 
-import { Button, Text, View } from '~/components/shared';
-import { FormInput, FormSelect } from '~/components/wrappers';
+import { Button, Select, Text, TextInput, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
 
-const CreateProductForm = () => {
+interface Props {
+  productDetail: {
+    category: string;
+    description: string;
+    name: string;
+    price: number;
+    quantity: number;
+  };
+  product: any;
+  handleInputChange: <K extends keyof ProductDetailType>(
+    name: K,
+    value: ProductDetailType[K]
+  ) => void;
+  productId: string;
+}
+
+const EditProductForm = ({ product, productDetail, handleInputChange, productId }: Props) => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState({
     fileName: '',
     uri: '',
   });
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage({
-        fileName: result.assets[0].fileName as string,
-        uri: result?.assets[0].uri,
-      });
-    }
-  };
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
   });
   const data = useAuthStore();
   const orgId = data.data?.organisations[0]?.organisation_id;
 
-  const onCreate = async (data: CreateProductSchema) => {
-    const reqBody = {
-      ...data,
-      image_url: image.uri,
-      size: 'normal',
-    };
-
+  const onEdit = async () => {
     setLoading(true);
 
     try {
-      const response = await ProductService.createProduct(reqBody, orgId as string);
+      const response = await ProductService.editProduct(productDetail, productId as string);
 
       if (response) {
         Toast.show({
           type: 'success',
           props: {
             title: 'Success',
-            description: 'Product created successfully',
+            description: 'Product edited successfully',
           },
         });
         form.reset();
@@ -92,45 +85,26 @@ const CreateProductForm = () => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.uploadContainer}>
-        {image.uri && (
+        {product.image && (
           <Image
-            source={{ uri: image.uri }}
-            resizeMode="center"
+            source={{ uri: product.image }}
+            // resizeMode="center"
             style={{ width: 200, height: 200, marginTop: 10 }}
           />
         )}
-        <Button containerStyle={styles.uploadButton} onPress={pickImage}>
-          {!image.uri && (
-            <Text style={styles.uploadButtonText} weight="medium">
-              Upload New
-            </Text>
-          )}
-        </Button>
-        {!image.uri && <Text style={styles.subtext}>Upload product image</Text>}
       </View>
-      {image.fileName && (
-        <View style={[styles.uploadButton, styles.nameCont]}>
-          <Text style={styles.uploadButtonText} numberOfLines={1} ellipsizeMode="tail">
-            {image.fileName}
-          </Text>
-          <TouchableWithoutFeedback
-            onPress={() =>
-              setImage({
-                fileName: '',
-                uri: '',
-              })
-            }>
-            <X color="red" width={20} />
-          </TouchableWithoutFeedback>
-        </View>
-      )}
-      <FormInput control={form.control} name="name" label="Title" placeholder="Product Name" />
+
+      <TextInput
+        label="Title"
+        value={productDetail?.name}
+        onChangeText={(value) => handleInputChange('name', value)}
+      />
+
       <View>
-        <FormInput
-          control={form.control}
-          name="description"
+        <TextInput
           label="Description"
-          placeholder=""
+          value={productDetail?.description}
+          onChangeText={(value) => handleInputChange('description', value)}
           containerStyle={{ height: 80 }}
           style={{
             flex: 1,
@@ -138,11 +112,19 @@ const CreateProductForm = () => {
           inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
           multiline
         />
-        <Text weight="light" size="sm" style={{ marginTop: 5 }}>
-          Maximum of 72 characters
-        </Text>
       </View>
-      <FormSelect
+      <Select
+        options={[
+          { label: 'Food', value: 'Food' },
+          { label: 'Fashion', value: 'Fashion' },
+          { label: 'Device', value: 'Device' },
+          { label: 'Household Items', value: 'Household Items' },
+        ]}
+        placeholder={productDetail?.category}
+        width={300}
+        iconColor="#ccc"
+      />
+      {/* <FormSelect
         name="category"
         control={form.control}
         label="Category"
@@ -153,29 +135,19 @@ const CreateProductForm = () => {
           { label: 'Household Items', value: 'Household Items' },
         ]}
         placeholder="Select"
-      />
-
-      <FormInput
-        control={form.control}
-        name="price"
-        label="Standard Price"
-        placeholder="0.00"
+      /> */}
+      <TextInput
         icon={<Dollar width={20} height={20} />}
+        label="Standard Price"
+        value={String(productDetail?.price)} // Convert price to string
+        onChangeText={(value) => handleInputChange('price', Number(value))} // Convert back to number when changing
       />
-      <FormInput control={form.control} name="quantity" label="Quantity" placeholder="0.00 pcs" />
 
-      {/* <View>
-        <Text style={styles.label} size="md">
-          Product Variations
-        </Text>
-        <View style={styles.variationContainer}>
-          {[...Array(4)].map((_, index) => (
-            <TouchableWithoutFeedback style={styles.variationBox} key={index}>
-              <Plus color="#71717A" width={18} />
-            </TouchableWithoutFeedback>
-          ))}
-        </View>
-      </View> */}
+      <TextInput
+        label="Quantity"
+        value={String(productDetail?.quantity)} // Convert quantity to string
+        onChangeText={(value) => handleInputChange('quantity', Number(value))} // Convert back to number when changing
+      />
 
       <View style={styles.buttonGroup}>
         <Button
@@ -185,11 +157,8 @@ const CreateProductForm = () => {
           textStyle={styles.cancelButtonText}>
           Cancel
         </Button>
-        <Button
-          onPress={form.handleSubmit(onCreate)}
-          containerStyle={styles.addButton}
-          loading={loading}>
-          Add
+        <Button onPress={onEdit} containerStyle={styles.addButton} loading={loading}>
+          Update
         </Button>
       </View>
     </View>
@@ -275,4 +244,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateProductForm;
+export default EditProductForm;

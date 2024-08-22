@@ -1,12 +1,12 @@
+import { Link } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import GoBack from '~/components/go-back';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import CreateProductForm from '~/modules/products/components/create-product-form';
 
-const SignUpScreen = () => {
+const CreateProductScreen = () => {
   return (
     <>
       <SafeAreaView
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: THEME.spacing.lg,
+    // marginBottom: THEME.spacing.lg,
     paddingVertical: THEME.spacing.md,
     borderBottomWidth: 0.6,
     borderBottomColor: THEME.colors.border,
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default CreateProductScreen;

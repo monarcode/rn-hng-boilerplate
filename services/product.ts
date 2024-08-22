@@ -18,8 +18,27 @@ const createProduct = async (payload: any, orgId: string): Promise<CreateProduct
 
     return response;
   } catch (error) {
-    console.log(error);
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<CreateProductResponse>();
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
+const editProduct = async (payload: any, productId: string): Promise<CreateProductResponse> => {
+  try {
+    const response = await http
+      .put(`products/${productId}`, {
+        json: { ...payload },
+      })
+      .json<CreateProductResponse>();
 
+    if ('error' in response) {
+      throw new Error('Something went wrong');
+    }
+
+    return response;
+  } catch (error) {
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json<CreateProductResponse>();
       throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
@@ -81,4 +100,5 @@ export const ProductService = {
   createProduct,
   fetchProducts,
   deleteProduct,
+  editProduct,
 };
