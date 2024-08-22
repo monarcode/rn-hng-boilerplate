@@ -158,7 +158,7 @@ const CreateProductForm = () => {
           multiline
         />
         <Text weight="light" size="sm" style={{ marginTop: 5 }}>
-          {t('Maximum of 72 characters')}
+          Maximum of 72 characters
         </Text>
       </View>
 
