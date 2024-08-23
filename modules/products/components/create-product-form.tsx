@@ -17,9 +17,10 @@ import { FormInput, FormSelect } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
 import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '~/libs/query';
 
 const CreateProductForm = () => {
-  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState({
     fileName: '',
     uri: '',
@@ -47,47 +48,41 @@ const CreateProductForm = () => {
   const data = useAuthStore();
   const orgId = data.data?.organisations[0]?.organisation_id;
 
-  const onCreate = async (data: CreateProductSchema) => {
-    const reqBody = {
-      ...data,
-      image_url: image.uri,
-      size: 'normal',
-    };
-
-    setLoading(true);
-
-    try {
-      const response = await ProductService.createProduct(reqBody, orgId as string);
-
-      if (response) {
-        Toast.show({
-          type: 'success',
-          props: {
-            title: 'Success',
-            description: 'Product created successfully',
-          },
-        });
-        form.reset();
-        setImage({
-          fileName: '',
-          uri: '',
-        });
-        router.replace('/(tabs)/products');
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Toast.show({
-          type: 'error',
-          props: {
-            title: 'Error',
-            description: error.message,
-          },
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { mutate: onCreate, isPending: isLoading } = useMutation({
+    mutationFn: async (data: CreateProductSchema) => {
+      const reqBody = {
+        ...data,
+        image_url: image.uri,
+        size: 'normal',
+      };
+      return ProductService.createProduct(reqBody, orgId as string);
+    },
+    onSuccess: () => {
+      Toast.show({
+        type: 'success',
+        props: {
+          title: 'Success',
+          description: 'Product created successfully',
+        },
+      });
+      form.reset();
+      setImage({
+        fileName: '',
+        uri: '',
+      });
+      router.replace('/(tabs)/products');
+      return queryClient.invalidateQueries({ queryKey: ['product'] });
+    },
+    onError: (error: Error) => {
+      Toast.show({
+        type: 'error',
+        props: {
+          title: 'Error',
+          description: error.message,
+        },
+      });
+    },
+  });
 
   return (
     <View style={styles.wrapper}>
@@ -187,6 +182,7 @@ const CreateProductForm = () => {
 
       <View style={styles.buttonGroup}>
         <Button
+          disabled={isLoading}
           onPress={() => router.replace('/(tabs)/products')}
           variant="outline"
           containerStyle={styles.cancelButton}
@@ -196,7 +192,7 @@ const CreateProductForm = () => {
         <Button
           onPress={form.handleSubmit(onCreate)}
           containerStyle={styles.addButton}
-          loading={loading}>
+          loading={isLoading}>
           Add
         </Button>
       </View>

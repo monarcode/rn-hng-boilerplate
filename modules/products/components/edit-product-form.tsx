@@ -4,8 +4,6 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet } from 'react-native';
-import { Plus, X } from 'react-native-feather';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 
 import Dollar from '../../../assets/dollar.svg';
@@ -16,6 +14,8 @@ import { Button, Select, Text, TextInput, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '~/libs/query';
 
 interface Props {
   productDetail: {
@@ -34,40 +34,27 @@ interface Props {
 }
 
 const EditProductForm = ({ product, productDetail, handleInputChange, productId }: Props) => {
-  const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState({
-    fileName: '',
-    uri: '',
-  });
-
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
   });
   const data = useAuthStore();
-  const orgId = data.data?.organisations[0]?.organisation_id;
 
-  const onEdit = async () => {
-    setLoading(true);
+  const { mutate: onEdit, isPending: isEditing } = useMutation({
+    mutationFn: () => ProductService.editProduct(productDetail, productId as string),
+    onSuccess: () => {
+      Toast.show({
+        type: 'success',
+        props: {
+          title: 'Success',
+          description: 'Product edited successfully',
+        },
+      });
+      form.reset();
 
-    try {
-      const response = await ProductService.editProduct(productDetail, productId as string);
-
-      if (response) {
-        Toast.show({
-          type: 'success',
-          props: {
-            title: 'Success',
-            description: 'Product edited successfully',
-          },
-        });
-        form.reset();
-        setImage({
-          fileName: '',
-          uri: '',
-        });
-        router.replace('/(tabs)/products');
-      }
-    } catch (error) {
+      router.replace('/(tabs)/products');
+      return queryClient.invalidateQueries({ queryKey: ['product'] });
+    },
+    onError: (error: unknown) => {
       if (error instanceof Error) {
         Toast.show({
           type: 'error',
@@ -77,10 +64,8 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           },
         });
       }
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+  });
 
   return (
     <View style={styles.wrapper}>
@@ -157,7 +142,7 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           textStyle={styles.cancelButtonText}>
           Cancel
         </Button>
-        <Button onPress={onEdit} containerStyle={styles.addButton} loading={loading}>
+        <Button onPress={onEdit} containerStyle={styles.addButton} loading={isEditing}>
           Update
         </Button>
       </View>
