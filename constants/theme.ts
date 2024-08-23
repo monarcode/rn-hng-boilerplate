@@ -9,6 +9,8 @@ const colors = {
     400: '#7B7B7B',
   },
   dark: '#0F172A',
+  red: '#DC2626',
+  green: '#6DC347',
   error: '#E80D0D',
   toastText: {
     success: '#00A11F',

@@ -27,9 +27,9 @@ const routes = {
     icon: AnimatedProductsIcon,
     label: 'Products',
   },
-  cart: {
+  orders: {
     icon: AnimatedCartIcon,
-    label: 'Cart',
+    label: 'Orders',
   },
   'user-settings': {
     icon: AnimatedSettingsIcon,
