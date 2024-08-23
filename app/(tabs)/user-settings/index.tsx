@@ -99,14 +99,10 @@ const UserSettingsScreen = () => {
             title={t("Notification")}
             goto={() => router.push('/user-settings/notification')}
           />
-          <SettingItem
-            icon={<Database />}
-            title={t("Change Password")}
-            goto={() => router.push('/user/change-password')}
-          />
+          <SettingItem icon={<Database />} title="Change Password" />
           <SettingItem
             icon={<Globe />}
-            title={t("Language and Region")}
+            title="Language and Region"
             goto={() => router.push('/user-settings/language-and-region')}
           />
         </SettingsSection>
