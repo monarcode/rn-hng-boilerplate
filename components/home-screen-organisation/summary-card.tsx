@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SVGProps } from 'react';
 import { StyleSheet } from 'react-native';
 import { SvgProps } from 'react-native-svg';
 
@@ -6,6 +6,7 @@ import { Text, View } from '../shared';
 import { SummaryProps } from './type';
 
 import { THEME } from '~/constants/theme';
+import { SvgProps } from 'react-native-svg';
 
 interface CardProps extends SummaryProps {
   Icon: React.FC<SvgProps>;
@@ -16,26 +17,15 @@ const SummaryCard = (summary: CardProps) => {
     <View style={styles.container}>
       <View
         style={{
+          flexDirection: 'row',
           justifyContent: 'space-between',
+          alignItems: 'center',
           gap: 20,
         }}>
-        <View
-          style={{
-            backgroundColor: summary.color,
-            padding: 10,
-            alignSelf: 'flex-start',
-            borderRadius: 100,
-          }}>
-          <summary.Icon height={20} width={20} />
-        </View>
-      </View>
-      <View style={{ gap: THEME.spacing.xs }}>
-        <Text size="2xl" weight="bold" style={{ color: '#383f4e' }}>
-          {summary.amount}
-        </Text>
         <Text size="md" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
           {summary.title}
         </Text>
+        <summary.Icon height={20} width={20} />
         <summary.Icon height={20} width={20} />
       </View>
       <View style={{ gap: THEME.spacing.xs }}>

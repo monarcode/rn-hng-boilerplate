@@ -8,14 +8,8 @@ import SummaryCard from './summary-card';
 import { View, Text } from '../shared';
 import Product from '../../assets/icons/products.svg';
 import AllMembers from '../../assets/icons/allmembers.svg';
-import Dollar from '../../assets/icons/icondollar.svg';
+import Dollar from '../../assets/dollar.svg';
 import ActiveMembers from '../../assets/icons/activemembers.svg';
-import AllMembers from '../../assets/icons/allmembers.svg';
-import Dollar from '../../assets/icons/icondollar.svg';
-import Product from '../../assets/icons/products.svg';
-import { Text, View } from '../shared';
-import SummaryCard from './summary-card';
-
 import { THEME } from '~/constants/theme';
 
 const Summary = () => {
@@ -25,38 +19,26 @@ const Summary = () => {
     {
       title: 'Total Members',
       amount: '100',
-      increase: '+ 23 from last month',
-      increase: '+ 23 from last month',
+      increase: 20,
       Icon: AllMembers,
-      color: '#509DF5',
-      color: '#509DF5',
     },
     {
       title: 'Total Products',
       amount: '26',
-      increase: '+ 4 added last month',
-      increase: '+ 4 added last month',
+      increase: 150,
       Icon: Product,
-      color: '#422AF0',
-      color: '#422AF0',
     },
     {
       title: 'Subscriptions',
       amount: '126',
-      increase: '+ 2 from last month',
-      increase: '+ 2 from last month',
+      increase: 150,
       Icon: Dollar,
-      color: '#F85547',
-      color: '#F85547',
     },
     {
       title: 'Active Members',
       amount: '547',
-      increase: '+ 23 from last month',
-      increase: '+ 23 from last month',
+      increase: 150,
       Icon: ActiveMembers,
-      color: '#0ED970',
-      color: '#0ED970',
     },
   ];
   return (

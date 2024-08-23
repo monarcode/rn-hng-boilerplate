@@ -111,24 +111,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Summary />
-          <View style={[styles.buttonContainer]}>
-            <Button
-              onPress={() => {
-                router.push('/(create-product)/create-product');
-              }}
-              containerStyle={{ flex: 1 }}
-              icon={<Products />}>
-              {t('Add A Product')}
-            </Button>
 
-            <Button
-              icon={<AddUser />}
-              variant="outline"
-              containerStyle={{ borderColor: THEME.colors.neutral[400] }}
-              textStyle={{ color: THEME.colors.black }}>
-              Add A Product
-            </Button>
-          </View>
           <RecentSales />
         </View>
       </ScrollView>

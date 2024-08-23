@@ -41,7 +41,8 @@ const ListCategories = () => {
       </View>
     );
   }
-
+const [queriedProducts,setQueriedProducts]=useState(data)
+const [query,setQuery]=useState<string>('')
   return (
     <>
       <View style={styles.container}>
