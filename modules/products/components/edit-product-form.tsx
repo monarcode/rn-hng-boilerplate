@@ -14,7 +14,6 @@ import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
-import normalize from '~/libs/normalize';
 
 interface Props {
   productDetail: {
@@ -63,6 +62,8 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           },
         });
       }
+    },
+  });
     },
   });
 
@@ -129,6 +130,7 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           containerStyle={styles.addButton}>
           Cancel
         </Button>
+        <Button onPress={onEdit} containerStyle={styles.addButton} loading={isEditing}>
         <Button onPress={onEdit} containerStyle={styles.addButton} loading={isEditing}>
           Update
         </Button>
