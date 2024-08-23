@@ -36,12 +36,13 @@ const ListCategories = () => {
       </View>
     );
   }
-
+const [queriedProducts,setQueriedProducts]=useState(data)
+const [query,setQuery]=useState<string>('')
   return (
     <>
       <View style={styles.container}>
         <ProductTopHeader listViewOption={listView} setListViewOption={setListView} />
-        <SearchAndFilter />
+        <SearchAndFilter query={query} setQuery={setQuery} />
         <ScrollView showsVerticalScrollIndicator={false}>
           {data?.length && data.length > 0 ? (
             <View style={{ padding: THEME.spacing.md }}>

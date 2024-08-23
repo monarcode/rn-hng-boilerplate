@@ -102,7 +102,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Summary />
-          <Chart />
+      
           <RecentSales />
         </View>
       </ScrollView>
