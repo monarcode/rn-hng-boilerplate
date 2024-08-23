@@ -1,10 +1,12 @@
 import { Redirect, router, Stack } from 'expo-router';
 import React from 'react';
-import { Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
-import { Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Bell } from 'react-native-feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import AddUser from '../../assets/icons/mdi_users-add-outline.svg';
+import Products from '../../assets/icons/products.svg';
 
 import AddUser from '../../assets/icons/mdi_users-add-outline.svg';
 import Products from '../../assets/icons/products.svg';
@@ -16,8 +18,6 @@ import { Button, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { useDashboard } from '~/hooks/dashboard/dashboard';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
-import Products from '../../assets/icons/products.svg';
-import AddUser from '../../assets/icons/mdi_users-add-outline.svg';
 import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {
@@ -117,11 +117,7 @@ const HomeScreen = () => {
               Add A Product
             </Button>
 
-            <Button
-              icon={<AddUser />}
-              variant="outline"
-              containerStyle={{ borderColor: THEME.colors.neutral[400] }}
-              textStyle={{ color: THEME.colors.black }}>
+            <Button icon={<AddUser />} variant="secondary">
               Add A Product
             </Button>
           </View>
@@ -200,12 +196,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: THEME.spacing.lg,
+    gap: THEME.spacing.md,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: THEME.spacing.lg,
+    gap: THEME.spacing.md,
   },
 });
 
