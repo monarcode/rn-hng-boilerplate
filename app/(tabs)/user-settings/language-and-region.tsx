@@ -11,7 +11,7 @@ import { router } from 'expo-router';
 const LanguageAndRegion = () => {
   const dialogRef = useRef<DialogRef>(null);
 
-  const { data: fetchedData } = useQuery({
+  const { data: fetchedData, isLoading } = useQuery({
     queryKey: ['fetchTimeZone'],
     queryFn: TimeZoneService.getTimeZone
   })
@@ -65,7 +65,7 @@ const LanguageAndRegion = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {false ? (
+      {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size={'large'} />
         </View>
