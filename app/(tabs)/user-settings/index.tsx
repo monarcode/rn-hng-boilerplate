@@ -59,6 +59,7 @@ const UserSettingsScreen = () => {
           <View style={styles.profileImageContainer}>
             {data?.data?.avatar_url ? (
             {data?.data?.avatar_url ? (
+            {data?.data?.avatar_url ? (
               <Image
                 source={{ uri: `${data?.data?.avatar_url}?${new Date().getTime()}` }}
                 style={styles.profileImage}
@@ -126,8 +127,8 @@ const UserSettingsScreen = () => {
           <SettingItem icon={<Business />} title={t("Manage Organization")} />
           <SettingItem icon={<Users />} title={t("Members")} goto={() => router.push('/user/members')} />
         </SettingsSection>
-        <SettingsSection title={t("Payment Setting")}>
-          <SettingItem icon={<Wallet />} title={t("Subscription")} />
+        <SettingsSection title="Payment Setting">
+          <SettingItem icon={<Business />} title="Subscription" />
         </SettingsSection>
         <TouchableOpacity
           style={[styles.logout, { marginBottom: bottomInset }]}
