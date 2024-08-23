@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Switch,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, Image, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';
 import { Button, Select, Text } from '~/components/shared';
-import { Search } from 'react-native-feather';
+import { Search, Copy, Share2 } from 'react-native-feather';
 
 // Define Props interface for a single member
 interface Member {
@@ -32,41 +24,47 @@ const Members = () => {
   const members: Member[] = [
     {
       id: '1',
-      name: 'Chad Bosewick',
-      email: 'ChadBoseW@gmail.com',
+      name: 'Chad Bosewick1',
+      email: 'ChadBoseW1@gmail.com',
       role: 'Admin',
       avatar: 'https://i.pravatar.cc/300',
     },
     {
       id: '2',
-      name: 'Chad Bosewick',
-      email: 'ChadBoseW@gmail.com',
+      name: 'Chad Bosewick2',
+      email: 'ChadBoseW2@gmail.com',
       role: 'Admin',
-      avatar: 'https://i.pravatar.cc/300',
+      avatar: 'https://i.pravatar.cc/400',
     },
     {
       id: '3',
-      name: 'Chad Bosewick',
-      email: 'ChadBoseW@gmail.com',
+      name: 'Chad Bosewick3',
+      email: 'ChadBoseW3@gmail.com',
       role: 'Admin',
-      avatar: 'https://i.pravatar.cc/300',
+      avatar: 'https://i.pravatar.cc/500',
     },
     // Add other members here...
   ];
 
   // Correctly typing the renderItem function
-  const renderMemberItem = ({ item }: { item: Member }) => (
-    <View style={styles.memberItem}>
-      <Image source={{ uri: item.avatar }} style={styles.avatar} />
-      <View style={styles.memberInfo}>
-        <Text style={styles.memberName} weight="semiBold">
-          {item.name}
-        </Text>
-        <Text size="sm">{item.email}</Text>
+  const renderMemberItem = ({ item }: { item: Member }) => {
+    if (!item) {
+      console.error('Item is null or undefined', item);
+      return null;
+    }
+    return (
+      <View style={styles.memberItem}>
+        <Image source={{ uri: item.avatar }} style={styles.avatar} />
+        <View style={styles.memberInfo}>
+          <Text style={styles.memberName} weight="semiBold">
+            {item.name}
+          </Text>
+          <Text size="sm">{item.email}</Text>
+        </View>
+        <Text>{item.role}</Text>
       </View>
-      <Text>{item.role}</Text>
-    </View>
-  );
+    );
+  };
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
@@ -79,82 +77,51 @@ const Members = () => {
         </View>
         <Text size="sm">Manage who has access to this workspace</Text>
       </View>
+      <>
+        <View style={styles.sectionBodyCon}>
+          <View style={styles.sectionBody}>
+            <Text size="lg" weight="semiBold">
+              Invite Link
+            </Text>
+            <Text weight="regular" style={styles.manageText}>
+              This provides a unique URL that allows anyone to join your workspace.
+            </Text>
+          </View>
+        </View>
+
+        <View style={[styles.uploadButton, styles.nameCont]}>
+          <Text style={styles.uploadButtonText}>
+            {
+              'https://www.figma.com/design/7hCSTNzQOJLl9aww6wEEd1/Managing-Users----Team-Learn-AI?node-i'
+            }
+          </Text>
+          <View style={{ flex: 0.25 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Share2 color="black" width={40} />
+              <Copy color="black" width={40} />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.searchcontainer}>
+          <View style={styles.inputContainer}>
+            <Search width={20} height={20} color={THEME.colors.neutral[400]} />
+            <TextInput
+              placeholder="Search by name or email"
+              style={{ borderWidth: 0, fontSize: 16, width: '100%' }}
+              //   inputStyle={{ fontSize: 16, width: '100%' }}
+              value={searchTerm}
+              onChangeText={setSearchTerm}
+            />
+          </View>
+        </View>
+      </>
 
       <FlatList
         data={members}
         keyExtractor={(item) => item.id}
         renderItem={renderMemberItem}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <>
-            <View style={styles.sectionBodyCon}>
-              <View style={styles.sectionBody}>
-                <Text size="lg" weight="semiBold">
-                  Invite Link
-                </Text>
-                <Text weight="regular" style={styles.manageText}>
-                  This provides a unique URL that allows anyone to join your workspace.
-                </Text>
-              </View>
-              <Switch
-                trackColor={{ false: '#D0D6D6', true: '#F97316' }}
-                thumbColor={isEnabled ? '#F9F9F9' : '#E6F5F3'}
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              />
-            </View>
-
-            <View style={styles.sectionBodyCon}>
-              <View style={styles.sectionBody}>
-                <Text size="lg" weight="semiBold">
-                  Manage members
-                </Text>
-                <Text weight="regular" style={styles.manageText}>
-                  On the Free plan all members in a workspace are administrators.
-                </Text>
-              </View>
-              <Button>Invite People</Button>
-            </View>
-
-            <View style={styles.searchcontainer}>
-              <View style={styles.inputContainer}>
-                <Search width={20} height={20} color={THEME.colors.neutral[400]} />
-                <TextInput
-                  placeholder="Search by name or email"
-                  style={{ borderWidth: 0, fontSize: 16, width: '100%' }}
-                  //   inputStyle={{ fontSize: 16, width: '100%' }}
-                  value={searchTerm}
-                  onChangeText={setSearchTerm}
-                />
-              </View>
-              <Select
-                options={[
-                  { label: 'All', value: 'All' },
-                  { label: 'Members', value: 'Members' },
-                  { label: 'Suspended', value: 'Suspended' },
-                  { label: 'Left Workspace', value: 'Left Workspace' },
-                ]}
-                placeholder="All"
-                onValueChange={(value) => console.log('Selected:', value)}
-                iconColor={THEME.colors.black}
-                containerStyle={styles.selectContainer}
-              />
-            </View>
-          </>
-        }
-        ListFooterComponent={
-          <View style={styles.sectionBodyCon}>
-            <View style={styles.sectionBody}>
-              <Text size="lg" weight="semiBold">
-                Export Members List
-              </Text>
-              <Text weight="regular" style={styles.manageText}>
-                Export a CSV with information of all members of your team
-              </Text>
-            </View>
-            <Button variant="outline">Invite People</Button>
-          </View>
-        }
       />
     </SafeAreaView>
   );
@@ -194,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 15,
     gap: 10,
   },
   inputContainer: {
@@ -220,7 +187,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // marginBottom: 15,
     borderBottomWidth: 1,
-    paddingVertical: 20,
+    paddingVertical: 15,
     borderColor: '#DEDEDE',
   },
   avatar: {
@@ -235,5 +202,21 @@ const styles = StyleSheet.create({
   },
   memberName: {
     fontWeight: 'bold',
+  },
+
+  uploadButton: {
+    borderWidth: 1,
+    borderColor: THEME.colors.border,
+    position: 'relative',
+  },
+  uploadButtonText: {
+    color: THEME.colors.black,
+    flex: 1,
+  },
+  nameCont: {
+    padding: THEME.spacing.sm,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

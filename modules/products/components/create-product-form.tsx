@@ -17,9 +17,10 @@ import { FormInput, FormSelect } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
 import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '~/libs/query';
 
 const CreateProductForm = () => {
-  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState({
     fileName: '',
     uri: '',
@@ -28,7 +29,7 @@ const CreateProductForm = () => {
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -46,48 +47,49 @@ const CreateProductForm = () => {
   });
   const data = useAuthStore();
   const orgId = data.data?.organisations[0]?.organisation_id;
+  const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
 
-  const onCreate = async (data: CreateProductSchema) => {
-    const reqBody = {
-      ...data,
-      image_url: image.uri,
-      size: 'normal',
-    };
-
-    setLoading(true);
-
-    try {
-      const response = await ProductService.createProduct(reqBody, orgId as string);
-
-      if (response) {
-        Toast.show({
-          type: 'success',
-          props: {
-            title: 'Success',
-            description: 'Product created successfully',
-          },
-        });
-        form.reset();
-        setImage({
-          fileName: '',
-          uri: '',
-        });
-        router.replace('/(tabs)/products');
+  const { mutate: onCreate, isPending: isLoading } = useMutation({
+    mutationFn: async (data: CreateProductSchema) => {
+      if (!image.uri) {
+        throw new Error('Product Image is required');
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        Toast.show({
-          type: 'error',
-          props: {
-            title: 'Error',
-            description: error.message,
-          },
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+      const reqBody = {
+        ...data,
+        image_url: image.uri,
+        size: 'normal',
+      };
+      return ProductService.createProduct(reqBody, orgId as string);
+    },
+    onMutate: () => {
+      setIsSubmitAttempted(true);
+    },
+    onSuccess: () => {
+      Toast.show({
+        type: 'success',
+        props: {
+          title: 'Success',
+          description: 'Product created successfully',
+        },
+      });
+      form.reset();
+      setImage({
+        fileName: '',
+        uri: '',
+      });
+      router.replace('/(tabs)/products');
+      return queryClient.invalidateQueries({ queryKey: ['product'] });
+    },
+    onError: (error: Error) => {
+      Toast.show({
+        type: 'error',
+        props: {
+          title: 'Error',
+          description: error.message,
+        },
+      });
+    },
+  });
 
   return (
     <View style={styles.wrapper}>
@@ -108,6 +110,10 @@ const CreateProductForm = () => {
         </Button>
         {!image.uri && <Text style={styles.subtext}>Upload product image</Text>}
       </View>
+      {!image.uri && isSubmitAttempted && (
+        <Text style={styles.errorText}>Product Image is required</Text>
+      )}
+
       {image.fileName && (
         <View style={[styles.uploadButton, styles.nameCont]}>
           <Text style={styles.uploadButtonText} numberOfLines={1} ellipsizeMode="tail">
@@ -124,7 +130,21 @@ const CreateProductForm = () => {
           </TouchableWithoutFeedback>
         </View>
       )}
+
       <FormInput control={form.control} name="name" label="Title" placeholder="Product Name" />
+
+      <FormSelect
+        name="category"
+        control={form.control}
+        label="Category"
+        options={[
+          { label: 'Food', value: 'Food' },
+          { label: 'Fashion', value: 'Fashion' },
+          { label: 'Device', value: 'Device' },
+          { label: 'Household Items', value: 'Household Items' },
+        ]}
+        placeholder="Select"
+      />
       <View>
         <FormInput
           control={form.control}
@@ -142,27 +162,22 @@ const CreateProductForm = () => {
           Maximum of 72 characters
         </Text>
       </View>
-      <FormSelect
-        name="category"
-        control={form.control}
-        label="Category"
-        options={[
-          { label: 'Food', value: 'Food' },
-          { label: 'Fashion', value: 'Fashion' },
-          { label: 'Device', value: 'Device' },
-          { label: 'Household Items', value: 'Household Items' },
-        ]}
-        placeholder="Select"
-      />
 
       <FormInput
         control={form.control}
         name="price"
         label="Standard Price"
         placeholder="0.00"
+        keyboardType="numeric"
         icon={<Dollar width={20} height={20} />}
       />
-      <FormInput control={form.control} name="quantity" label="Quantity" placeholder="0.00 pcs" />
+      <FormInput
+        control={form.control}
+        name="quantity"
+        keyboardType="numeric"
+        label="Quantity"
+        placeholder="0.00 pcs"
+      />
 
       {/* <View>
         <Text style={styles.label} size="md">
@@ -179,6 +194,7 @@ const CreateProductForm = () => {
 
       <View style={styles.buttonGroup}>
         <Button
+          disabled={isLoading}
           onPress={() => router.replace('/(tabs)/products')}
           variant="outline"
           containerStyle={styles.cancelButton}
@@ -188,7 +204,7 @@ const CreateProductForm = () => {
         <Button
           onPress={form.handleSubmit(onCreate)}
           containerStyle={styles.addButton}
-          loading={loading}>
+          loading={isLoading}>
           Add
         </Button>
       </View>
@@ -272,6 +288,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  errorText: {
+    color: THEME.colors.error,
+    fontSize: THEME.fontSize.sm,
+    marginTop: -20,
+    fontFamily: THEME.fontFamily.regular,
   },
 });
 
