@@ -12,9 +12,7 @@ import OrganisationSignupForm from '~/modules/authentication/components/organisa
 export default function OrganisationSignup() {
   return (
     <KeyboardWrapper>
-      <SafeAreaView
-        edges={['top', 'bottom']}
-        style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+      <SafeAreaView edges={['top', 'bottom']} style={[styles.container, { paddingHorizontal: 20 }]}>
         <GoBack />
 
         <ScrollView
@@ -29,13 +27,6 @@ export default function OrganisationSignup() {
           </View>
 
           <OrganisationSignupForm />
-
-          <View style={styles.footer}>
-            <Text>Already Have An Account?</Text>
-            <Link style={styles.link} href="/login">
-              Login
-            </Link>
-          </View>
         </ScrollView>
       </SafeAreaView>
     </KeyboardWrapper>
@@ -55,14 +46,5 @@ const styles = StyleSheet.create({
   subtitle: {
     color: THEME.colors.neutral[300],
     marginTop: THEME.spacing.sm,
-  },
-  footer: {
-    flexDirection: 'row',
-    gap: THEME.spacing.sm,
-    justifyContent: 'center',
-  },
-  link: {
-    color: THEME.colors.primary,
-    fontFamily: THEME.fontFamily.medium,
   },
 });
