@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: normalize(6),
     padding: 10,
-    height: normalize(38),
+    height: 48,
   },
   iconContainer: {
     marginRight: normalize(8),
