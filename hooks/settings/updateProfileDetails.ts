@@ -4,17 +4,11 @@ import Toast from 'react-native-toast-message';
 import { queryClient } from '~/libs/query';
 import { ProfileService } from '~/services/edit-profile';
 
-export interface UpdateProfileVariables {
-  email: string;
-  newData: any;
-}
-
 export const useUpdateProfileDetails = () => {
   return useMutation({
-    mutationFn: async ({ email, newData }: UpdateProfileVariables) => {
+    mutationFn: async ({ newData }: { newData: any }) => {
       try {
-        const response = await ProfileService.updateProfile(email, newData);
-        console.log('the response: ', response);
+        const response = await ProfileService.updateProfile(newData);
         return response;
       } catch (error) {
         throw new Error('Failed to update profile');
@@ -36,7 +30,6 @@ export const useUpdateProfileDetails = () => {
       }
     },
     onError: (error: Error) => {
-      console.error('Error', error);
       Toast.show({
         type: 'error',
         props: { title: 'Error', description: error.message || 'Failed to update profile' },

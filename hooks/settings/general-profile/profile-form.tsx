@@ -30,7 +30,6 @@ export const useProfileForm = (initialData: Partial<EditProfileFormData>, userEm
       );
 
       await updateProfile({
-        email: userEmail,
         newData: cleanedData,
       });
 

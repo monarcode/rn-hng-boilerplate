@@ -52,10 +52,10 @@ const HomeScreen = () => {
                       activeOpacity={0.7}
                       onPress={() => router.navigate('/user-settings')}>
                       <View style={styles.profileImageContainer}>
-                        {profileData?.data.avatar_url ? (
+                        {profileData?.data?.avatar_url ? (
                           <Image
                             source={{
-                              uri: `${profileData?.data.avatar_url}?${new Date().getTime()}`,
+                              uri: `${profileData?.data?.avatar_url}?${new Date().getTime()}`,
                             }}
                             style={styles.profileImage}
                           />

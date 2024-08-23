@@ -7,7 +7,7 @@ import PasswordInput, { PasswordInputProps } from '../shared/password-input';
 import { THEME } from '~/constants/theme';
 
 interface FormPasswordInputProps<TFieldValues extends FieldValues>
-  extends Omit<PasswordInputProps, 'value' | 'onChangeText'> {
+  extends Omit<PasswordInputProps, 'value'> {
   name: FieldPath<TFieldValues>;
   control: Control<TFieldValues>;
   rules?: any;
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   errorText: {
     color: THEME.colors.error,
     fontSize: THEME.fontSize.sm,
-    marginTop: THEME.spacing.xs,
     fontFamily: THEME.fontFamily.regular,
   },
 });

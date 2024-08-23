@@ -144,14 +144,14 @@ const GeneralProfileSettings = () => {
           </View>
 
           <View style={[styles.actions, { marginBottom: bottomInset }]}>
-            <Button onPress={resetForm} variant="secondary" containerStyle={{ flex: 1 }}>
-              Cancel
-            </Button>
             <Button
               onPress={form.handleSubmit(handleSaveChanges)}
               containerStyle={{ flex: 1 }}
               loading={loading}>
               Save Changes
+            </Button>
+            <Button onPress={resetForm} variant="secondary" containerStyle={{ flex: 1 }}>
+              Cancel
             </Button>
           </View>
         </ScrollView>
@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
     marginBottom: THEME.spacing.xl,
   },
   actions: {
-    flexDirection: 'row',
     gap: THEME.spacing.sm + 4,
   },
   row: {
