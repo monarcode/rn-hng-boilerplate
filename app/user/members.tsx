@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Switch,
-  TextInput,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { FlatList, Image, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';

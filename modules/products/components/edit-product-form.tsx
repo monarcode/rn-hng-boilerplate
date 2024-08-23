@@ -1,7 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -13,7 +11,6 @@ import { createProductSchema } from '../validation-schema/create-product';
 import { Button, Select, Text, TextInput, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { ProductService } from '~/services/product';
-import useAuthStore from '~/store/auth';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
 
@@ -37,7 +34,6 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
   });
-  const data = useAuthStore();
 
   const { mutate: onEdit, isPending: isEditing } = useMutation({
     mutationFn: () => ProductService.editProduct(productDetail, productId as string),
@@ -109,18 +105,7 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
         width={300}
         iconColor="#ccc"
       />
-      {/* <FormSelect
-        name="category"
-        control={form.control}
-        label="Category"
-        options={[
-          { label: 'Food', value: 'Food' },
-          { label: 'Fashion', value: 'Fashion' },
-          { label: 'Device', value: 'Device' },
-          { label: 'Household Items', value: 'Household Items' },
-        ]}
-        placeholder="Select"
-      /> */}
+
       <TextInput
         icon={<Dollar width={20} height={20} />}
         label="Standard Price"
