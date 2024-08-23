@@ -6,7 +6,8 @@ export type HomeHeaderProps={
 export type SummaryProps={
     title:string,
     amount:string,
-    increase:number
+    increase:string
+    color:string
 }
 
 export type SalesCardProps={
