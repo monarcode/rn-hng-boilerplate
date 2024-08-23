@@ -12,6 +12,7 @@ const colors = {
   red: '#DC2626',
   green: '#6DC347',
   error: '#E80D0D',
+  success: '#6DC347',
   toastText: {
     success: '#00A11F',
     error: '#A11300',
