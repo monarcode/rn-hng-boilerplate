@@ -20,10 +20,8 @@ import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
-import normalize from '~/libs/normalize';
 
 const CreateProductForm = () => {
-  const { t } = useTranslation();
   const [image, setImage] = useState({
     fileName: '',
     uri: '',
@@ -56,9 +54,6 @@ const CreateProductForm = () => {
 
   const { mutate: onCreate, isPending: isLoading } = useMutation({
     mutationFn: async (data: CreateProductSchema) => {
-      if (!image.uri) {
-        throw new Error('Product Image is required');
-      }
       const reqBody = {
         ...data,
         image_url: image.uri,
@@ -66,15 +61,12 @@ const CreateProductForm = () => {
       };
       return ProductService.createProduct(reqBody, orgId as string);
     },
-    onMutate: () => {
-      setIsSubmitAttempted(true);
-    },
     onSuccess: () => {
       Toast.show({
         type: 'success',
         props: {
-          title: t('Success'),
-          description: t('Product created successfully'),
+          title: 'Success',
+          description: 'Product created successfully',
         },
       });
       form.reset();
@@ -89,7 +81,7 @@ const CreateProductForm = () => {
       Toast.show({
         type: 'error',
         props: {
-          title: t('Error'),
+          title: 'Error',
           description: error.message,
         },
       });
@@ -218,7 +210,7 @@ const CreateProductForm = () => {
           onPress={form.handleSubmit(onCreate)}
           containerStyle={styles.addButton}
           loading={isLoading}>
-          {t('Add')}
+          Add
         </Button>
       </View>
     </View>
