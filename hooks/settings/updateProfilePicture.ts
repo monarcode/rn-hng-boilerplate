@@ -4,7 +4,6 @@ import { ProfileService } from '~/services/edit-profile';
 
 export const useUpdateProfilePicture = () => {
   return useMutation({
-    mutationFn: ({ email, photo }: { email: string; photo: string }) =>
-      ProfileService.uploadPicture(email, photo),
+    mutationFn: ({ photo }: { photo: string }) => ProfileService.uploadPicture(photo),
   });
 };
