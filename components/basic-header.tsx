@@ -6,11 +6,11 @@ import GoBack from './go-back';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
-const BasicHeader = ({ label }: { label?: string | undefined }) => {
+const BasicHeader = ({ label }: { label: string }) => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, { marginTop: insets.top }]}>
+    <View style={[styles.conatiner, { marginTop: insets.top }]}>
       <View
         style={{
           marginLeft: -4,
@@ -18,17 +18,15 @@ const BasicHeader = ({ label }: { label?: string | undefined }) => {
         <GoBack />
       </View>
 
-      {label ? (
-        <Text size="lg" weight="medium">
-          {label}
-        </Text>
-      ) : null}
+      <Text size="lg" weight="medium">
+        {label}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  conatiner: {
     flexDirection: 'row',
     alignItems: 'center',
     height: 45,
