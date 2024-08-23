@@ -12,32 +12,25 @@ import OrganisationSignupForm from '~/modules/authentication/components/organisa
 
 export default function OrganisationSignup() {
   return (
-    <>
-      <Stack.Screen
-        options={{
-          header: () => <BasicHeader />,
-        }}
-      />
-      <KeyboardAwareWrapper>
-        <SafeAreaView
-          edges={['top', 'bottom']}
-          style={[styles.container, { paddingHorizontal: 20 }]}>
-          <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}>
-            <View>
-              <Text weight="semiBold" size="3xl" style={{ color: THEME.colors.dark }}>
-                Create Organisation
-              </Text>
-              <Text style={styles.subtitle}>Create an account to get started with us</Text>
-            </View>
+    <KeyboardWrapper>
+      <SafeAreaView edges={['top', 'bottom']} style={[styles.container, { paddingHorizontal: 20 }]}>
+        <GoBack />
 
-            <OrganisationSignupForm />
-          </ScrollView>
-        </SafeAreaView>
-      </KeyboardAwareWrapper>
-    </>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}>
+          <View>
+            <Text weight="semiBold" size="3xl" style={{ color: THEME.colors.dark }}>
+              Sign up
+            </Text>
+            <Text style={styles.subtitle}>Create an account to get started with us</Text>
+          </View>
+
+          <OrganisationSignupForm />
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardWrapper>
   );
 }
 

@@ -7,7 +7,6 @@ import {
   AuthLoginResponse,
   AuthSuccessResponse,
   ErrorResponse,
-  ForgotPasswordResponse,
   OrganisationResponse,
   UserDetailsResponse,
 } from '~/types/auth/login';
@@ -129,7 +128,29 @@ const changeUserPassword = async (
   }
 };
 
-const createUser = async (payload: any): Promise<AuthSuccessResponse> => {
+const createUserOrganisation = async (payload: any): Promise<OrganisationResponse> => {
+  try {
+    const response = await http
+      .post('organisations', {
+        json: { ...payload },
+      })
+      .json<OrganisationResponse>();
+
+    if ('error' in response) {
+      throw new Error('Something went wrong');
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<ErrorResponse>();
+      throw new Error(errorBody.detail || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
+
+const changeUserPassword = async (payload: any): Promise<AuthSuccessResponse> => {
   try {
     const response = await http
       .post('auth/register', {
@@ -176,8 +197,7 @@ const createUserOrganisation = async (payload: any): Promise<OrganisationRespons
 export const AuthService = {
   loginUser,
   createUser,
-  forgotPassword,
-  verifyOtpCode,
+  createUserOrganisation,
   changeUserPassword,
   createUserOrganisation,
   getUserDetails,
