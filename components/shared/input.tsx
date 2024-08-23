@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 6,
     padding: 10,
-    height: 40,
+    height: 48,
   },
   iconContainer: {
     marginRight: 10,
