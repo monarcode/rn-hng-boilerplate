@@ -107,51 +107,49 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
           </View>
         </View>
       </View>
-      {title === 'user' && (
-        <View style={styles.variationInfoContainer}>
-          <View style={styles.variationColumnContainer}>
-            <Text style={styles.variationLabel}>Variation</Text>
-            <View style={styles.variationContainer}>
-              {images.length > 0 ? (
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.thumbnailContainer}>
-                  {images.map((image, index) => (
-                    <Pressable
-                      key={index}
-                      onPress={() => handleImageSelect(image)}
+      {/* <View style={styles.variationInfoContainer}>
+        <View style={styles.variationColumnContainer}>
+          <Text style={styles.variationLabel}>Variation</Text>
+          <View style={styles.variationContainer}>
+            {images.length > 0 ? (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.thumbnailContainer}>
+                {images.map((image, index) => (
+                  <Pressable
+                    key={index}
+                    onPress={() => handleImageSelect(image)}
+                    style={[
+                      styles.variationImageContainer,
+                      {
+                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE', // Change border color if selected
+                        borderWidth: selectedImage === image ? 2 : 1, // Change border width if selected
+                      },
+                    ]}>
+                    <Image
+                      source={{ uri: image }}
                       style={[
-                        styles.variationImageContainer,
+                        styles.thumbnailImage,
                         {
-                          borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE', // Change border color if selected
-                          borderWidth: selectedImage === image ? 2 : 1, // Change border width if selected
+                          width: selectedImage === image ? '80%' : '100%',
+                          height: selectedImage === image ? '80%' : '100%',
+                          borderRadius: selectedImage === image ? 5 : 0,
                         },
-                      ]}>
-                      <Image
-                        source={{ uri: image }}
-                        style={[
-                          styles.thumbnailImage,
-                          {
-                            width: selectedImage === image ? '80%' : '100%',
-                            height: selectedImage === image ? '80%' : '100%',
-                            borderRadius: selectedImage === image ? 5 : 0,
-                          },
-                        ]}
-                      />
-                    </Pressable>
-                  ))}
-                </ScrollView>
-              ) : (
-                <Text style={styles.noImagesText}>No images to display</Text>
-              )}
-            </View>
+                      ]}
+                    />
+                  </Pressable>
+                ))}
+              </ScrollView>
+            ) : (
+              <Text style={styles.noImagesText}>No images to display</Text>
+            )}
           </View>
         </View>
-      )}
+      </View> */}
       <View style={styles.descriptionInfoContainer}>
         <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionLabel}>Description</Text>
+          <Text style={{ fontSize: 17, fontFamily: 'Inter_600SemiBold' }}>Description</Text>
           <View>
             <Text style={styles.descriptionText}>{data?.description}</Text>
           </View>
@@ -386,6 +384,7 @@ const styles = StyleSheet.create({
   thumbnailImage: {
     width: '100%',
     height: '100%',
+    resizeMode: 'stretch',
     resizeMode: 'stretch',
   },
   noImagesText: {
