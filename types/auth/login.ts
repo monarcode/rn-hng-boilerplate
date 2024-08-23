@@ -5,6 +5,23 @@ export type AuthSuccessResponse = {
   status_code: number;
 };
 
+export type OrganisationResponse = {
+  id: number;
+  name: string;
+  description: string;
+  slug: string;
+  email: string;
+  industry: string;
+  type: string;
+  country: string;
+  address: string;
+  state: string;
+  created_at: string;
+  update_at: string;
+  owner_id: string;
+  is_active: boolean;
+};
+
 export type AuthData = {
   user: User;
   organisations: Organisation[];
