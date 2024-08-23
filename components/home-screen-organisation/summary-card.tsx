@@ -34,14 +34,25 @@ const SummaryCard = (summary: CardProps) => {
         <Text size="2xl" weight="bold" style={{ color: '#383f4e' }}>
           {summary.amount}
         </Text>
+        <View
+          style={{
+            backgroundColor: summary.color,
+            padding: 10,
+            alignSelf: 'flex-start',
+            borderRadius: 100,
+          }}>
+          <summary.Icon height={20} width={20} />
+        </View>
+      </View>
+      <View style={{ gap: THEME.spacing.xs }}>
+        <Text size="2xl" weight="bold" style={{ color: '#383f4e' }}>
+          {summary.amount}
+        </Text>
         <Text size="md" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
           {summary.title}
         </Text>
-        <summary.Icon height={20} width={20} />
-      </View>
-      <View style={{ gap: THEME.spacing.xs }}>
-        <Text size="2xl" weight="semiBold" style={{ color: '#383f4e' }}>
-          {summary.amount}
+        <Text size="lg" weight="semiBold" style={{ color: '#383f4e' }}>
+          {summary.increase}
         </Text>
       </View>
     </View>

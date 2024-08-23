@@ -1,6 +1,7 @@
 import { Redirect, router, Stack } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 import { Bell } from 'react-native-feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,7 +13,6 @@ import Ellipse from '~/assets/icons/ellipse.svg';
 import RecentSales from '~/components/home-screen-organisation/recent-sales';
 import Summary from '~/components/home-screen-organisation/summary';
 import { Button, Text, View } from '~/components/shared';
-
 import { THEME } from '~/constants/theme';
 import { useDashboard } from '~/hooks/dashboard/dashboard';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
@@ -109,14 +109,13 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Summary />
-          <View style={[styles.buttonContainer]}>
+          <View style={styles.buttonContainer}>
             <Button
               onPress={() => {
                 router.push('/(create-product)/create-product');
               }}
-              containerStyle={{ flex: 1 }}
               icon={<Products />}>
-              {t('Add A Product')}
+              Add A Product
             </Button>
 
             <Button
