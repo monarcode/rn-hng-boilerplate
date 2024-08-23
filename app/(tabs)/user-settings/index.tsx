@@ -48,7 +48,7 @@ const UserSettingsScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.profileInfo}>
           <View style={styles.profileImageContainer}>
-            {data?.data.avatar_url ? (
+            {data?.data?.avatar_url ? (
               <Image
                 source={{ uri: `${data?.data?.avatar_url}?${new Date().getTime()}` }}
                 style={styles.profileImage}
@@ -114,7 +114,7 @@ const UserSettingsScreen = () => {
             goto={() => router.push('/user/members')}
           />
         </SettingsSection>
-        <SettingsSection title="Payment Settings">
+        <SettingsSection title="Payment Setting">
           <SettingItem icon={<Business />} title="Subscription" />
         </SettingsSection>
         <TouchableOpacity
