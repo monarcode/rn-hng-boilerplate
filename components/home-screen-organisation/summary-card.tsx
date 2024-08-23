@@ -36,8 +36,11 @@ const SummaryCard = (summary: CardProps) => {
         <Text size="md" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
           {summary.title}
         </Text>
-        <Text size="sm" style={{ color: '#383f4e' }}>
-          {summary.increase}
+        <summary.Icon height={20} width={20} />
+      </View>
+      <View style={{ gap: THEME.spacing.xs }}>
+        <Text size="2xl" weight="semiBold" style={{ color: '#383f4e' }}>
+          {summary.amount}
         </Text>
       </View>
     </View>
