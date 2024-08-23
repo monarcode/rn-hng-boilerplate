@@ -5,7 +5,7 @@ import { ProductProps } from './types';
 import { THEME } from '~/constants/theme';
 import { Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
-import { createUniqueId } from '~/modules/products/constants';
+import { createUniqueId, formatCurrency } from '~/modules/products/constants';
 
 const { width } = Dimensions.get('window');
 
@@ -40,14 +40,14 @@ const ProductItemListTile = (product: ProductProps) => {
               Status:
             </Text>
             <View style={styles.statusContainer}>
-              <View style={styles.indicator}></View>
+              <View style={styles.indicator} />
               <Text>{product.status}</Text>
             </View>
           </View>
         </View>
       </View>
       <Text size="xl" weight="bold">
-        ${parseFloat(`${product.price}`)}
+        {formatCurrency(product.price)}
       </Text>
     </View>
   );

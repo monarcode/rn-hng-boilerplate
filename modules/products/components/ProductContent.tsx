@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createAddressSchema } from '../validation-schema/address';
 
 const ProductContent = ({ data, title }: ProductContentProps) => {
-  const images = convertImageToArray(data.image);
+  const images = convertImageToArray(data?.image);
   const [street, setStreet] = useState<string>('');
   const { rotateIcon, rotate, isRotated } = useRotationAnimation();
   const [selectedState, setSelectedState] = useState<string>('Select State');
@@ -56,7 +56,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
   });
   const selectedAddress = getSelectedAddress();
 
-  const uniqueId = createUniqueId(data.name, data.id);
+  const uniqueId = createUniqueId(data?.name, data?.id);
 
   return (
     <View style={styles.container}>
@@ -72,17 +72,17 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
       <View style={styles.infoContainer}>
         <View style={styles.rowContainerJb}>
           <View style={[styles.columnContainer, { alignItems: 'flex-start' }]}>
-            <Text style={styles.productName}>{data.name}</Text>
+            <Text style={styles.productName}>{data?.name}</Text>
             <Text style={styles.productUniqueId}>{uniqueId}</Text>
           </View>
           <View style={[styles.columnContainer, { alignItems: 'flex-end' }]}>
-            <Text style={styles.productPrice}>{formatCurrency(data.price)}</Text>
+            <Text style={styles.productPrice}>{formatCurrency(data?.price)}</Text>
             <View style={styles.rowGap3}>
-              {title === 'Organizational' && <Text>{data.quantity}</Text>}
+              {title === 'Organizational' && <Text>{data?.quantity}</Text>}
               {title === 'user' && (
                 <View
                   style={
-                    data.quantity > 0
+                    data?.quantity > 0
                       ? [styles.stockCircle, { backgroundColor: 'green' }]
                       : [styles.stockCircle, { backgroundColor: 'red' }]
                   }
@@ -109,8 +109,8 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
                     style={[
                       styles.variationImageContainer,
                       {
-                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE', // Change border color if selected
-                        borderWidth: selectedImage === image ? 2 : 1, // Change border width if selected
+                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE',
+                        borderWidth: selectedImage === image ? 2 : 1,
                       },
                     ]}>
                     <Image
@@ -137,7 +137,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
         <View style={styles.descriptionContainer}>
           <Text>Description</Text>
           <View>
-            <Text style={styles.descriptionText}>{data.description}</Text>
+            <Text style={styles.descriptionText}>{data?.description}</Text>
           </View>
         </View>
       </View>
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
   largeImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'stretch',
+    resizeMode: 'center',
   },
   placeholderText: {
     fontSize: 18,
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
   thumbnailImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'stretch',
+    resizeMode: 'center',
   },
   noImagesText: {
     fontSize: 16,

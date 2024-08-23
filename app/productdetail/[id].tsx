@@ -1,40 +1,68 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
-import { StyleSheet, Platform, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Platform, ScrollView, Alert } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import { Button, View } from '~/components/shared';
 import { useProducts } from '~/hooks/products/organization/fetchProducts';
 import HeaderHero from '~/modules/products/components/HeaderHero';
 import ProductContent from '~/modules/products/components/ProductContent';
+import { findProductById } from '~/modules/products/constants';
 import { ProductData, ProductDetailProps } from '~/modules/products/types';
+import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
 
-const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
+const ProductDetail = ({ title = 'Organizational' }: ProductDetailProps) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const [loading, setLoading] = useState(false);
 
   const goBack = () => {
     router.back();
   };
-  const { id } = useLocalSearchParams();
 
+  function editProductByID(productId: string) {
+    router.push(`/(create-product)/${productId}`);
+  }
+
+  const { id } = useLocalSearchParams();
   const authstore = useAuthStore();
   const orgId = authstore.data?.organisations[0].organisation_id;
-
   const { data } = useProducts(orgId);
 
-  const findProductById = (data: ProductData[], id: string) => {
-    for (const category of data) {
-      const product = category.products.find((product) => product.id === id);
-      if (product) {
-        return product;
-      }
-    }
-    return null;
-  };
+  const product = data ? findProductById(data, id as string) : null;
 
-  const product = findProductById(data || [], id as string);
+  const handleDeleteProduct = async () => {
+    if (!product) {
+      Alert.alert('Error', 'Product not found');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await ProductService.deleteProduct(product.id);
+      Toast.show({
+        type: 'success',
+        props: {
+          title: 'Success',
+          description: 'Product deleted successfully',
+        },
+      });
+      router.back();
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        props: {
+          title: 'Error',
+          description: 'Failed to delete product',
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={[styles.safeArea]}>
@@ -50,6 +78,7 @@ const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
         ]}>
         <View style={styles.rowGap}>
           <Button
+            onPress={() => editProductByID(product.id)}
             containerStyle={{
               width: '50%',
               borderColor: '#E2E8F0',
@@ -58,16 +87,16 @@ const ProductDetail = ({ title = 'user' }: ProductDetailProps) => {
             textStyle={{
               color: '#000',
             }}>
-            {title === 'Organizational' && ' Edit'}
-            {title === 'user' && ' Checkout'}
+            {title === 'Organizational' ? 'Edit' : 'Checkout'}
           </Button>
           <Button
+            onPress={handleDeleteProduct}
+            disabled={loading}
             containerStyle={{
               width: '50%',
               backgroundColor: title === 'Organizational' ? '#DC2626' : '#F68C1E',
             }}>
-            {title === 'Organizational' && 'Delete'}
-            {title === 'user' && ' Add to Cart'}
+            {title === 'Organizational' ? 'Delete' : 'Add to Cart'}
           </Button>
         </View>
       </View>
