@@ -11,12 +11,15 @@ import CategoryItem from '~/components/product-list/category-item';
 import { View, Text } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
+import { CategoryProps } from '~/components/product-list/types';
 
 const ListCategories = () => {
   type listViewOption = 'list' | 'grid';
   const [listView, setListView] = useState<listViewOption>('list');
   const authstore = useAuthStore();
   const orgId = authstore.data?.organisations[0].organisation_id;
+  const [queriedProducts, setQueriedProducts] = useState<CategoryProps[] | undefined>([]);
+  const [query, setQuery] = useState<string>('');
   // dummy data
 
   const { data, isError, isLoading } = useProducts(orgId);
@@ -36,8 +39,7 @@ const ListCategories = () => {
       </View>
     );
   }
-const [queriedProducts,setQueriedProducts]=useState(data)
-const [query,setQuery]=useState<string>('')
+
   return (
     <>
       <View style={styles.container}>

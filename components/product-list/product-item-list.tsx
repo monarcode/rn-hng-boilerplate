@@ -15,8 +15,7 @@ const ProductItemListTile = (product: ProductProps) => {
   const router = useRouter();
 
   function moreDetails(productId: string) {
-    // router.push(`/productdetail/${productId}`);
-    router.push(`/(create-product)/${productId}`);
+    router.push(`/productdetail/${productId}`);
   }
 
   const uniqueId = createUniqueId(product.name, product.id);
