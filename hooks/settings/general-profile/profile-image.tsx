@@ -24,7 +24,7 @@ export const useProfileImage = (userEmail: string) => {
   const handleRemovePhoto = async () => {
     setSelectedImage({ uri: undefined, status: 'loading' });
     try {
-      await deleteProfilePicture(userEmail);
+      deleteProfilePicture();
       Toast.show({
         type: 'success',
         props: { title: 'Success', description: 'Profile picture removed successfully' },
@@ -52,7 +52,7 @@ export const useProfileImage = (userEmail: string) => {
       if (imageUri) {
         const resizedImageUri = await resizeImage(imageUri);
         updateProfilePicture(
-          { email: userEmail, photo: resizedImageUri },
+          { photo: resizedImageUri },
           {
             onSuccess: (response) => {
               if (response && response.status_code === 200) {
