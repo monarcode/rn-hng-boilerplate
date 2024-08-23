@@ -22,6 +22,10 @@ const ProductDetail = ({ title = 'Organizational' }: ProductDetailProps) => {
     router.back();
   };
 
+  function editProductByID(productId: string) {
+    router.push(`/(create-product)/${productId}`);
+  }
+
   const { id } = useLocalSearchParams();
   const authstore = useAuthStore();
   const orgId = authstore.data?.organisations[0].organisation_id;
@@ -74,6 +78,7 @@ const ProductDetail = ({ title = 'Organizational' }: ProductDetailProps) => {
         ]}>
         <View style={styles.rowGap}>
           <Button
+            onPress={() => editProductByID(product.id)}
             containerStyle={{
               width: '50%',
               borderColor: '#E2E8F0',
