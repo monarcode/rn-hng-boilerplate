@@ -16,7 +16,7 @@ export default function TabLayout() {
     <Tabs screenOptions={{}} tabBar={CustomBottomTabs}>
       <Tabs.Screen name="index" key="index" />
       <Tabs.Screen name="products" key="products" options={screenOptions} />
-      <Tabs.Screen name="cart" key="cart" />
+      <Tabs.Screen name="orders" key="orders" options={screenOptions} />
       <Tabs.Screen name="user-settings" key="user-settings" options={screenOptions} />
     </Tabs>
   );
