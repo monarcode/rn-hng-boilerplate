@@ -6,15 +6,10 @@ import GoBack from '~/components/go-back';
 import { Dialog, DialogRef, Text, View, Button, Select } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { TimeZoneService } from '~/services/timeZones';
-import useAuthStore from '~/store/auth';
-import getNotificationSections from '~/constants/notification';
-import CheckIcon from '~/assets/icons/check.svg';
 import { router } from 'expo-router';
 
 const LanguageAndRegion = () => {
-  const authstore = useAuthStore();
   const dialogRef = useRef<DialogRef>(null);
-  const [timeZone, setTimeZone] = useState(null);
 
   const { data: fetchedData } = useQuery({
     queryKey: ['fetchTimeZone'],
