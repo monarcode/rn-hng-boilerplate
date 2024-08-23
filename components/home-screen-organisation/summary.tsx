@@ -3,22 +3,42 @@ import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import SummaryCard from './summary-card';
-import { SummaryProps } from './type';
 import { View, Text } from '../shared';
-
+import Product from '../../assets/icons/products.svg';
+import AllMembers from '../../assets/icons/allmembers.svg';
+import Dollar from '../../assets/icons/icondollar.svg'
+import ActiveMembers from '../../assets/icons/activemembers.svg';
 import { THEME } from '~/constants/theme';
 
 const Summary = () => {
   const summary = [
     {
-      title: 'Total Revenue',
-      amount: '$45,000.00',
-      increase: 20,
+      title: 'Total Members',
+      amount: '100',
+      increase: '+ 23 from last month',
+      Icon: AllMembers,
+      color: '#509DF5',
+    },
+    {
+      title: 'Total Products',
+      amount: '26',
+      increase: '+ 4 added last month',
+      Icon: Product,
+      color: '#422AF0',
     },
     {
       title: 'Subscriptions',
-      amount: '2350',
-      increase: 150,
+      amount: '126',
+      increase: '+ 2 from last month',
+      Icon: Dollar,
+      color: '#F85547',
+    },
+    {
+      title: 'Active Members',
+      amount: '547',
+      increase: '+ 23 from last month',
+      Icon: ActiveMembers,
+      color: '#0ED970',
     },
   ];
   return (
@@ -34,9 +54,11 @@ const Summary = () => {
       <FlatList
         data={summary}
         renderItem={({ item, index }) => <SummaryCard {...item} />}
-        contentContainerStyle={{ gap: THEME.spacing.sm }}
-        horizontal
+        contentContainerStyle={{ gap: THEME.spacing.md, rowGap: 10 }}
+        numColumns={2}
         showsHorizontalScrollIndicator={false}
+        scrollEnabled={false}
+        columnWrapperStyle={{ gap: 10 }}
       />
     </View>
   );

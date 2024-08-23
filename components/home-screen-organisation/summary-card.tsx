@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SVGProps } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { SummaryProps } from './type';
@@ -6,21 +6,40 @@ import Dollar from '../../assets/dollar.svg';
 import { View, Text } from '../shared';
 
 import { THEME } from '~/constants/theme';
+import { SvgProps } from 'react-native-svg';
 
-const SummaryCard = (summary: SummaryProps) => {
+interface CardProps extends SummaryProps {
+  Icon: React.FC<SvgProps>;
+}
+
+const SummaryCard = (summary: CardProps) => {
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Text size="lg" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
-          {summary.title}
-        </Text>
-        <Dollar color={THEME.colors.black} width={17} height={17} />
+      <View
+        style={{
+          justifyContent: 'space-between',
+          gap: 20,
+        }}>
+        <View
+          style={{
+            backgroundColor: summary.color,
+            padding: 10,
+            alignSelf: 'flex-start',
+            borderRadius: 100,
+          }}>
+          <summary.Icon height={20}  width={20} />
+        </View>
       </View>
       <View style={{ gap: THEME.spacing.xs }}>
-        <Text size="2xl" weight="semiBold" style={{ color: '#383f4e' }}>
+        <Text size="2xl" weight="bold" style={{ color: '#383f4e' }}>
           {summary.amount}
         </Text>
-        <Text size="lg">+{summary.increase}% from last month</Text>
+        <Text size="md" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
+          {summary.title}
+        </Text>
+        <Text size="lg" weight="semiBold" style={{ color: '#383f4e' }}>
+          {summary.increase}
+        </Text>
       </View>
     </View>
   );
@@ -36,5 +55,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     gap: THEME.spacing.md,
+    width: '50%',
   },
 });
