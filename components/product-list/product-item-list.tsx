@@ -15,7 +15,8 @@ const ProductItemListTile = (product: ProductProps) => {
   const router = useRouter();
 
   function moreDetails(productId: string) {
-    router.push(`/productdetail/${productId}`);
+    // router.push(`/productdetail/${productId}`);
+    router.push(`/(create-product)/${productId}`);
   }
 
   const uniqueId = createUniqueId(product.name, product.id);
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     width: 0.3 * width,
     borderRadius: 5,
     resizeMode: 'cover',
-    height:0.2*width
+    height: 0.2 * width,
   },
   indicator: {
     height: 6,
