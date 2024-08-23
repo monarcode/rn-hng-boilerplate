@@ -31,6 +31,7 @@ const CreateProductForm = () => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -49,15 +50,22 @@ const CreateProductForm = () => {
   const data = useAuthStore();
   const orgId = data.data?.organisations[0]?.organisation_id;
   const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
+  const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
 
   const { mutate: onCreate, isPending: isLoading } = useMutation({
     mutationFn: async (data: CreateProductSchema) => {
+      if (!image.uri) {
+        throw new Error('Product Image is required');
+      }
       const reqBody = {
         ...data,
         image_url: image.uri,
         size: 'normal',
       };
       return ProductService.createProduct(reqBody, orgId as string);
+    },
+    onMutate: () => {
+      setIsSubmitAttempted(true);
     },
     onSuccess: () => {
       Toast.show({
@@ -106,7 +114,7 @@ const CreateProductForm = () => {
         {!image.uri && <Text style={styles.subtext}>{t('Upload product image')}</Text>}
       </View>
       {!image.uri && isSubmitAttempted && (
-        <Text style={styles.errorText}>{t('Product Image is required')}</Text>
+        <Text style={styles.errorText}>Product Image is required</Text>
       )}
 
       {image.fileName && (
@@ -282,6 +290,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  errorText: {
+    color: THEME.colors.error,
+    fontSize: THEME.fontSize.sm,
+    marginTop: -20,
+    fontFamily: THEME.fontFamily.regular,
   },
   errorText: {
     color: THEME.colors.error,
