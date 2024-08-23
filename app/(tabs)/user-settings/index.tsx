@@ -4,7 +4,6 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
-import Account from '~/assets/icons/account.svg';
 import Business from '~/assets/icons/business.svg';
 import Database from '~/assets/icons/database.svg';
 import Ellipse from '~/assets/icons/ellipse.svg';
@@ -90,7 +89,11 @@ const UserSettingsScreen = () => {
             title="Notification"
             goto={() => router.push('/user-settings/notification')}
           />
-          <SettingItem icon={<Database />} title="Change Password" />
+          <SettingItem
+            icon={<Database />}
+            title="Change Password"
+            goto={() => router.push('/user/change-password')}
+          />
           <SettingItem
             icon={<Globe />}
             title="Language and Region"
