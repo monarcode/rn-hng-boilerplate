@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rn-hng-boilerplate",
+    "name": "HNG Boilerplate",
     "slug": "rn-hng-boilerplate",
     "version": "1.0.0",
     "scheme": "rn-hng-boilerplate",
@@ -31,9 +31,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -42,9 +40,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.teamcyborg.rnhngboilerplate"
     },
     "extra": {
