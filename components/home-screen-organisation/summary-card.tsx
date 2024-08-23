@@ -33,7 +33,7 @@ const SummaryCard = (summary: CardProps) => {
         <Text size="2xl" weight="bold" style={{ color: '#383f4e' }}>
           {summary.amount}
         </Text>
-        <Text size="md" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
+        <Text size="xl" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
           {summary.title}
         </Text>
         <Text size="sm" style={{ color: '#383f4e' }}>

@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     borderColor: THEME.colors.border,
     borderRadius: THEME.spacing.sm,
     justifyContent: 'center',
-    paddingVertical: 5,
     paddingHorizontal: 5,
   },
   slider: {
