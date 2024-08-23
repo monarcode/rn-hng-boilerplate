@@ -3,7 +3,7 @@ const colors = {
   black: '#000000',
   white: '#FFFFFF',
   border: '#CBD5E1',
-  apply: "#FCB889",
+  apply: '#FCB889',
   neutral: {
     300: '#525252',
     400: '#7B7B7B',
@@ -18,7 +18,8 @@ const colors = {
     success: '#DAF1DF',
     error: '#F1DADA',
   },
-  borderLight:'#F7F7F7'
+  borderLight: '#F7F7F7',
+  border_alt: '#B2B0B0',
 } as const;
 
 const spacing = {
