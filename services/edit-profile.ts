@@ -9,10 +9,10 @@ import {
   ProfileUpdateResponse,
 } from '~/types/profile/profile';
 
-const updateProfile = async (email: string, payload: any): Promise<ProfileUpdateResponse> => {
+const updateProfile = async (payload: any): Promise<ProfileUpdateResponse> => {
   try {
     const response = await http
-      .put(`profile/${email}`, {
+      .put(`profile`, {
         json: { ...payload },
       })
       .json<ProfileUpdateResponse>();
@@ -31,7 +31,7 @@ const updateProfile = async (email: string, payload: any): Promise<ProfileUpdate
   }
 };
 
-const uploadPicture = async (email: string, photo: string): Promise<ProfilePictureResponse> => {
+const uploadPicture = async (photo: string): Promise<ProfilePictureResponse> => {
   try {
     const formData = new FormData();
 
@@ -46,7 +46,7 @@ const uploadPicture = async (email: string, photo: string): Promise<ProfilePictu
     console.log('formData:', formData);
 
     const response = await http
-      .put(`profile/${email}/picture`, {
+      .put(`profile/picture`, {
         body: formData,
         // Remove the Content-Type header
       })
@@ -68,11 +68,9 @@ const uploadPicture = async (email: string, photo: string): Promise<ProfilePictu
   }
 };
 
-const deletePicture = async (email: string): Promise<ProfileDeletePictureResponse> => {
+const deletePicture = async (): Promise<ProfileDeletePictureResponse> => {
   try {
-    const response = await http
-      .delete(`profile/${email}/picture`)
-      .json<ProfileDeletePictureResponse>();
+    const response = await http.delete(`profile/picture`).json<ProfileDeletePictureResponse>();
 
     if ('error' in response) {
       throw new Error('Something went wrong');
