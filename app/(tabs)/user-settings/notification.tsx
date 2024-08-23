@@ -1,20 +1,40 @@
-import React, { useState } from 'react';
-import { StyleSheet, SectionList, Switch, SafeAreaView } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { useEffect, useRef, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { StyleSheet, SectionList, SafeAreaView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 
 import GoBack from '~/components/go-back';
-import { Button, Text, View } from '~/components/shared';
-import notificationSections from '~/constants/notification';
+import RenderSetting from '~/components/notification-settings';
+import { Dialog, DialogRef, Text, View, Button } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-
-type Item = {
-  header: string;
-  body: string;
-  status: true | false;
-};
+import { NotificationSettingsService } from '~/services/notification-settings';
+import useAuthStore from '~/store/auth';
+import getNotificationSections from '~/constants/notification';
+import CheckIcon from '~/assets/icons/check.svg';
 
 const NotificationSettings = () => {
-  const [notificationData, setNotificationData] = useState(notificationSections);
+  const authstore = useAuthStore();
+  const dialogRef = useRef<DialogRef>(null);
+  const [notificationData, setNotificationData] = useState(getNotificationSections)
+
+  const { data: fetchedData, isLoading } = useQuery({
+    queryKey: ['fetchNotification', authstore.data?.user.id],
+    queryFn: () => NotificationSettingsService.getNotifications(authstore.data?.user.id)
+  })
+
+  useEffect(() => {
+    if (fetchedData)
+      setNotificationData(getNotificationSections(fetchedData?.data))
+  }, [fetchedData])
+
+  const settingsMutation = useMutation({
+    mutationFn: () => NotificationSettingsService.setNotifications(notificationData),
+    onSuccess: (res) => {
+      dialogRef.current?.open()
+    },
+    onError: (err) => {
+      Alert.alert('Server error', 'An error occured while saving settings')
+    }
+  })
 
   const toggleSwitch = (sectionIndex: number, itemIndex: number) => {
     setNotificationData((prevState) => {
@@ -25,68 +45,69 @@ const NotificationSettings = () => {
     });
   };
 
-  const renderBody = ({
-    item,
-    sectionIndex,
-    itemIndex,
-  }: {
-    item: any;
-    sectionIndex: number;
-    itemIndex: number;
-  }) => {
-    return (
-      <View style={styles.sectionBodyCon}>
-        <View style={styles.sectionBody}>
-          <Text size="md" weight="medium">
-            {item.header}
-          </Text>
-          <Text size="sm" weight="regular">
-            {item.body}
-          </Text>
-        </View>
-        <Switch
-          trackColor={{ false: '#D0D6D6', true: '#F97316' }}
-          thumbColor={item.status ? '#F9F9F9' : '#E6F5F3'}
-          ios_backgroundColor="#F97316"
-          onValueChange={() => toggleSwitch(sectionIndex, itemIndex)}
-          value={item.status}
-        />
-      </View>
-    );
-  };
-
-  const { top } = useSafeAreaInsets();
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.header]}>
-        <GoBack />
-        <Text size="lg" weight="semiBold">
-          Notification
-        </Text>
-        <View />
-      </View>
 
-      <View style={[styles.saveBtn, { marginTop: top * 2 }]}>
-        <Button children="Save Changes" />
-      </View>
-
-      <SectionList
-        contentContainerStyle={styles.section}
-        keyExtractor={(item, index) => item.header + index}
-        sections={notificationData}
-        renderItem={({ item, index, section }) =>
-          renderBody({ item, sectionIndex: notificationData.indexOf(section), itemIndex: index })
-        }
-        showsVerticalScrollIndicator={false}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.sectionHeader}>
-            <Text size="xl" weight="semiBold">
-              {title}
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      ) : (
+        <>
+          <View style={[styles.header]}>
+            <GoBack />
+            <Text size="lg" weight="semiBold">
+              Notification
             </Text>
+            <View />
           </View>
-        )}
-      />
+
+          <SectionList
+            contentContainerStyle={styles.section}
+            keyExtractor={(item, index) => item.header + index}
+            sections={notificationData}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index, section }) => (
+              <RenderSetting
+                item={item}
+                toggleSwitch={toggleSwitch}
+                sectionIndex={notificationData.indexOf(section)}
+                itemIndex={index}
+              />
+            )}
+            renderSectionHeader={({ section: { title } }) => (
+              <View style={styles.sectionHeader}>
+                <Text size="xl" weight="semiBold">
+                  {title}
+                </Text>
+              </View>
+            )}
+          />
+          <View style={styles.saveBtn}>
+            <Button
+              icon={<CheckIcon />}
+              loading={settingsMutation.isPending}
+              onPress={() => settingsMutation.mutate()}
+              children="Save Changes"
+            />
+          </View>
+        </>
+      )}
+
+
+      <Dialog
+        ref={dialogRef}
+        title="Notification Updated"
+        description="Notification preferences updated successfully. Remember, you can always adjust these settings again later"
+        showCloseButton={false}
+      >
+        <View style={styles.dialogButtons}>
+          <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
+            <Text style={styles.cancelButtonText} >Done</Text>
+          </TouchableOpacity>
+        </View>
+      </Dialog>
     </SafeAreaView>
   );
 };
@@ -102,15 +123,14 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: THEME.spacing.sm,
     width: '100%',
     paddingVertical: THEME.spacing.sm,
   },
   saveBtn: {
-    width: 140,
-    position: 'absolute',
-    right: 20,
-    zIndex: 20,
+    width: '100%',
+    paddingHorizontal: THEME.spacing.md,
+    marginVertical: 10
   },
   section: {
     width: '100%',
@@ -127,21 +147,28 @@ const styles = StyleSheet.create({
     paddingTop: THEME.spacing.md,
     paddingHorizontal: 20,
   },
-  sectionBodyCon: {
+  dialogButtons: {
     flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  sectionBody: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '75%',
-    paddingBottom: 11,
+    justifyContent: 'flex-end',
     marginTop: THEME.spacing.md,
-    gap: 12,
   },
+  cancelButton: {
+    paddingHorizontal: THEME.spacing.md,
+    paddingVertical: THEME.spacing.sm,
+    borderRadius: THEME.spacing.sm,
+    backgroundColor: THEME.colors.primary,
+  },
+  cancelButtonText: {
+    color: THEME.colors.white,
+    fontSize: THEME.fontSize.lg,
+    fontWeight: 500
+  },
+  loadingContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 export default NotificationSettings;
