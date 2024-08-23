@@ -1,16 +1,16 @@
 type monthSale = {
-  id: string
-  user_id: string
-  product_id: string
-  subscription_id: string
-  type: string
-  status: string
-  partners: string
-  amount: number
-  reference:string
-  created_at: string 
-  paid_at:string
-  modified_at: string
+  id: string;
+  user_id: string;
+  product_id: string;
+  subscription_id: string;
+  type: string;
+  status: string;
+  partners: string;
+  amount: number;
+  reference: string;
+  created_at: string;
+  paid_at: string;
+  modified_at: string;
 };
 
 type DashboardResponse = {
@@ -18,15 +18,14 @@ type DashboardResponse = {
   subscriptions: 0;
   sales: 0;
   activeSubscription: 0;
-  monthSales:Array<monthSale>
+  monthSales: monthSale[];
 };
 
-type DashboardResponseError={
-  data: string,
-  error: string,
-  message: string,
-  status_code: number
-}
+type DashboardResponseError = {
+  data: string;
+  error: string;
+  message: string;
+  status_code: number;
+};
 
-
-export {DashboardResponse,DashboardResponseError}
+export { DashboardResponse, DashboardResponseError };
