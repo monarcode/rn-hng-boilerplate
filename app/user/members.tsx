@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';
 import { Button, Select, Text } from '~/components/shared';
-import { Search, X, Share, Share2 } from 'react-native-feather';
+import { Search, Copy, Share2 } from 'react-native-feather';
 
 // Define Props interface for a single member
 interface Member {
@@ -26,8 +26,6 @@ const Members = () => {
       id: '1',
       name: 'Chad Bosewick1',
       email: 'ChadBoseW1@gmail.com',
-      name: 'Chad Bosewick1',
-      email: 'ChadBoseW1@gmail.com',
       role: 'Admin',
       avatar: 'https://i.pravatar.cc/300',
     },
@@ -35,44 +33,20 @@ const Members = () => {
       id: '2',
       name: 'Chad Bosewick2',
       email: 'ChadBoseW2@gmail.com',
-      name: 'Chad Bosewick2',
-      email: 'ChadBoseW2@gmail.com',
       role: 'Admin',
-      avatar: 'https://i.pravatar.cc/400',
       avatar: 'https://i.pravatar.cc/400',
     },
     {
       id: '3',
       name: 'Chad Bosewick3',
       email: 'ChadBoseW3@gmail.com',
-      name: 'Chad Bosewick3',
-      email: 'ChadBoseW3@gmail.com',
       role: 'Admin',
-      avatar: 'https://i.pravatar.cc/500',
       avatar: 'https://i.pravatar.cc/500',
     },
     // Add other members here...
   ];
 
   // Correctly typing the renderItem function
-  const renderMemberItem = ({ item }: { item: Member }) => {
-    if (!item) {
-      console.error('Item is null or undefined', item);
-      return null;
-    }
-    return (
-      <View style={styles.memberItem}>
-        <Image source={{ uri: item.avatar }} style={styles.avatar} />
-        <View style={styles.memberInfo}>
-          <Text style={styles.memberName} weight="semiBold">
-            {item.name}
-          </Text>
-          <Text size="sm">{item.email}</Text>
-        </View>
-        <Text>{item.role}</Text>
-      </View>
-    );
-  };
   const renderMemberItem = ({ item }: { item: Member }) => {
     if (!item) {
       console.error('Item is null or undefined', item);
@@ -114,17 +88,6 @@ const Members = () => {
             </Text>
           </View>
         </View>
-      <>
-        <View style={styles.sectionBodyCon}>
-          <View style={styles.sectionBody}>
-            <Text size="lg" weight="semiBold">
-              Invite Link
-            </Text>
-            <Text weight="regular" style={styles.manageText}>
-              This provides a unique URL that allows anyone to join your workspace.
-            </Text>
-          </View>
-        </View>
 
         <View style={[styles.uploadButton, styles.nameCont]}>
           <Text style={styles.uploadButtonText}>
@@ -135,30 +98,11 @@ const Members = () => {
           <View style={{ flex: 0.25 }}>
             <View style={{ flexDirection: 'row' }}>
               <Share2 color="black" width={40} />
-              <X color="red" width={40} />
+              <Copy color="black" width={40} />
             </View>
           </View>
         </View>
 
-        <View style={styles.searchcontainer}>
-          <View style={styles.inputContainer}>
-            <Search width={20} height={20} color={THEME.colors.neutral[400]} />
-            <TextInput
-              placeholder="Search by name or email"
-              style={{ borderWidth: 0, fontSize: 16, width: '100%' }}
-              //   inputStyle={{ fontSize: 16, width: '100%' }}
-              value={searchTerm}
-              onChangeText={setSearchTerm}
-            />
-          </View>
-        </View>
-      </>
-
-      <FlatList
-        data={members}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMemberItem}
-        showsVerticalScrollIndicator={false}
         <View style={styles.searchcontainer}>
           <View style={styles.inputContainer}>
             <Search width={20} height={20} color={THEME.colors.neutral[400]} />
@@ -258,22 +202,6 @@ const styles = StyleSheet.create({
   },
   memberName: {
     fontWeight: 'bold',
-  },
-
-  uploadButton: {
-    borderWidth: 1,
-    borderColor: THEME.colors.border,
-    position: 'relative',
-  },
-  uploadButtonText: {
-    color: THEME.colors.black,
-    flex: 1,
-  },
-  nameCont: {
-    padding: THEME.spacing.sm,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
 
   uploadButton: {
