@@ -3,22 +3,38 @@ import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import SummaryCard from './summary-card';
-import { SummaryProps } from './type';
 import { View, Text } from '../shared';
-
+import Product from '../../assets/icons/products.svg';
+import AllMembers from '../../assets/icons/allmembers.svg';
+import Dollar from '../../assets/dollar.svg';
+import ActiveMembers from '../../assets/icons/activemembers.svg';
 import { THEME } from '~/constants/theme';
 
 const Summary = () => {
   const summary = [
     {
-      title: 'Total Revenue',
-      amount: '$45,000.00',
+      title: 'Total Members',
+      amount: '100',
       increase: 20,
+      Icon: AllMembers,
+    },
+    {
+      title: 'Total Products',
+      amount: '26',
+      increase: 150,
+      Icon: Product,
     },
     {
       title: 'Subscriptions',
-      amount: '2350',
+      amount: '126',
       increase: 150,
+      Icon: Dollar,
+    },
+    {
+      title: 'Active Members',
+      amount: '547',
+      increase: 150,
+      Icon: ActiveMembers,
     },
   ];
   return (
