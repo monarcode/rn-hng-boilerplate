@@ -5,6 +5,8 @@ import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';
 import { Button, Select, Text } from '~/components/shared';
 import { Search, Copy, Share2 } from 'react-native-feather';
+import { useInvite } from '~/hooks/dashboard/dashboard';
+import useAuthStore from '~/store/auth';
 
 // Define Props interface for a single member
 interface Member {
@@ -16,30 +18,31 @@ interface Member {
 }
 
 const Members = () => {
-  const [isEnabled, setEnabled] = useState(false);
-  const toggleSwitch = () => setEnabled(!isEnabled);
+  const authstore = useAuthStore();
   const [searchTerm, setSearchTerm] = useState('');
+
+  const { data, isError } = useInvite(authstore.data?.organisations[0].organisation_id);
 
   // Sample members data
   const members: Member[] = [
     {
       id: '1',
-      name: 'Chad Bosewick1',
-      email: 'ChadBoseW1@gmail.com',
+      name: 'Kurt Dirk',
+      email: 'kurtd@gmail.com',
       role: 'Admin',
       avatar: 'https://i.pravatar.cc/300',
     },
     {
       id: '2',
-      name: 'Chad Bosewick2',
-      email: 'ChadBoseW2@gmail.com',
+      name: 'Lennon Kate',
+      email: 'katie@gmail.com',
       role: 'Admin',
       avatar: 'https://i.pravatar.cc/400',
     },
     {
       id: '3',
-      name: 'Chad Bosewick3',
-      email: 'ChadBoseW3@gmail.com',
+      name: 'Sam Curtis',
+      email: 'curty00@gmail.com',
       role: 'Admin',
       avatar: 'https://i.pravatar.cc/500',
     },
@@ -49,7 +52,6 @@ const Members = () => {
   // Correctly typing the renderItem function
   const renderMemberItem = ({ item }: { item: Member }) => {
     if (!item) {
-      console.error('Item is null or undefined', item);
       return null;
     }
     return (
@@ -90,11 +92,7 @@ const Members = () => {
         </View>
 
         <View style={[styles.uploadButton, styles.nameCont]}>
-          <Text style={styles.uploadButtonText}>
-            {
-              'https://www.figma.com/design/7hCSTNzQOJLl9aww6wEEd1/Managing-Users----Team-Learn-AI?node-i'
-            }
-          </Text>
+          {data && <Text style={styles.uploadButtonText}>{data?.data?.invite_link}</Text>}
           <View style={{ flex: 0.25 }}>
             <View style={{ flexDirection: 'row' }}>
               <Share2 color="black" width={40} />

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchDashboard } from '~/services/dashboard';
+import { fetchDashboard, fetchInvite } from '~/services/dashboard';
 
 const useDashboard = (userId: string | undefined) => {
   const { data, isLoading, isError } = useQuery({
@@ -10,5 +10,13 @@ const useDashboard = (userId: string | undefined) => {
 
   return { data, isError, isLoading };
 };
+const useInvite = (orgId: string | undefined) => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['invite'],
+    queryFn: () => fetchInvite(orgId),
+  });
 
-export { useDashboard };
+  return { data, isError, isLoading };
+};
+
+export { useDashboard, useInvite };
