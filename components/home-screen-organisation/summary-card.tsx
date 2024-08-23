@@ -1,4 +1,4 @@
-import React, { SVGProps } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SvgProps } from 'react-native-svg';
 
@@ -6,7 +6,6 @@ import { Text, View } from '../shared';
 import { SummaryProps } from './type';
 
 import { THEME } from '~/constants/theme';
-import { SvgProps } from 'react-native-svg';
 
 interface CardProps extends SummaryProps {
   Icon: React.FC<SvgProps>;
@@ -51,7 +50,7 @@ const SummaryCard = (summary: CardProps) => {
         <Text size="md" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
           {summary.title}
         </Text>
-        <Text size="lg" weight="semiBold" style={{ color: '#383f4e' }}>
+        <Text size="sm" style={{ color: '#383f4e' }}>
           {summary.increase}
         </Text>
       </View>
