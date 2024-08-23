@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';
 import { Button, Select, Text } from '~/components/shared';
-import { Search, X, Share, Share2 } from 'react-native-feather';
+import { Search, Copy, Share2 } from 'react-native-feather';
 
 // Define Props interface for a single member
 interface Member {
@@ -107,7 +107,7 @@ const Members = () => {
           <View style={{ flex: 0.25 }}>
             <View style={{ flexDirection: 'row' }}>
               <Share2 color="black" width={40} />
-              <X color="red" width={40} />
+              <Copy color="black" width={40} />
             </View>
           </View>
         </View>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 15,
     gap: 10,
   },
   inputContainer: {
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // marginBottom: 15,
     borderBottomWidth: 1,
-    paddingVertical: 20,
+    paddingVertical: 15,
     borderColor: '#DEDEDE',
   },
   avatar: {
