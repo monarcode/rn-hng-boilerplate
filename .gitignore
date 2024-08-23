@@ -26,5 +26,6 @@ android
 *.apk
 .env
 .env.local
+.env.production
 
 .vscode

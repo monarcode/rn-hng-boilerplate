@@ -13,6 +13,9 @@
     "production": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_BASEURL": "https://staging.api-csharp.boilerplate.hng.tech/api/v1/"
       }
     }
   },
