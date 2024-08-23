@@ -93,7 +93,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
           </View>
         </View>
       </View>
-      <View style={styles.variationInfoContainer}>
+      {/* <View style={styles.variationInfoContainer}>
         <View style={styles.variationColumnContainer}>
           <Text style={styles.variationLabel}>Variation</Text>
           <View style={styles.variationContainer}>
@@ -109,8 +109,8 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
                     style={[
                       styles.variationImageContainer,
                       {
-                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE',
-                        borderWidth: selectedImage === image ? 2 : 1,
+                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE', // Change border color if selected
+                        borderWidth: selectedImage === image ? 2 : 1, // Change border width if selected
                       },
                     ]}>
                     <Image
@@ -132,10 +132,10 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
             )}
           </View>
         </View>
-      </View>
+      </View> */}
       <View style={styles.descriptionInfoContainer}>
         <View style={styles.descriptionContainer}>
-          <Text>Description</Text>
+          <Text style={{ fontSize: 17, fontFamily: 'Inter_600SemiBold' }}>Description</Text>
           <View>
             <Text style={styles.descriptionText}>{data?.description}</Text>
           </View>
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
   largeImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'center',
+    resizeMode: 'stretch',
   },
   placeholderText: {
     fontSize: 18,
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
   thumbnailImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'center',
+    resizeMode: 'stretch',
   },
   noImagesText: {
     fontSize: 16,
