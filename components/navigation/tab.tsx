@@ -19,7 +19,24 @@ const AnimatedCartIcon = Animated.createAnimatedComponent(Bag);
 const AnimatedSettingsIcon = Animated.createAnimatedComponent(Setting2);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-
+const routes = {
+  index: {
+    icon: AnimatedHomeIcon,
+    label: 'Home',
+  },
+  products: {
+    icon: AnimatedProductsIcon,
+    label: 'Products',
+  },
+  orders: {
+    icon: AnimatedCartIcon,
+    label: 'Orders',
+  },
+  'user-settings': {
+    icon: AnimatedSettingsIcon,
+    label: 'Settings',
+  },
+};
 
 interface Props {
   route: string;
