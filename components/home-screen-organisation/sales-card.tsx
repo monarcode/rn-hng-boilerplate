@@ -1,24 +1,27 @@
-import { View, Text } from '../shared';
-import { StyleSheet } from 'react-native';
 import React from 'react';
-import { THEME } from '~/constants/theme';
+import { StyleSheet } from 'react-native';
+
+import { Text, View } from '../shared';
 import { SalesCardProps } from './type';
+
+import { THEME } from '~/constants/theme';
+import { currency } from '~/libs/currency';
 
 const SalesCard = (sale: SalesCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <View style={styles.profileBall}></View>
+        <View style={styles.profileBall} />
         <View>
-          <Text size="xl" weight="semiBold">
+          <Text size="lg" weight="medium">
             {sale.name}
           </Text>
-          <Text size="lg" style={{ color: THEME.colors.neutral[400] }}>
+          <Text size="sm" style={{ color: THEME.colors.neutral[400] }}>
             {sale.email}
           </Text>
         </View>
       </View>
-      <Text size="xl" weight="bold">{`+ $${parseFloat(sale.amount.toString())}`}</Text>
+      <Text size="xl" weight="bold">{`+ ${currency(sale.amount)}`}</Text>
     </View>
   );
 };
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 1000,
-    backgroundColor:'#F6C790'
+    backgroundColor: '#F6C790',
   },
   profileContainer: {
     flexDirection: 'row',
