@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const OrderDetails = () => {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>Orders Detailed page!</Text>
+      <Text>{t('Orders Detailed page!')}</Text>
     </View>
   );
 };

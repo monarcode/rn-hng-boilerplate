@@ -4,6 +4,7 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Bell } from 'react-native-feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 import AddUser from '../../assets/icons/mdi_users-add-outline.svg';
 import Products from '../../assets/icons/products.svg';
@@ -85,7 +86,7 @@ const HomeScreen = () => {
                       <Text size="xl" weight="semiBold">
                         {profileData?.data?.profile?.user_name
                           ? profileData?.data?.profile?.user_name.charAt(0).toUpperCase() +
-                            profileData?.data?.profile?.user_name.slice(1).toLowerCase()
+                          profileData?.data?.profile?.user_name.slice(1).toLowerCase()
                           : userData?.first_name + ' ' + userData?.last_name}
                       </Text>
                     </View>
@@ -114,11 +115,11 @@ const HomeScreen = () => {
                 router.push('/(create-product)/create-product');
               }}
               icon={<Products />}>
-              Add A Product
+              {t('Add A Product')}
             </Button>
 
             <Button icon={<AddUser />} variant="secondary">
-              Add A Product
+              {t('Add A Product')}
             </Button>
           </View>
           <RecentSales />

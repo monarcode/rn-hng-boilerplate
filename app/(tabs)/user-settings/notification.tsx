@@ -1,13 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  StyleSheet,
-  SectionList,
-  SafeAreaView,
-  TouchableOpacity,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, SectionList, SafeAreaView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import CheckIcon from '~/assets/icons/check.svg';
 import GoBack from '~/components/go-back';
@@ -20,6 +15,7 @@ import { NotificationSettingsService } from '~/services/notification-settings';
 import useAuthStore from '~/store/auth';
 
 const NotificationSettings = () => {
+  const { t } = useTranslation();
   const { t } = useTranslation();
   const authstore = useAuthStore();
   const dialogRef = useRef<DialogRef>(null);
@@ -74,6 +70,7 @@ const NotificationSettings = () => {
             <GoBack />
             <Text size="lg" weight="semiBold">
               {t('Notification')}
+              {t('Notification')}
             </Text>
           </View>
           <SectionList
@@ -102,7 +99,7 @@ const NotificationSettings = () => {
               icon={<CheckIcon />}
               loading={settingsMutation.isPending}
               onPress={() => settingsMutation.mutate()}
-              children={t('Save Changes')}
+              children={t("Save Changes")}
             />
           </View>
         </>
@@ -110,12 +107,13 @@ const NotificationSettings = () => {
 
       <Dialog
         ref={dialogRef}
-        title="Notification Updated"
-        description="Notification preferences updated successfully. Remember, you can always adjust these settings again later"
-        showCloseButton={false}>
+        title={t("Notification Updated")}
+        description={t("Notification preferences updated successfully. Remember, you can always adjust these settings again later")}
+        showCloseButton={false}
+      >
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText}>Done</Text>
+            <Text style={styles.cancelButtonText} >{t('Done')}</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
