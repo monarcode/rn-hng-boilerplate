@@ -1,17 +1,19 @@
-import { Image, Pressable, StyleSheet } from 'react-native';
-import { View, Text } from '../shared';
-import React from 'react';
-import { ProductProps } from './types';
-import { THEME } from '~/constants/theme';
-import { Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
-import { createUniqueId, formatCurrency } from '~/modules/products/constants';
+import React from 'react';
+import { Dimensions, Image, Pressable, StyleSheet } from 'react-native';
+
+import { Text, View } from '../shared';
+import { ProductProps } from './types';
+
+import { THEME } from '~/constants/theme';
+import { currency } from '~/libs/currency';
+import { createUniqueId } from '~/modules/products/constants';
 
 const { width } = Dimensions.get('window');
 
 const ProductItemListTile = (product: ProductProps) => {
-  let date = new Date(product.created_at);
-  let date_modified = date.toDateString();
+  const date = new Date(product.created_at);
+  const date_modified = date.toDateString();
   const router = useRouter();
 
   function moreDetails(productId: string) {
@@ -46,7 +48,10 @@ const ProductItemListTile = (product: ProductProps) => {
         </View>
       </View>
       <Text size="xl" weight="bold">
-        {formatCurrency(product.price)}
+        {currency(product.price, {
+          notation: 'compact',
+          maximumFractionDigits: 0,
+        })}
       </Text>
     </View>
   );

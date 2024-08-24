@@ -5,6 +5,7 @@ import TabIcon from './tab';
 
 import { View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+import normalize from '~/libs/normalize';
 
 const width = Dimensions.get('window').width;
 
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: THEME.colors.white,
-    height: 75,
+    height: normalize(56),
     borderTopWidth: 0.4,
     borderTopColor: THEME.colors.border,
     flexDirection: 'row',
