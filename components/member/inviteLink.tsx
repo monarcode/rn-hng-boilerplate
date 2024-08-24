@@ -3,8 +3,8 @@ import { View, StyleSheet, Pressable, ActivityIndicator, TouchableOpacity } from
 import { THEME } from '~/constants/theme';
 import { Text } from '~/components/shared';
 import { Copy, Share2 } from 'react-native-feather';
-import { copyToClipboard } from '~/libs/copyToClipboard';
-import { onShare } from '~/libs/share';
+import { copyToClipboard } from '~/utils/copyToClipboard';
+import { onShare } from '~/utils/share';
 
 interface InviteLinkSectionProps {
   inviteLink: string | null;

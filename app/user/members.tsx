@@ -8,6 +8,7 @@ import InviteLinkSection from '~/components/member/inviteLink';
 import SearchBar from '~/components/member/searchBar';
 import MemberList from '~/components/member/memberList';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { memberArr } from '~/components/member/member';
 
 const Members = () => {
   const authstore = useAuthStore();
@@ -15,31 +16,13 @@ const Members = () => {
 
   const { data, isError, isLoading } = useInvite(authstore.data?.organisations[0].organisation_id);
 
-  // Sample members data
-  const members = [
-    {
-      id: '1',
-      name: 'Kurt Dirk',
-      email: 'kurtd@gmail.com',
-      role: 'Admin',
-      avatar: 'https://i.pravatar.cc/300',
-    },
-    {
-      id: '2',
-      name: 'Lennon Kate',
-      email: 'katie@gmail.com',
-      role: 'Admin',
-      avatar: 'https://i.pravatar.cc/400',
-    },
-    {
-      id: '3',
-      name: 'Sam Curtis',
-      email: 'curty00@gmail.com',
-      role: 'Admin',
-      avatar: 'https://i.pravatar.cc/500',
-    },
-    // Add other members here...
-  ];
+  const filteredMembers = React.useMemo(() => {
+    return memberArr.filter(
+      (member) =>
+        member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm, memberArr]);
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
@@ -50,7 +33,7 @@ const Members = () => {
         isError={isError}
       />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <MemberList members={members} />
+      <MemberList members={filteredMembers} />
     </SafeAreaView>
   );
 };

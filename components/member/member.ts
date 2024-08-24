@@ -1,0 +1,51 @@
+export const memberArr = [
+  {
+    id: '1',
+    name: 'Kurt Dirk',
+    email: 'kurtd@gmail.com',
+    role: 'Admin',
+    avatar: 'https://i.pravatar.cc/300',
+  },
+  {
+    id: '2',
+    name: 'Lennon Kate',
+    email: 'katie@gmail.com',
+    role: 'Admin',
+    avatar: 'https://i.pravatar.cc/400',
+  },
+  {
+    id: '3',
+    name: 'Sam Curtis',
+    email: 'curty00@gmail.com',
+    role: 'Admin',
+    avatar: 'https://i.pravatar.cc/500',
+  },
+  {
+    id: '4',
+    name: 'Amy Nguyen',
+    email: 'amynguyen@gmail.com',
+    role: 'Member',
+    avatar: 'https://i.pravatar.cc/600',
+  },
+  {
+    id: '5',
+    name: 'James Smith',
+    email: 'jamessmith@gmail.com',
+    role: 'Member',
+    avatar: 'https://i.pravatar.cc/700',
+  },
+  {
+    id: '6',
+    name: 'Isabella Johnson',
+    email: 'isabellaj@gmail.com',
+    role: 'Admin',
+    avatar: 'https://i.pravatar.cc/800',
+  },
+  {
+    id: '7',
+    name: 'Michael Brown',
+    email: 'michaelb@gmail.com',
+    role: 'Member',
+    avatar: 'https://i.pravatar.cc/900',
+  },
+];

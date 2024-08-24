@@ -17,23 +17,32 @@ const MemberList = ({ members }: MemberListProps) => {
       <View style={styles.memberItem}>
         <Image source={{ uri: item.avatar }} style={styles.avatar} />
         <View style={styles.memberInfo}>
-          <Text style={styles.memberName} weight="semiBold">
+          <Text size="md" style={styles.memberName} weight="medium">
             {item.name}
           </Text>
           <Text size="sm">{item.email}</Text>
         </View>
-        <Text>{item.role}</Text>
       </View>
     );
   };
 
   return (
-    <FlatList
-      data={members}
-      keyExtractor={(item) => item.id}
-      renderItem={renderMemberItem}
-      showsVerticalScrollIndicator={false}
-    />
+    <>
+      {members.length > 0 ? (
+        <FlatList
+          data={members}
+          keyExtractor={(item) => item.id}
+          renderItem={renderMemberItem}
+          showsVerticalScrollIndicator={false}
+        />
+      ) : (
+        <View style={styles.noResultsContainer}>
+          <Text size="lg" style={styles.noResultsText}>
+            No results found
+          </Text>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -55,9 +64,17 @@ const styles = StyleSheet.create({
   },
   memberInfo: {
     flex: 1,
-    gap: 10,
+    gap: 8,
   },
   memberName: {
     fontWeight: 'bold',
+  },
+  noResultsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noResultsText: {
+    color: THEME.colors.neutral[400],
   },
 });

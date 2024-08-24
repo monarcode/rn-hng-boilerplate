@@ -110,13 +110,13 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
         icon={<Dollar width={20} height={20} />}
         label="Standard Price"
         value={String(productDetail?.price)} // Convert price to string
-        onChangeText={(value) => handleInputChange('price', Number(value))} // Convert back to number when changing
+        onChangeText={(value) => handleInputChange('price', value)} // Convert back to number when changing
       />
 
       <TextInput
         label="Quantity"
         value={String(productDetail?.quantity)} // Convert quantity to string
-        onChangeText={(value) => handleInputChange('quantity', Number(value))} // Convert back to number when changing
+        onChangeText={(value) => handleInputChange('quantity', value)} // Convert back to number when changing
       />
 
       <View style={styles.buttonGroup}>
