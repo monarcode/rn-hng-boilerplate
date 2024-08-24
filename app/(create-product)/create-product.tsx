@@ -2,13 +2,14 @@ import { Link } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import GoBack from '~/components/go-back';
+import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import CreateProductForm from '~/modules/products/components/create-product-form';
 
 const CreateProductScreen = () => {
   return (
-    <>
+    <KeyboardWrapper>
       <SafeAreaView
         edges={['top', 'bottom']}
         style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
@@ -26,7 +27,7 @@ const CreateProductScreen = () => {
           <CreateProductForm />
         </ScrollView>
       </SafeAreaView>
-    </>
+    </KeyboardWrapper>
   );
 };
 

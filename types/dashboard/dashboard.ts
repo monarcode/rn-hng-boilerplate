@@ -27,5 +27,11 @@ type DashboardResponseError = {
   message: string;
   status_code: number;
 };
-
-export { DashboardResponse, DashboardResponseError };
+type InviteLinkResponse = {
+  status_code: number;
+  message: string;
+  data: {
+    invite_link: string;
+  };
+};
+export { DashboardResponse, DashboardResponseError, InviteLinkResponse };
