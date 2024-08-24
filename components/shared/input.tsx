@@ -17,6 +17,7 @@ import Animated, {
 import Text from './text';
 
 import { THEME } from '~/constants/theme';
+import normalize from '~/libs/normalize';
 
 /**
  * Props for the TextInput component.
@@ -74,12 +75,12 @@ const TextInput: React.FC<TextInputProps> = ({
   });
 
   const handleFocus = () => {
-    focusProgress.value = withTiming(1, { duration: 200 });
+    focusProgress.value = withTiming(1, { duration: 300 });
     onFocus?.();
   };
 
   const handleBlur = () => {
-    focusProgress.value = withTiming(0, { duration: 200 });
+    focusProgress.value = withTiming(0, { duration: 300 });
     onBlur?.();
   };
 
@@ -106,18 +107,18 @@ const TextInput: React.FC<TextInputProps> = ({
 const styles = StyleSheet.create({
   outerContainer: {
     width: 'auto',
-    borderRadius: 8,
+    borderRadius: normalize(6),
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderRadius: 6,
+    borderRadius: normalize(6),
     padding: 10,
-    height: 48,
+    height: normalize(38),
   },
   iconContainer: {
-    marginRight: 10,
+    marginRight: normalize(8),
   },
   input: {
     flex: 1,

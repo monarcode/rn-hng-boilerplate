@@ -18,6 +18,7 @@ import Animated, {
 import Text from './text';
 
 import { THEME } from '~/constants/theme';
+import normalize from '~/libs/normalize';
 
 export interface PasswordInputProps {
   /**
@@ -146,18 +147,18 @@ const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
     overflow: 'hidden',
-    borderRadius: 6,
+    borderRadius: normalize(6),
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderRadius: 6,
+    borderRadius: normalize(6),
     padding: 10,
-    height: 48,
+    height: normalize(38),
   },
   iconContainer: {
-    marginRight: 10,
+    marginRight: normalize(8),
   },
   input: {
     flex: 1,

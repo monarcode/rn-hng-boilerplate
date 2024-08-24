@@ -5,6 +5,7 @@ import { ChevronDown } from 'react-native-feather';
 import Animated, { FadeIn, FadeOutDown } from 'react-native-reanimated';
 
 import { THEME } from '~/constants/theme';
+import normalize from '~/libs/normalize';
 
 /**
  * Represents an option in the select component.
@@ -138,10 +139,10 @@ const styles = StyleSheet.create({
   },
   trigger: {
     paddingHorizontal: 10,
-    height: 40,
+    height: normalize(38),
     borderWidth: 1,
     borderColor: THEME.colors.border,
-    borderRadius: 6,
+    borderRadius: normalize(6),
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: THEME.colors.white,
     width: '100%',
-    borderRadius: 6,
+    borderRadius: normalize(6),
     borderWidth: 0.5,
     borderColor: THEME.colors.border,
     marginTop: 4,
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
   },
   item: {
     paddingHorizontal: 10,
-    height: 40,
+    height: normalize(38),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
