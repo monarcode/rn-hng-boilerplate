@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import React, { useRef } from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
 import Business from '~/assets/icons/business.svg';
@@ -10,13 +11,17 @@ import Ellipse from '~/assets/icons/ellipse.svg';
 import ExitIcon from '~/assets/icons/exit-icon.svg';
 import Globe from '~/assets/icons/globe.svg';
 import Notification from '~/assets/icons/notification.svg';
-import People from '~/assets/icons/people.svg';
+import UserPlus from '~/assets/icons/userplus.svg';
+import Users from '~/assets/icons/users.svg';
+import Wallet from '~/assets/icons/wallet.svg';
 import { Dialog, DialogRef, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
 import { SettingItem, SettingsSection } from '~/modules/settings/components';
 import useAuthStore from '~/store/auth';
+
 const UserSettingsScreen = () => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const dialogRef = useRef<DialogRef>(null);
   const resetStore = useAuthStore((state) => state.resetStore);
@@ -38,11 +43,11 @@ const UserSettingsScreen = () => {
   };
   return (
     <SafeAreaView
-      edges={['top', 'bottom']}
+      edges={['top']}
       style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
       <View style={[styles.header]}>
         <Text size="xl" weight="semiBold">
-          Settings
+          {t('Settings')}
         </Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -75,44 +80,40 @@ const UserSettingsScreen = () => {
           </View>
         </View>
 
-        <SettingsSection title="Profile Settings">
+        <SettingsSection title={t("Profile Settings")}>
           {/*
           To enable navigation when using any of the SettingItem components,
           you should call the goto prop within the SettingItem */}
           <SettingItem
             icon={<AccountSetting />}
-            title="Account"
+            title={t("Account")}
             goto={() => router.push('/user/general-profile')}
           />
           <SettingItem
             icon={<Notification />}
-            title="Notification"
+            title={t("Notification")}
             goto={() => router.push('/user-settings/notification')}
           />
           <SettingItem
             icon={<Database />}
-            title="Change Password"
+            title={t("Change Password")}
             goto={() => router.push('/user/change-password')}
           />
           <SettingItem
             icon={<Globe />}
-            title="Language and Region"
+            title={t("Language and Region")}
             goto={() => router.push('/user-settings/language-and-region')}
           />
         </SettingsSection>
 
-        <SettingsSection title="Organizational Settings">
+        <SettingsSection title={t("Organizational Settings")}>
           <SettingItem
-            icon={<Business />}
-            title="Create Organisation"
+            icon={<UserPlus />}
+            title={t("Create Organisation")}
             goto={() => router.push('/(auth)/organisation-sign-up')}
           />
-          <SettingItem icon={<Business />} title="Manage Organization" />
-          <SettingItem
-            icon={<People />}
-            title="Members"
-            goto={() => router.push('/user/members')}
-          />
+          <SettingItem icon={<Business />} title={t("Manage Organization")} />
+          <SettingItem icon={<Users />} title={t("Members")} goto={() => router.push('/user/members')} />
         </SettingsSection>
         <SettingsSection title="Payment Setting">
           <SettingItem
@@ -120,19 +121,21 @@ const UserSettingsScreen = () => {
             title="Subscription"
             goto={() => router.push('/user/subscription')}
           />
+        <SettingsSection title={t("Payment Setting")}>
+          <SettingItem icon={<Wallet />} title={t("Subscription")} />
         </SettingsSection>
         <TouchableOpacity
           style={[styles.logout, { marginBottom: bottomInset }]}
           onPress={handleLogout}>
           <Text size="md" weight="medium" style={{ color: THEME.colors.error }}>
-            Log Out
+            {t('Log Out')}
           </Text>
           <ExitIcon />
         </TouchableOpacity>
 
         <Dialog
           ref={dialogRef}
-          title="Confirm Logout"
+          title={t("Confirm Logout")}
           description="Are you sure you want to log out?"
           showCloseButton={false}>
           <View style={styles.dialogButtons}>
@@ -162,7 +165,7 @@ const styles = StyleSheet.create({
   profileInfo: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: THEME.spacing.xl,
+    marginVertical: THEME.spacing.md,
   },
   profileImageContainer: {
     width: 80,

@@ -13,6 +13,7 @@ import { THEME } from '~/constants/theme';
 import { ProductService } from '~/services/product';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
+import normalize from '~/libs/normalize';
 
 interface Props {
   productDetail: {
@@ -90,7 +91,7 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           style={{
             flex: 1,
           }}
-          inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
+          inputStyle={{ textAlign: 'left', textAlignVertical: 'top', height: 75 }}
           multiline
         />
       </View>
@@ -110,21 +111,20 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
         icon={<Dollar width={20} height={20} />}
         label="Standard Price"
         value={String(productDetail?.price)} // Convert price to string
-        onChangeText={(value) => handleInputChange('price', Number(value))} // Convert back to number when changing
+        onChangeText={(value) => handleInputChange('price', value)} // Convert back to number when changing
       />
 
       <TextInput
         label="Quantity"
         value={String(productDetail?.quantity)} // Convert quantity to string
-        onChangeText={(value) => handleInputChange('quantity', Number(value))} // Convert back to number when changing
+        onChangeText={(value) => handleInputChange('quantity', value)} // Convert back to number when changing
       />
 
       <View style={styles.buttonGroup}>
         <Button
           onPress={() => router.replace('/(tabs)/products')}
-          variant="outline"
-          containerStyle={styles.cancelButton}
-          textStyle={styles.cancelButtonText}>
+          variant="secondary"
+          containerStyle={styles.addButton}>
           Cancel
         </Button>
         <Button onPress={onEdit} containerStyle={styles.addButton} loading={isEditing}>
@@ -138,13 +138,6 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
 const styles = StyleSheet.create({
   wrapper: {
     rowGap: THEME.spacing.lg,
-  },
-
-  label: {
-    marginBottom: 5,
-  },
-  subtext: {
-    marginTop: 5,
   },
   variationContainer: {
     flexDirection: 'row',
@@ -165,7 +158,7 @@ const styles = StyleSheet.create({
   },
   uploadContainer: {
     borderWidth: 1,
-    height: 125,
+    height: normalize(150),
     gap: 5,
     borderColor: '#ddd',
     borderRadius: 6,
@@ -174,7 +167,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     borderStyle: 'dashed',
     overflow: 'hidden',
-    marginTop: 10,
   },
   uploadButton: {
     backgroundColor: THEME.colors.white,
@@ -193,15 +185,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: THEME.spacing.sm,
   },
-  cancelButton: {
-    flex: 1,
-    borderColor: THEME.colors.border,
-    marginRight: 5,
-  },
-  cancelButtonText: {
-    fontSize: THEME.fontSize.md,
-    color: '#333',
-  },
+
   addButton: {
     flex: 1,
     marginLeft: 5,

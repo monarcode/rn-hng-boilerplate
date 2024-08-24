@@ -1,40 +1,45 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Stack } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, SectionList, SafeAreaView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
+import CheckIcon from '~/assets/icons/check.svg';
+import BasicHeader from '~/components/basic-header';
 import GoBack from '~/components/go-back';
 import RenderSetting from '~/components/notification-settings';
 import { Dialog, DialogRef, Text, View, Button } from '~/components/shared';
+import getNotificationSections from '~/constants/notification';
 import { THEME } from '~/constants/theme';
 import { NotificationSettingsService } from '~/services/notification-settings';
 import useAuthStore from '~/store/auth';
-import getNotificationSections from '~/constants/notification';
-import CheckIcon from '~/assets/icons/check.svg';
 
 const NotificationSettings = () => {
+  const { t } = useTranslation();
   const authstore = useAuthStore();
   const dialogRef = useRef<DialogRef>(null);
-  const [notificationData, setNotificationData] = useState(getNotificationSections)
+  const [notificationData, setNotificationData] = useState(getNotificationSections);
+  const { bottom: bottomInset } = useSafeAreaInsets();
 
   const { data: fetchedData, isLoading } = useQuery({
     queryKey: ['fetchNotification', authstore.data?.user.id],
-    queryFn: () => NotificationSettingsService.getNotifications(authstore.data?.user.id)
-  })
+    queryFn: () => NotificationSettingsService.getNotifications(authstore.data?.user.id),
+  });
 
   useEffect(() => {
-    if (fetchedData)
-      setNotificationData(getNotificationSections(fetchedData?.data))
-  }, [fetchedData])
+    if (fetchedData) setNotificationData(getNotificationSections(fetchedData?.data));
+  }, [fetchedData]);
 
   const settingsMutation = useMutation({
     mutationFn: () => NotificationSettingsService.setNotifications(notificationData),
     onSuccess: (res) => {
-      dialogRef.current?.open()
+      dialogRef.current?.open();
     },
     onError: (err) => {
-      Alert.alert('Server error', 'An error occured while saving settings')
-    }
-  })
+      Alert.alert('Server error', 'An error occured while saving settings');
+    },
+  });
 
   const toggleSwitch = (sectionIndex: number, itemIndex: number) => {
     setNotificationData((prevState) => {
@@ -45,24 +50,20 @@ const NotificationSettings = () => {
     });
   };
 
-
   return (
     <SafeAreaView style={styles.container}>
-
       {isLoading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size={'large'} />
+          <ActivityIndicator size="large" />
         </View>
       ) : (
         <>
-          <View style={[styles.header]}>
+          <View style={[styles.header, { marginBottom: bottomInset }]}>
             <GoBack />
             <Text size="lg" weight="semiBold">
-              Notification
+              {t('Notification')}
             </Text>
-            <View />
           </View>
-
           <SectionList
             contentContainerStyle={styles.section}
             keyExtractor={(item, index) => item.header + index}
@@ -89,22 +90,21 @@ const NotificationSettings = () => {
               icon={<CheckIcon />}
               loading={settingsMutation.isPending}
               onPress={() => settingsMutation.mutate()}
-              children="Save Changes"
+              children={t("Save Changes")}
             />
           </View>
         </>
       )}
 
-
       <Dialog
         ref={dialogRef}
-        title="Notification Updated"
-        description="Notification preferences updated successfully. Remember, you can always adjust these settings again later"
+        title={t("Notification Updated")}
+        description={t("Notification preferences updated successfully. Remember, you can always adjust these settings again later")}
         showCloseButton={false}
       >
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText} >Done</Text>
+            <Text style={styles.cancelButtonText} >{t('Done')}</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
@@ -115,25 +115,23 @@ const NotificationSettings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
     backgroundColor: THEME.colors.white,
-    paddingHorizontal: 20,
-    paddingVertical: THEME.spacing.gutter,
+    paddingHorizontal: THEME.spacing.gutter,
   },
   header: {
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: THEME.spacing.sm + 4,
+    marginHorizontal: THEME.spacing.md,
     alignItems: 'center',
-    gap: THEME.spacing.sm,
-    width: '100%',
-    paddingVertical: THEME.spacing.sm,
   },
   saveBtn: {
     width: '100%',
     paddingHorizontal: THEME.spacing.md,
-    marginVertical: 10
+    marginVertical: 10,
   },
   section: {
-    width: '100%',
+    flex: 1,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -161,14 +159,13 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: THEME.colors.white,
     fontSize: THEME.fontSize.lg,
-    fontWeight: 500
+    fontWeight: 500,
   },
   loadingContainer: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default NotificationSettings;

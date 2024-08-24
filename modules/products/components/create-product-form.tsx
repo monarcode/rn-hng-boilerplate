@@ -7,6 +7,7 @@ import { Image, StyleSheet } from 'react-native';
 import { X } from 'react-native-feather';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 
 import Dollar from '../../../assets/dollar.svg';
 import { CreateProductSchema } from '../types/create-product';
@@ -19,8 +20,10 @@ import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
+import normalize from '~/libs/normalize';
 
 const CreateProductForm = () => {
+  const { t } = useTranslation();
   const [image, setImage] = useState({
     fileName: '',
     uri: '',
@@ -68,8 +71,8 @@ const CreateProductForm = () => {
       Toast.show({
         type: 'success',
         props: {
-          title: 'Success',
-          description: 'Product created successfully',
+          title: t('Success'),
+          description: t('Product created successfully'),
         },
       });
       form.reset();
@@ -84,7 +87,7 @@ const CreateProductForm = () => {
       Toast.show({
         type: 'error',
         props: {
-          title: 'Error',
+          title: t('Error'),
           description: error.message,
         },
       });
@@ -104,14 +107,14 @@ const CreateProductForm = () => {
         <Button containerStyle={styles.uploadButton} onPress={pickImage}>
           {!image.uri && (
             <Text style={styles.uploadButtonText} weight="medium">
-              Upload New
+              {t('Upload New')}
             </Text>
           )}
         </Button>
-        {!image.uri && <Text style={styles.subtext}>Upload product image</Text>}
+        {!image.uri && <Text style={styles.subtext}>{t('Upload product image')}</Text>}
       </View>
       {!image.uri && isSubmitAttempted && (
-        <Text style={styles.errorText}>Product Image is required</Text>
+        <Text style={styles.errorText}>{t('Product Image is required')}</Text>
       )}
 
       {image.fileName && (
@@ -155,11 +158,11 @@ const CreateProductForm = () => {
           style={{
             flex: 1,
           }}
-          inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
+          inputStyle={{ textAlign: 'left', textAlignVertical: 'top', height: 75 }}
           multiline
         />
         <Text weight="light" size="sm" style={{ marginTop: 5 }}>
-          Maximum of 72 characters
+          {t('Maximum of 72 characters')}
         </Text>
       </View>
 
@@ -196,16 +199,15 @@ const CreateProductForm = () => {
         <Button
           disabled={isLoading}
           onPress={() => router.replace('/(tabs)/products')}
-          variant="outline"
-          containerStyle={styles.cancelButton}
-          textStyle={styles.cancelButtonText}>
-          Cancel
+          variant="secondary"
+          containerStyle={styles.addButton}>
+          {t('Cancel')}
         </Button>
         <Button
           onPress={form.handleSubmit(onCreate)}
           containerStyle={styles.addButton}
           loading={isLoading}>
-          Add
+          {t('Add')}
         </Button>
       </View>
     </View>
@@ -242,7 +244,7 @@ const styles = StyleSheet.create({
   },
   uploadContainer: {
     borderWidth: 1,
-    height: 125,
+    height: normalize(125),
     gap: 5,
     borderColor: '#ddd',
     borderRadius: 6,
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     borderStyle: 'dashed',
     overflow: 'hidden',
-    marginTop: 10,
+    // marginTop: 10,
   },
   uploadButton: {
     backgroundColor: THEME.colors.white,
@@ -269,15 +271,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: THEME.spacing.sm,
-  },
-  cancelButton: {
-    flex: 1,
-    borderColor: THEME.colors.border,
-    marginRight: 5,
-  },
-  cancelButtonText: {
-    fontSize: THEME.fontSize.md,
-    color: '#333',
   },
   addButton: {
     flex: 1,

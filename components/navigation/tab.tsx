@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { useTranslation } from 'react-i18next';
 
 import { View } from '../shared';
 
@@ -18,24 +19,7 @@ const AnimatedCartIcon = Animated.createAnimatedComponent(Bag);
 const AnimatedSettingsIcon = Animated.createAnimatedComponent(Setting2);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-const routes = {
-  index: {
-    icon: AnimatedHomeIcon,
-    label: 'Home',
-  },
-  products: {
-    icon: AnimatedProductsIcon,
-    label: 'Products',
-  },
-  orders: {
-    icon: AnimatedCartIcon,
-    label: 'Orders',
-  },
-  'user-settings': {
-    icon: AnimatedSettingsIcon,
-    label: 'Settings',
-  },
-};
+
 
 interface Props {
   route: string;
@@ -45,6 +29,27 @@ interface Props {
 const INACTIVE_COLOR = '#4e4e4e';
 
 const TabIcon: React.FC<Props> = ({ route, isFocused }) => {
+  const { t } = useTranslation();
+
+  const routes = {
+    index: {
+      icon: AnimatedHomeIcon,
+      label: t('Home'),
+    },
+    products: {
+      icon: AnimatedProductsIcon,
+      label: t('Products'),
+    },
+    orders: {
+      icon: AnimatedCartIcon,
+      label: t('Orders'),
+    },
+    'user-settings': {
+      icon: AnimatedSettingsIcon,
+      label: t('Settings'),
+    },
+  };
+
   const progress = useSharedValue(0);
 
   const animatedColor = useDerivedValue(() => {

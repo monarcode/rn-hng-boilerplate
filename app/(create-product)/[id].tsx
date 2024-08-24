@@ -10,6 +10,8 @@ import GoBack from '~/components/go-back';
 import { Text } from '~/components/shared';
 import EditProductForm from '~/modules/products/components/edit-product-form';
 import { ProductDetailType } from '~/modules/products/types/create-product';
+import KeyboardAwareWrapper from '~/components/keyboard-aware-wrapper';
+import BasicHeader from '~/components/basic-header';
 
 const EdittProduct = () => {
   const { id } = useLocalSearchParams();
@@ -63,28 +65,24 @@ const EdittProduct = () => {
 
   return (
     <>
-      <SafeAreaView
-        edges={['top', 'bottom']}
-        style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
-        <View style={styles.header}>
-          <GoBack />
-          <Text weight="bold" size="xl">
-            Edit Product
-          </Text>
-          <View style={styles.iconPlaceholder} />
-        </View>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={false}>
-          <EditProductForm
-            handleInputChange={handleInputChange}
-            product={product}
-            productDetail={productDetail}
-            productId={id}
-          />
-        </ScrollView>
-      </SafeAreaView>
+      <BasicHeader label="Edit Product" />
+      <KeyboardAwareWrapper>
+        <SafeAreaView
+          edges={['top', 'bottom']}
+          style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+          <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.contentContainer}
+            showsVerticalScrollIndicator={false}>
+            <EditProductForm
+              handleInputChange={handleInputChange}
+              product={product}
+              productDetail={productDetail}
+              productId={id}
+            />
+          </ScrollView>
+        </SafeAreaView>
+      </KeyboardAwareWrapper>
     </>
   );
 };
@@ -93,28 +91,14 @@ export default EdittProduct;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   contentContainer: {
-    rowGap: THEME.spacing.xl,
-    flexGrow: 1,
-    paddingBottom: 10,
+    // rowGap: THEME.spacing.xl,
+    // flexGrow: 1,
+    // paddingBottom: 10,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    // marginBottom: THEME.spacing.lg,
-    paddingVertical: THEME.spacing.md,
-    borderBottomWidth: 0.6,
-    borderBottomColor: THEME.colors.border,
-  },
-  iconPlaceholder: {
-    width: 24,
-    height: 24,
-    backgroundColor: 'transparent',
-    borderRadius: 12,
-  },
+
   subtitle: {
     color: THEME.colors.neutral[300],
     marginTop: THEME.spacing.sm,

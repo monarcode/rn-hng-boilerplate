@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, StatusBar, SafeAreaView } from 'react-native';
 import { ChevronLeft } from 'react-native-feather';
+import { useTranslation } from 'react-i18next';
 
 import Dollar from '../../assets/dollar.svg';
 
@@ -8,6 +9,7 @@ import { Button, Select, Text, TextInput } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
 const CreateProductScreen = () => {
+  const { t } = useTranslation();
   const [description, setDescription] = useState('');
 
   const handleDescriptionChange = (text: string) => {
@@ -29,21 +31,21 @@ const CreateProductScreen = () => {
         <View style={styles.header}>
           <ChevronLeft color={THEME.colors.black} />
           <Text weight="bold" size="lg">
-            Add a Product
+            {t('Add a Product')}
           </Text>
           <View style={styles.iconPlaceholder} />
         </View>
 
         <View style={styles.formGroup}>
           <Text style={styles.label} weight="semiBold">
-            Title<Text style={{ color: THEME.colors.primary }}>*</Text>
+            {t('Title')}<Text style={{ color: THEME.colors.primary }}>*</Text>
           </Text>
-          <TextInput placeholder="Product name" />
+          <TextInput placeholder={t("Product name")} />
         </View>
 
         <View style={styles.formGroup}>
           <Text style={styles.label} weight="semiBold">
-            Description
+            {t('Description')}
           </Text>
           <TextInput
             value={description}
@@ -53,20 +55,20 @@ const CreateProductScreen = () => {
             placeholder="Enter product description"
           />
           <Text style={styles.subtext} weight="light">
-            Maximum of 72 characters
+            {t('Maximum of 72 characters')}
           </Text>
         </View>
 
         <View style={styles.formGroup}>
           <Text style={styles.label} weight="semiBold">
-            Category
+            {t('Category')}
           </Text>
           <Select options={options} placeholder="Select an option" width={300} />
         </View>
 
         <View style={styles.formGroup}>
           <Text style={styles.label} weight="semiBold">
-            Standard Price<Text style={{ color: THEME.colors.primary }}>*</Text>
+            {t('Standard Price')}<Text style={{ color: THEME.colors.primary }}>*</Text>
           </Text>
           <TextInput
             style={styles.priceInput}
@@ -77,19 +79,19 @@ const CreateProductScreen = () => {
 
         <View style={styles.formGroup}>
           <Text style={styles.label} weight="semiBold">
-            Quantity<Text style={{ color: THEME.colors.primary }}>*</Text>
+            {t('Quantity')}<Text style={{ color: THEME.colors.primary }}>*</Text>
           </Text>
           <TextInput placeholder="0.00 pcs" />
         </View>
 
         <View style={styles.formGroup}>
           <Text style={styles.label} size="md" weight="semiBold">
-            Media
+            {t('Media')}
           </Text>
           <View style={styles.uploadContainer}>
             <Button containerStyle={styles.uploadButton}>
               <Text style={styles.uploadButtonText} weight="medium">
-                Upload New
+                {t('Upload New')}
               </Text>
             </Button>
             <Text style={styles.subtext}>Accepts images, videos or 3D models</Text>
@@ -101,9 +103,9 @@ const CreateProductScreen = () => {
             variant="outline"
             containerStyle={styles.cancelButton}
             textStyle={styles.cancelButtonText}>
-            Cancel
+            {t('Cancel')}
           </Button>
-          <Button containerStyle={styles.addButton}>Add</Button>
+          <Button containerStyle={styles.addButton}>{t('Add')}</Button>
         </View>
       </ScrollView>
     </SafeAreaView>

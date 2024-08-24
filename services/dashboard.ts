@@ -1,7 +1,11 @@
 import { HTTPError } from 'ky';
 
 import { http } from '~/libs/ky';
-import { DashboardResponse, DashboardResponseError } from '~/types/dashboard/dashboard';
+import {
+  DashboardResponse,
+  DashboardResponseError,
+  InviteLinkResponse,
+} from '~/types/dashboard/dashboard';
 
 const fetchDashboard = async (userId: string | undefined): Promise<DashboardResponse> => {
   try {
@@ -15,5 +19,19 @@ const fetchDashboard = async (userId: string | undefined): Promise<DashboardResp
     throw error;
   }
 };
+const fetchInvite = async (orgId: string | undefined): Promise<InviteLinkResponse> => {
+  try {
+    const response = await http.get(`organisations/${orgId}/invites`).json<InviteLinkResponse>();
 
-export { fetchDashboard };
+    return response;
+  } catch (error) {
+    console.log(error);
+
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<DashboardResponseError>();
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
+export { fetchDashboard, fetchInvite };

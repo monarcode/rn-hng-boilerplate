@@ -1,5 +1,6 @@
 import { Redirect, router, Stack } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Bell } from 'react-native-feather';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -19,6 +20,7 @@ import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {
   const authstore = useAuthStore();
+  const { t } = useTranslation();
   const { data: profileData } = useFetchProfile();
   const userData = useAuthStore((state) => state.data?.user);
   const { top } = useSafeAreaInsets();
@@ -75,7 +77,7 @@ const HomeScreen = () => {
 
                     <View style={styles.textRow}>
                       <Text size="md" weight="medium" style={styles.greetingText}>
-                        Welcome back!
+                        {t('Welcome back!')}
                       </Text>
 
                       <Text size="xl" weight="semiBold">
@@ -104,17 +106,18 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Summary />
-          <View style={styles.buttonContainer}>
+          <View style={[styles.buttonContainer]}>
             <Button
               onPress={() => {
                 router.push('/(create-product)/create-product');
               }}
+              containerStyle={{ flex: 1 }}
               icon={<Products />}>
-              Add A Product
+              {t('Add A Product')}
             </Button>
 
-            <Button icon={<AddUser />} variant="secondary">
-              Add A Product
+            <Button containerStyle={{ flex: 1 }} icon={<AddUser />} variant="secondary">
+              {t('Add A Product')}
             </Button>
           </View>
           <RecentSales />
@@ -192,7 +195,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: THEME.spacing.md,
+    gap: THEME.spacing.sm,
+    flex: 1,
   },
 });
 

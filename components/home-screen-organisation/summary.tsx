@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -12,6 +13,8 @@ import SummaryCard from './summary-card';
 import { THEME } from '~/constants/theme';
 
 const Summary = () => {
+  const { t } = useTranslation();
+
   const summary = [
     {
       title: 'Total Members',
@@ -46,10 +49,10 @@ const Summary = () => {
     <View style={styles.container}>
       <View style={{ gap: THEME.spacing.xs }}>
         <Text size="2xl" weight="bold">
-          Dashboard
+          {t('Dashboard')}
         </Text>
         <Text size="md" style={{ color: THEME.colors.neutral[300] }}>
-          This Month's Summary
+          {t("This Month's Summary")}
         </Text>
       </View>
       <FlatList
