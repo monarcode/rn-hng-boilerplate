@@ -20,6 +20,7 @@ import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
+import normalize from '~/libs/normalize';
 
 const CreateProductForm = () => {
   const { t } = useTranslation();
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   },
   uploadContainer: {
     borderWidth: 1,
-    height: 125,
+    height: normalize(125),
     gap: 5,
     borderColor: '#ddd',
     borderRadius: 6,
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     borderStyle: 'dashed',
     overflow: 'hidden',
-    marginTop: 10,
+    // marginTop: 10,
   },
   uploadButton: {
     backgroundColor: THEME.colors.white,

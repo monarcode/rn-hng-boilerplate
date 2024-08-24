@@ -14,6 +14,7 @@ import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
+import normalize from '~/libs/normalize';
 
 interface Props {
   productDetail: {
@@ -140,13 +141,6 @@ const styles = StyleSheet.create({
   wrapper: {
     rowGap: THEME.spacing.lg,
   },
-
-  label: {
-    marginBottom: 5,
-  },
-  subtext: {
-    marginTop: 5,
-  },
   variationContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -166,7 +160,7 @@ const styles = StyleSheet.create({
   },
   uploadContainer: {
     borderWidth: 1,
-    height: 125,
+    height: normalize(150),
     gap: 5,
     borderColor: '#ddd',
     borderRadius: 6,
@@ -175,7 +169,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     borderStyle: 'dashed',
     overflow: 'hidden',
-    marginTop: 10,
   },
   uploadButton: {
     backgroundColor: THEME.colors.white,
