@@ -6,6 +6,7 @@ const colors = {
   white: '#FFFFFF',
   border: '#CBD5E1',
   apply: '#FCB889',
+  inactive: '#FDEEE3',
   neutral: {
     300: '#525252',
     400: '#7B7B7B',

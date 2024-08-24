@@ -115,7 +115,11 @@ const UserSettingsScreen = () => {
           />
         </SettingsSection>
         <SettingsSection title="Payment Setting">
-          <SettingItem icon={<Business />} title="Subscription" />
+          <SettingItem
+            icon={<Business />}
+            title="Subscription"
+            goto={() => router.push('/user/subscription')}
+          />
         </SettingsSection>
         <TouchableOpacity
           style={[styles.logout, { marginBottom: bottomInset }]}
