@@ -1,43 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { StyleSheet, SafeAreaView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import GoBack from '~/components/go-back';
 import { Dialog, DialogRef, Text, View, Button, Select } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import { TimeZoneService } from '~/services/timeZones';
 import { router } from 'expo-router';
 
 const LanguageAndRegion = () => {
+  const { t } = useTranslation();
   const dialogRef = useRef<DialogRef>(null);
+  const { i18n } = useTranslation();
+  const [selectedLang, setSelectedLang] = useState('');
 
-  const { data: fetchedData } = useQuery({
-    queryKey: ['fetchTimeZone'],
-    queryFn: TimeZoneService.getTimeZone,
-  });
-
-  console.log('fetchedData', fetchedData);
-
-  const settingsMutation = useMutation({
-    mutationFn: () => TimeZoneService.setTimeZone(null),
-    onSuccess: (res) => {
-      dialogRef.current?.open();
-    },
-    onError: (err) => {
-      Alert.alert('Server error', 'An error occured while saving settings');
-    },
-  });
+  const switchLanguage = () => {
+    i18n.changeLanguage(selectedLang || 'en');
+    dialogRef.current?.open();
+  };
 
   const languageOptions = [
-    { label: 'Italiano (Italian)', value: 'Italiano (Italian)' },
-    { label: 'Español (Spanish)', value: 'Español (Spanish)' },
-    { label: 'Français (French)', value: 'Français (French)' },
-    { label: 'Deutsch (German)', value: 'Deutsch (German)' },
-    { label: 'English', value: 'English' },
-    { label: '日本語 (Japanese)', value: '日本語 (Japanese)' },
-    { label: '한국어 (Korean)', value: '한국어 (Korean)' },
-    { label: 'Русский (Russian)', value: 'Русский (Russian)' },
-    { label: 'العربية (Arabic)', value: 'العربية (Arabic)' },
+    { label: 'English', value: 'en' },
+    { label: 'Français (French)', value: 'fr' },
+    // { label: 'Italiano (Italian)', value: 'Italiano (Italian)' },
+    // { label: 'Español (Spanish)', value: 'Español (Spanish)' },
+    // { label: 'Deutsch (German)', value: 'Deutsch (German)' },
+    // { label: '日本語 (Japanese)', value: '日本語 (Japanese)' },
+    // { label: '한국어 (Korean)', value: '한국어 (Korean)' },
+    // { label: 'Русский (Russian)', value: 'Русский (Russian)' },
+    // { label: 'العربية (Arabic)', value: 'العربية (Arabic)' },
   ];
 
   const regionOptions = [
@@ -65,47 +55,44 @@ const LanguageAndRegion = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {false ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size={'large'} />
+      <View style={[styles.header]}>
+        <GoBack />
+        <Text size="lg" weight="semiBold">
+          {t('Language & Region')}
+        </Text>
+        <View />
+      </View>
+
+      <View style={styles.container}>
+        <Text style={styles.subHeaderText}>
+          {t('Customise your language and region prefrences')}
+        </Text>
+        <View style={styles.sectionContainer}>
+          <Select
+            onValueChange={(e) => setSelectedLang(e?.value || '')}
+            options={languageOptions}
+            placeholder="Language"
+            width={300}
+          />
+          <Select options={regionOptions} placeholder="Region" width={300} />
+          <Select options={timeZoneOptions} placeholder="Time-Zone" width={300} />
         </View>
-      ) : (
-        <>
-          <View style={[styles.header]}>
-            <GoBack />
-            <Text size="lg" weight="semiBold">
-              Language & Region
-            </Text>
-            <View />
-          </View>
 
-          <View style={styles.container}>
-            <Text style={styles.subHeaderText}>Customise your language and region prefrences</Text>
-            <View style={styles.sectionContainer}>
-              <Select options={languageOptions} placeholder="Language" width={300} />
-              <Select options={regionOptions} placeholder="Region" width={300} />
-              <Select options={timeZoneOptions} placeholder="Time-Zone" width={300} />
-            </View>
-
-            <View style={styles.btnContaner}>
-              <Button
-                loading={settingsMutation.isPending}
-                onPress={() => dialogRef.current?.open()}
-                children="Save"
-              />
-              <Button onPress={() => router.back()} children="Cancel" variant="outline" />
-            </View>
-          </View>
-        </>
-      )}
+        <View style={styles.btnContaner}>
+          <Button onPress={switchLanguage} children={t('Save')} />
+          <Button onPress={() => router.back()} children={t('Cancel')} variant="outline" />
+        </View>
+      </View>
       <Dialog
         ref={dialogRef}
-        title="Language and Region Updated"
-        description="Language and Region updated successfully. Remember, you can always adjust these settings again later"
+        title={t('Language and Region Updated')}
+        description={t(
+          'Language and Region updated successfully. Remember, you can always adjust these settings again later'
+        )}
         showCloseButton={false}>
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText}>Done</Text>
+            <Text style={styles.cancelButtonText}>{t('Done')}</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
