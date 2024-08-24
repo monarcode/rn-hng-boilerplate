@@ -16,7 +16,7 @@ import View from './view';
 import { THEME } from '~/constants/theme';
 import normalize from '~/libs/normalize';
 
-type ButtonVariant = 'primary' | 'outline' | 'secondary';
+type ButtonVariant = 'primary' | 'outline' | 'secondary' | 'inactive';
 
 interface ButtonProps extends PressableProps {
   children: React.ReactNode;
@@ -58,6 +58,7 @@ function Button({
       variant === 'primary' && styles.primaryContainer,
       variant === 'outline' && styles.outlineContainer,
       variant === 'secondary' && styles.secondaryContainer,
+      variant === 'inactive' && styles.inactiveContainer,
       containerStyle,
     ];
 
@@ -66,6 +67,7 @@ function Button({
       variant === 'primary' && styles.primaryText,
       variant === 'outline' && styles.outlineText,
       variant === 'secondary' && styles.secondaryText,
+      variant === 'inactive' && styles.inactiveText,
       textStyle,
     ];
 
@@ -122,6 +124,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: THEME.colors.border,
   },
+  inactiveContainer: {
+    backgroundColor: THEME.colors.inactive,
+  },
   primaryText: {
     color: THEME.colors.white,
   },
@@ -130,6 +135,9 @@ const styles = StyleSheet.create({
   },
   secondaryText: {
     color: THEME.colors.dark,
+  },
+  inactiveText: {
+    color: THEME.colors.neutral[300],
   },
   iconContainer: {},
 });
