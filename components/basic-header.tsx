@@ -10,7 +10,7 @@ const BasicHeader = ({ label }: { label: string }) => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.conatiner, { marginTop: insets.top }]}>
+    <View style={[styles.container, { marginTop: insets.top }]}>
       <View
         style={{
           marginLeft: -4,
@@ -26,7 +26,7 @@ const BasicHeader = ({ label }: { label: string }) => {
 };
 
 const styles = StyleSheet.create({
-  conatiner: {
+  container: {
     flexDirection: 'row',
     alignItems: 'center',
     height: 45,
