@@ -155,7 +155,7 @@ const CreateProductForm = () => {
           style={{
             flex: 1,
           }}
-          inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
+          inputStyle={{ textAlign: 'left', textAlignVertical: 'top', height: 75 }}
           multiline
         />
         <Text weight="light" size="sm" style={{ marginTop: 5 }}>

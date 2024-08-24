@@ -90,7 +90,7 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           style={{
             flex: 1,
           }}
-          inputStyle={{ textAlign: 'left', textAlignVertical: 'top' }}
+          inputStyle={{ textAlign: 'left', textAlignVertical: 'top', height: 75 }}
           multiline
         />
       </View>
