@@ -14,6 +14,7 @@ import Text from './text';
 import View from './view';
 
 import { THEME } from '~/constants/theme';
+import normalize from '~/libs/normalize';
 
 type ButtonVariant = 'primary' | 'outline' | 'secondary';
 
@@ -98,8 +99,8 @@ export default Button;
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
-    borderRadius: 6,
+    height: normalize(40),
+    borderRadius: normalize(6),
     justifyContent: 'center',
     alignItems: 'center',
     width: 'auto',

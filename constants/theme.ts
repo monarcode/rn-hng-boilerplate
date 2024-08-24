@@ -1,3 +1,5 @@
+import normalize from '~/libs/normalize';
+
 const colors = {
   primary: '#F97316',
   black: '#000000',
@@ -27,12 +29,12 @@ const colors = {
 
 const spacing = {
   xs: 4,
-  sm: 8,
-  md: 16,
-  lg: 24,
-  xl: 32,
+  sm: normalize(8),
+  md: normalize(14),
+  lg: normalize(22),
+  xl: normalize(30),
   /** Screen horizontal padding */
-  gutter: 24,
+  gutter: normalize(18),
 } as const;
 
 const fontFamily = {
@@ -46,10 +48,10 @@ const fontFamily = {
 } as const;
 
 const fontSize = {
-  xs: 10,
-  sm: 12,
-  md: 14,
-  lg: 16,
+  xs: normalize(7),
+  sm: normalize(9),
+  md: normalize(11),
+  lg: normalize(13),
   xl: 18,
   '2xl': 20,
   '3xl': 24,
