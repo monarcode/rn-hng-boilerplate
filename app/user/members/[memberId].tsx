@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     position: 'relative',
-    marginVertical: THEME.spacing.xl,
+    marginVertical: 20,
   },
   avatar: {
     width: 120,
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'column',
     gap: THEME.spacing.sm,
+    marginVertical: 20,
   },
   editButton: {
     backgroundColor: THEME.colors.primary,
