@@ -7,6 +7,7 @@ import { Image, StyleSheet } from 'react-native';
 import { X } from 'react-native-feather';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 
 import Dollar from '../../../assets/dollar.svg';
 import { CreateProductSchema } from '../types/create-product';
@@ -21,6 +22,7 @@ import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
 
 const CreateProductForm = () => {
+  const { t } = useTranslation();
   const [image, setImage] = useState({
     fileName: '',
     uri: '',
@@ -68,8 +70,8 @@ const CreateProductForm = () => {
       Toast.show({
         type: 'success',
         props: {
-          title: 'Success',
-          description: 'Product created successfully',
+          title: t('Success'),
+          description: t('Product created successfully'),
         },
       });
       form.reset();
@@ -84,7 +86,7 @@ const CreateProductForm = () => {
       Toast.show({
         type: 'error',
         props: {
-          title: 'Error',
+          title: t('Error'),
           description: error.message,
         },
       });
@@ -104,14 +106,14 @@ const CreateProductForm = () => {
         <Button containerStyle={styles.uploadButton} onPress={pickImage}>
           {!image.uri && (
             <Text style={styles.uploadButtonText} weight="medium">
-              Upload New
+              {t('Upload New')}
             </Text>
           )}
         </Button>
-        {!image.uri && <Text style={styles.subtext}>Upload product image</Text>}
+        {!image.uri && <Text style={styles.subtext}>{t('Upload product image')}</Text>}
       </View>
       {!image.uri && isSubmitAttempted && (
-        <Text style={styles.errorText}>Product Image is required</Text>
+        <Text style={styles.errorText}>{t('Product Image is required')}</Text>
       )}
 
       {image.fileName && (
@@ -159,7 +161,7 @@ const CreateProductForm = () => {
           multiline
         />
         <Text weight="light" size="sm" style={{ marginTop: 5 }}>
-          Maximum of 72 characters
+          {t('Maximum of 72 characters')}
         </Text>
       </View>
 
@@ -198,13 +200,13 @@ const CreateProductForm = () => {
           onPress={() => router.replace('/(tabs)/products')}
           variant="secondary"
           containerStyle={styles.addButton}>
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button
           onPress={form.handleSubmit(onCreate)}
           containerStyle={styles.addButton}
           loading={isLoading}>
-          Add
+          {t('Add')}
         </Button>
       </View>
     </View>

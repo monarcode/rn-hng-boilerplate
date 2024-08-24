@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { List } from 'react-native-feather';
+import { useTranslation } from 'react-i18next';
 
 import GridIcon from '../../assets/icons/icongrid.svg';
 import GoBack from '../go-back';
@@ -14,13 +15,15 @@ type TopHeaderProps = {
 };
 
 const ProductTopHeader = ({ listViewOption, setListViewOption }: TopHeaderProps) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View style={{ gap: THEME.spacing.sm }}>
         <Text size="2xl" weight="bold">
-          Products
+          {t('Products')}
         </Text>
-        <Text size="md">View all products</Text>
+        <Text size="md">{t('View all products')}</Text>
       </View>
       {/* <View style={{ flexDirection: 'row', gap: THEME.spacing.sm }}>
                 <Pressable
