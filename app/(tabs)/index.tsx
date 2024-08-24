@@ -5,6 +5,7 @@ import { Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 import { Bell } from 'react-native-feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 import AddUser from '../../assets/icons/mdi_users-add-outline.svg';
 import Products from '../../assets/icons/products.svg';
@@ -119,15 +120,11 @@ const HomeScreen = () => {
                 router.push('/(create-product)/create-product');
               }}
               icon={<Products />}>
-              Add A Product
+              {t('Add A Product')}
             </Button>
 
-            <Button
-              icon={<AddUser />}
-              variant="outline"
-              containerStyle={{ borderColor: THEME.colors.neutral[400] }}
-              textStyle={{ color: THEME.colors.black }}>
-              Add A Product
+            <Button icon={<AddUser />} variant="secondary">
+              {t('Add A Product')}
             </Button>
           </View>
           <RecentSales />
