@@ -3,17 +3,17 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import GoogleLogo from '~/assets/icons/google-icon.svg';
-import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
+import KeyboardAwareWrapper from '~/components/keyboard-aware-wrapper';
 import { Button, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import SignInForm from '~/modules/authentication/components/sign-in-form';
 
 const LoginScreen = () => {
   return (
-    <KeyboardWrapper>
-      <SafeAreaView
-        edges={['top', 'bottom']}
-        style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+    <SafeAreaView
+      edges={['top', 'bottom']}
+      style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+      <KeyboardAwareWrapper showsVerticalScrollIndicator={false}>
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
@@ -53,8 +53,8 @@ const LoginScreen = () => {
             </Text>
           </View>
         </ScrollView>
-      </SafeAreaView>
-    </KeyboardWrapper>
+      </KeyboardAwareWrapper>
+    </SafeAreaView>
   );
 };
 

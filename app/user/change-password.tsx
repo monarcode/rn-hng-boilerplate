@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Checkmark from '~/assets/icons/checkmark.svg';
 import BasicHeader from '~/components/basic-header';
-import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
+import KeyboardAwareWrapper from '~/components/keyboard-aware-wrapper';
 import { Button, Text, View } from '~/components/shared';
 import { FormPasswordInput } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
@@ -84,7 +84,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <KeyboardWrapper>
+    <KeyboardAwareWrapper>
       <Stack.Screen
         options={{
           header: () => <BasicHeader label="Password Setting" />,
@@ -172,7 +172,7 @@ const ChangePassword = () => {
           </View>
         </ScrollView>
       </View>
-    </KeyboardWrapper>
+    </KeyboardAwareWrapper>
   );
 };
 export default ChangePassword;
