@@ -122,9 +122,8 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
       <View style={styles.buttonGroup}>
         <Button
           onPress={() => router.replace('/(tabs)/products')}
-          variant="outline"
-          containerStyle={styles.cancelButton}
-          textStyle={styles.cancelButtonText}>
+          variant="secondary"
+          containerStyle={styles.addButton}>
           Cancel
         </Button>
         <Button onPress={onEdit} containerStyle={styles.addButton} loading={isEditing}>
@@ -193,15 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: THEME.spacing.sm,
   },
-  cancelButton: {
-    flex: 1,
-    borderColor: THEME.colors.border,
-    marginRight: 5,
-  },
-  cancelButtonText: {
-    fontSize: THEME.fontSize.md,
-    color: '#333',
-  },
+
   addButton: {
     flex: 1,
     marginLeft: 5,

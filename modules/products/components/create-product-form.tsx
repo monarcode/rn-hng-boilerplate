@@ -196,9 +196,8 @@ const CreateProductForm = () => {
         <Button
           disabled={isLoading}
           onPress={() => router.replace('/(tabs)/products')}
-          variant="outline"
-          containerStyle={styles.cancelButton}
-          textStyle={styles.cancelButtonText}>
+          variant="secondary"
+          containerStyle={styles.addButton}>
           Cancel
         </Button>
         <Button
@@ -269,15 +268,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: THEME.spacing.sm,
-  },
-  cancelButton: {
-    flex: 1,
-    borderColor: THEME.colors.border,
-    marginRight: 5,
-  },
-  cancelButtonText: {
-    fontSize: THEME.fontSize.md,
-    color: '#333',
   },
   addButton: {
     flex: 1,
