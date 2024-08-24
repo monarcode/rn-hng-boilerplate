@@ -5,6 +5,12 @@ export type AuthSuccessResponse = {
   status_code: number;
 };
 
+export type ForgotPasswordResponse = {
+  message: string;
+  status_code: number;
+  data: string[] | null;
+};
+
 export type OrganisationResponse = {
   id: number;
   name: string;
