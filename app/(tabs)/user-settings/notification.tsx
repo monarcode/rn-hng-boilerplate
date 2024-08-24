@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Stack } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
@@ -8,8 +9,10 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import CheckIcon from '~/assets/icons/check.svg';
+import BasicHeader from '~/components/basic-header';
 import GoBack from '~/components/go-back';
 import RenderSetting from '~/components/notification-settings';
 import { Dialog, DialogRef, Text, View, Button } from '~/components/shared';
@@ -22,6 +25,7 @@ const NotificationSettings = () => {
   const authstore = useAuthStore();
   const dialogRef = useRef<DialogRef>(null);
   const [notificationData, setNotificationData] = useState(getNotificationSections);
+  const { bottom: bottomInset } = useSafeAreaInsets();
 
   const { data: fetchedData, isLoading } = useQuery({
     queryKey: ['fetchNotification', authstore.data?.user.id],
@@ -59,14 +63,12 @@ const NotificationSettings = () => {
         </View>
       ) : (
         <>
-          <View style={[styles.header]}>
+          <View style={[styles.header, { marginBottom: bottomInset }]}>
             <GoBack />
             <Text size="lg" weight="semiBold">
               Notification
             </Text>
-            <View />
           </View>
-
           <SectionList
             contentContainerStyle={styles.section}
             keyExtractor={(item, index) => item.header + index}
@@ -117,17 +119,15 @@ const NotificationSettings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
     backgroundColor: THEME.colors.white,
-    paddingHorizontal: 20,
-    paddingVertical: THEME.spacing.gutter,
+    paddingHorizontal: THEME.spacing.gutter,
   },
   header: {
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: THEME.spacing.sm + 4,
+    marginHorizontal: THEME.spacing.md,
     alignItems: 'center',
-    gap: THEME.spacing.sm,
-    width: '100%',
-    paddingVertical: THEME.spacing.sm,
   },
   saveBtn: {
     width: '100%',
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   section: {
-    width: '100%',
+    flex: 1,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -166,8 +166,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
   },
   loadingContainer: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
