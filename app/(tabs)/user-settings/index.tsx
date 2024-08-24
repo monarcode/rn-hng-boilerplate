@@ -10,7 +10,9 @@ import Ellipse from '~/assets/icons/ellipse.svg';
 import ExitIcon from '~/assets/icons/exit-icon.svg';
 import Globe from '~/assets/icons/globe.svg';
 import Notification from '~/assets/icons/notification.svg';
-import People from '~/assets/icons/people.svg';
+import UserPlus from '~/assets/icons/userplus.svg';
+import Users from '~/assets/icons/users.svg';
+import Wallet from '~/assets/icons/wallet.svg';
 import { Dialog, DialogRef, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
@@ -103,19 +105,15 @@ const UserSettingsScreen = () => {
 
         <SettingsSection title="Organizational Settings">
           <SettingItem
-            icon={<Business />}
+            icon={<UserPlus />}
             title="Create Organisation"
             goto={() => router.push('/(auth)/organisation-sign-up')}
           />
           <SettingItem icon={<Business />} title="Manage Organization" />
-          <SettingItem
-            icon={<People />}
-            title="Members"
-            goto={() => router.push('/user/members')}
-          />
+          <SettingItem icon={<Users />} title="Members" goto={() => router.push('/user/members')} />
         </SettingsSection>
         <SettingsSection title="Payment Setting">
-          <SettingItem icon={<Business />} title="Subscription" />
+          <SettingItem icon={<Wallet />} title="Subscription" />
         </SettingsSection>
         <TouchableOpacity
           style={[styles.logout, { marginBottom: bottomInset }]}
