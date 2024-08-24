@@ -1,10 +1,10 @@
 import { Redirect, router, Stack } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Bell } from 'react-native-feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
 
 import AddUser from '../../assets/icons/mdi_users-add-outline.svg';
 import Products from '../../assets/icons/products.svg';
@@ -83,7 +83,7 @@ const HomeScreen = () => {
                       <Text size="xl" weight="semiBold">
                         {profileData?.data?.profile?.user_name
                           ? profileData?.data?.profile?.user_name.charAt(0).toUpperCase() +
-                          profileData?.data?.profile?.user_name.slice(1).toLowerCase()
+                            profileData?.data?.profile?.user_name.slice(1).toLowerCase()
                           : userData?.first_name + ' ' + userData?.last_name}
                       </Text>
                     </View>
@@ -106,16 +106,17 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Summary />
-          <View style={styles.buttonContainer}>
+          <View style={[styles.buttonContainer]}>
             <Button
               onPress={() => {
                 router.push('/(create-product)/create-product');
               }}
+              containerStyle={{ flex: 1 }}
               icon={<Products />}>
               {t('Add A Product')}
             </Button>
 
-            <Button icon={<AddUser />} variant="secondary">
+            <Button containerStyle={{ flex: 1 }} icon={<AddUser />} variant="secondary">
               {t('Add A Product')}
             </Button>
           </View>
@@ -194,7 +195,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: THEME.spacing.md,
+    gap: THEME.spacing.sm,
+    flex: 1,
   },
 });
 
