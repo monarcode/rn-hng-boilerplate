@@ -15,7 +15,7 @@ const CreateProductScreen = () => {
         style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
         <View style={styles.header}>
           <GoBack />
-          <Text weight="bold" size="xl">
+          <Text weight="semiBold" size="xl">
             Add a Product
           </Text>
           <View style={styles.iconPlaceholder} />
@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+
+    gap: 10,
     // marginBottom: THEME.spacing.lg,
     paddingVertical: THEME.spacing.md,
     borderBottomWidth: 0.6,

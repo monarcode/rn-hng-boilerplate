@@ -26,7 +26,7 @@ const Members = () => {
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-      <Header />
+      <Header title="Members" />
       <InviteLinkSection
         inviteLink={data?.data?.invite_link || null}
         isLoading={isLoading}
