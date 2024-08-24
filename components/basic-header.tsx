@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     height: 45,
     columnGap: 10,
     paddingHorizontal: THEME.spacing.gutter,
-    backgroundColor: 'red',
   },
 });
 
