@@ -1,4 +1,3 @@
-import { Link } from 'expo-router';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,9 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import GoBack from '~/components/go-back';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import ForgotPasswordForm from '~/modules/authentication/components/forgot-password-form';
+import ResetPasswordForm from '~/modules/authentication/components/reset-password';
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <GoBack />
@@ -16,15 +15,14 @@ const ForgotPassword = () => {
       <View style={styles.wrapper}>
         <View>
           <Text size="3xl" weight="semiBold" style={styles.title}>
-            Forgot Password
+            Reset Password
           </Text>
           <Text size="md" weight="regular" style={styles.desc}>
-            Enter the email address you used to create the account to receive instructions on how to
-            reset your password
+            Create a unique password, your password should be easy to remember.
           </Text>
         </View>
 
-        <ForgotPasswordForm />
+        <ResetPasswordForm />
       </View>
     </SafeAreaView>
   );
@@ -51,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgotPassword;
+export default ResetPassword;
