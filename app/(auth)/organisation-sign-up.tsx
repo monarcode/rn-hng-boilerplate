@@ -1,4 +1,3 @@
-import { Link } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,7 +20,7 @@ export default function OrganisationSignup() {
           showsVerticalScrollIndicator={false}>
           <View>
             <Text weight="semiBold" size="3xl" style={{ color: THEME.colors.dark }}>
-              Sign up
+              Create Organisation
             </Text>
             <Text style={styles.subtitle}>Create an account to get started with us</Text>
           </View>

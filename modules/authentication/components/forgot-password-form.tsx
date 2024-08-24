@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, router } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Pressable, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { forgotpasswordSchema } from '../types/forgot-password';
@@ -12,35 +12,28 @@ import { Button, Text, View } from '~/components/shared';
 import { FormInput } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
 import { AuthService } from '~/services/authentication';
-import useAuthStore from '~/store/auth';
 
 const ForgotPasswordForm = () => {
   const [loading, setLoading] = useState(false);
-  const authstore = useAuthStore();
 
   const form = useForm<forgotpasswordSchema>({
     resolver: zodResolver(forgotPasswordSchema),
   });
 
-  const onChangePassword = async (data: forgotpasswordSchema) => {
+  const handleForgotPassword = async ({ email }: forgotpasswordSchema) => {
     setLoading(true);
     try {
-      const response = await AuthService.changeUserPassword(data);
+      const response = await AuthService.forgotPassword(email);
 
       if (response) {
-        authstore.setData(response.data);
-        authstore.setToken(response.access_token);
-        authstore.setStatus('authenticated');
-
         Toast.show({
           type: 'success',
           props: {
             title: 'Success',
-            description: `Welcome back ${response.data.user.first_name}`,
+            description: 'A verification code has been sent to your email',
           },
         });
-
-        router.replace('/');
+        router.navigate(`/${email}`);
       }
     } catch (error) {
       console.log(error);
@@ -68,10 +61,17 @@ const ForgotPasswordForm = () => {
         autoCapitalize="none"
       />
 
-      <View style={styles.actions}>
-        <Button onPress={form.handleSubmit(onChangePassword)} loading={loading}>
-          Login
+      <View>
+        <Button onPress={form.handleSubmit(handleForgotPassword)} loading={loading}>
+          Send
         </Button>
+
+        <View style={styles.footer}>
+          <Text>Remember your password?</Text>
+          <Link style={styles.link} href="/(auth)/login">
+            Login
+          </Link>
+        </View>
       </View>
     </View>
   );
@@ -82,7 +82,14 @@ const styles = StyleSheet.create({
   wrapper: {
     rowGap: THEME.spacing.lg,
   },
-  actions: {
-    rowGap: THEME.spacing.sm,
+  footer: {
+    flexDirection: 'row',
+    gap: THEME.spacing.sm,
+    justifyContent: 'center',
+    marginTop: THEME.spacing.lg,
+  },
+  link: {
+    color: THEME.colors.primary,
+    fontFamily: THEME.fontFamily.medium,
   },
 });

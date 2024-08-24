@@ -1,10 +1,13 @@
 import { HTTPError } from 'ky';
 
 import { http } from '~/libs/ky';
+import { OtpVerificationFormSchema } from '~/modules/authentication/types/otp-verification';
+import { ResetPasswordFormSchema } from '~/modules/authentication/types/reset-password';
 import {
   AuthLoginResponse,
   AuthSuccessResponse,
   ErrorResponse,
+  ForgotPasswordResponse,
   OrganisationResponse,
   UserDetailsResponse,
 } from '~/types/auth/login';
@@ -40,6 +43,75 @@ const loginUser = async ({
     const response = await http
       .post('auth/login', {
         json: { email, password },
+      })
+      .json<AuthSuccessResponse>();
+
+    if ('error' in response) {
+      throw new Error('Something went wrong');
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<AuthLoginResponse>();
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
+
+const forgotPassword = async (email: string): Promise<ForgotPasswordResponse> => {
+  try {
+    const response = await http
+      .post('auth/forgot-password-mobile', {
+        json: { email },
+      })
+      .json<ForgotPasswordResponse>();
+
+    if ('error' in response) {
+      throw new Error('Something went wrong');
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<AuthLoginResponse>();
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
+    }
+
+    throw error;
+  }
+};
+
+const verifyOtpCode = async ({ email, code }: any): Promise<ForgotPasswordResponse> => {
+  try {
+    const response = await http
+      .post(`auth/verify-code`, {
+        json: { email, code },
+      })
+      .json<ForgotPasswordResponse>();
+
+    if ('error' in response) {
+      throw new Error('Something went wrong');
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<ErrorResponse>();
+      throw new Error(errorBody.detail || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
+
+const changeUserPassword = async (
+  payload: ResetPasswordFormSchema
+): Promise<AuthSuccessResponse> => {
+  try {
+    const response = await http
+      .post('auth/reset-password', {
+        json: { ...payload },
       })
       .json<AuthSuccessResponse>();
 
@@ -101,32 +173,12 @@ const createUserOrganisation = async (payload: any): Promise<OrganisationRespons
   }
 };
 
-const changeUserPassword = async (payload: any): Promise<AuthSuccessResponse> => {
-  try {
-    const response = await http
-      .post('auth/update/password', {
-        json: { email: payload.email, new_password: payload.new_password },
-      })
-      .json<AuthSuccessResponse>();
-
-    if ('error' in response) {
-      throw new Error('Something went wrong');
-    }
-
-    return response;
-  } catch (error) {
-    if (error instanceof HTTPError) {
-      const errorBody = await error.response.json<AuthLoginResponse>();
-      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
-    }
-    throw error;
-  }
-};
-
 export const AuthService = {
   loginUser,
   createUser,
-  createUserOrganisation,
+  forgotPassword,
+  verifyOtpCode,
   changeUserPassword,
+  createUserOrganisation,
   getUserDetails,
 };
