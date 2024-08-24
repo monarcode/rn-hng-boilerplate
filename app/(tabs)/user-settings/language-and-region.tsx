@@ -11,22 +11,22 @@ import { router } from 'expo-router';
 const LanguageAndRegion = () => {
   const dialogRef = useRef<DialogRef>(null);
 
-  const { data: fetchedData, isLoading } = useQuery({
+  const { data: fetchedData } = useQuery({
     queryKey: ['fetchTimeZone'],
-    queryFn: TimeZoneService.getTimeZone
-  })
+    queryFn: TimeZoneService.getTimeZone,
+  });
 
-  console.log('fetchedData', fetchedData)
+  console.log('fetchedData', fetchedData);
 
   const settingsMutation = useMutation({
     mutationFn: () => TimeZoneService.setTimeZone(null),
     onSuccess: (res) => {
-      dialogRef.current?.open()
+      dialogRef.current?.open();
     },
     onError: (err) => {
-      Alert.alert('Server error', 'An error occured while saving settings')
-    }
-  })
+      Alert.alert('Server error', 'An error occured while saving settings');
+    },
+  });
 
   const languageOptions = [
     { label: 'Italiano (Italian)', value: 'Italiano (Italian)' },
@@ -65,7 +65,7 @@ const LanguageAndRegion = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {isLoading ? (
+      {false ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size={'large'} />
         </View>
@@ -93,25 +93,19 @@ const LanguageAndRegion = () => {
                 onPress={() => dialogRef.current?.open()}
                 children="Save"
               />
-              <Button
-                onPress={() => router.back()}
-                children="Cancel"
-                variant='outline'
-              />
+              <Button onPress={() => router.back()} children="Cancel" variant="outline" />
             </View>
           </View>
-
         </>
       )}
       <Dialog
         ref={dialogRef}
         title="Language and Region Updated"
         description="Language and Region updated successfully. Remember, you can always adjust these settings again later"
-        showCloseButton={false}
-      >
+        showCloseButton={false}>
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText} >Done</Text>
+            <Text style={styles.cancelButtonText}>Done</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
@@ -163,31 +157,31 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: THEME.colors.white,
     fontSize: THEME.fontSize.lg,
-    fontWeight: 500
+    fontWeight: 500,
   },
   loadingContainer: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   subHeaderText: {
     fontSize: THEME.fontSize.sm,
     fontWeight: 400,
-    marginBottom: THEME.spacing.xl
+    marginBottom: THEME.spacing.xl,
   },
   sectionContainer: {
     flexDirection: 'column',
     alignItems: 'stretch',
-    gap: THEME.spacing.md
+    gap: THEME.spacing.md,
   },
   btnContaner: {
     marginTop: THEME.spacing.xl,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     width: '100%',
-    gap: THEME.spacing.md
-  }
+    gap: THEME.spacing.md,
+  },
 });
 
 export default LanguageAndRegion;

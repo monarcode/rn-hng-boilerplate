@@ -12,7 +12,6 @@ import Ellipse from '~/assets/icons/ellipse.svg';
 import RecentSales from '~/components/home-screen-organisation/recent-sales';
 import Summary from '~/components/home-screen-organisation/summary';
 import { Button, Text, View } from '~/components/shared';
-
 import { THEME } from '~/constants/theme';
 import { useDashboard } from '~/hooks/dashboard/dashboard';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
@@ -115,11 +114,7 @@ const HomeScreen = () => {
               Add A Product
             </Button>
 
-            <Button
-              icon={<AddUser />}
-              variant="outline"
-              containerStyle={{ borderColor: THEME.colors.neutral[400] }}
-              textStyle={{ color: THEME.colors.black }}>
+            <Button icon={<AddUser />} variant="secondary">
               Add A Product
             </Button>
           </View>
@@ -198,7 +193,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: THEME.spacing.lg,
+    gap: THEME.spacing.md,
   },
 });
 

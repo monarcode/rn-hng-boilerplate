@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
   largeImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'center',
+    resizeMode: 'stretch',
   },
   placeholderText: {
     fontSize: 18,
@@ -386,6 +386,7 @@ const styles = StyleSheet.create({
   thumbnailImage: {
     width: '100%',
     height: '100%',
+    resizeMode: 'stretch',
     resizeMode: 'stretch',
   },
   noImagesText: {

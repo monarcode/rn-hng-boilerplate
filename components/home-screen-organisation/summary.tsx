@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import SummaryCard from './summary-card';
-import { View, Text } from '../shared';
-import Product from '../../assets/icons/products.svg';
+import ActiveMembers from '../../assets/icons/activemembers.svg';
 import AllMembers from '../../assets/icons/allmembers.svg';
 import Dollar from '../../assets/icons/icondollar.svg';
-import ActiveMembers from '../../assets/icons/activemembers.svg';
+import Product from '../../assets/icons/products.svg';
+import { Text, View } from '../shared';
+import SummaryCard from './summary-card';
 
 import { THEME } from '~/constants/theme';
 
@@ -17,7 +17,6 @@ const Summary = () => {
       title: 'Total Members',
       amount: '100',
       increase: '+ 23 from last month',
-
       Icon: AllMembers,
       color: '#509DF5',
     },
@@ -32,7 +31,6 @@ const Summary = () => {
       title: 'Subscriptions',
       amount: '126',
       increase: '+ 2 from last month',
-
       Icon: Dollar,
       color: '#F85547',
     },
@@ -40,7 +38,6 @@ const Summary = () => {
       title: 'Active Members',
       amount: '547',
       increase: '+ 23 from last month',
-
       Icon: ActiveMembers,
       color: '#0ED970',
     },

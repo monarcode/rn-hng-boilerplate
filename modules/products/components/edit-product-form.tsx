@@ -11,6 +11,7 @@ import { createProductSchema } from '../validation-schema/create-product';
 import { Button, Select, Text, TextInput, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { ProductService } from '~/services/product';
+import useAuthStore from '~/store/auth';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
 
@@ -34,6 +35,7 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
   });
+  const data = useAuthStore();
 
   const { mutate: onEdit, isPending: isEditing } = useMutation({
     mutationFn: () => ProductService.editProduct(productDetail, productId as string),
