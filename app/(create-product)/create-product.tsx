@@ -11,21 +11,21 @@ import CreateProductForm from '~/modules/products/components/create-product-form
 
 const CreateProductScreen = () => {
   return (
-    <>
-      <BasicHeader label="Add a Product" />
-      <KeyboardAwareWrapper>
-        <SafeAreaView
-          edges={['top', 'bottom']}
-          style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
-          <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}>
-            <CreateProductForm />
-          </ScrollView>
-        </SafeAreaView>
-      </KeyboardAwareWrapper>
-    </>
+    <KeyboardAwareWrapper>
+      <Stack.Screen
+        options={{
+          header: () => <BasicHeader label="Add a Product" />,
+        }}
+      />
+      <View style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}>
+          <CreateProductForm />
+        </ScrollView>
+      </View>
+    </KeyboardAwareWrapper>
   );
 };
 

@@ -70,8 +70,8 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
         {product.image && (
           <Image
             source={{ uri: product.image }}
-            // resizeMode="center"
-            style={{ width: 200, height: 200, marginTop: 10 }}
+            resizeMode="contain"
+            style={{ width: 150, height: 150 }}
           />
         )}
       </View>
@@ -87,12 +87,10 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           label="Description"
           value={productDetail?.description}
           onChangeText={(value) => handleInputChange('description', value)}
-          containerStyle={{ height: 80 }}
-          style={{
-            flex: 1,
-          }}
-          inputStyle={{ textAlign: 'left', textAlignVertical: 'top', height: 75 }}
+          numberOfLines={4}
           multiline
+          containerStyle={{ width: '100%', height: 80, alignItems: 'flex-start' }}
+          textAlign="left"
         />
       </View>
       <Select
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
   },
   uploadContainer: {
     borderWidth: 1,
-    height: normalize(150),
+    height: normalize(125),
     gap: 5,
     borderColor: '#ddd',
     borderRadius: 6,
@@ -167,6 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     borderStyle: 'dashed',
     overflow: 'hidden',
+    marginTop: 10,
   },
   uploadButton: {
     backgroundColor: THEME.colors.white,
