@@ -1,7 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   StyleSheet,
   SectionList,
@@ -10,13 +8,12 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
 
 import CheckIcon from '~/assets/icons/check.svg';
-import BasicHeader from '~/components/basic-header';
 import GoBack from '~/components/go-back';
 import RenderSetting from '~/components/notification-settings';
 import { Dialog, DialogRef, Text, View, Button } from '~/components/shared';
+import getNotificationSections from '~/constants/notification';
 import getNotificationSections from '~/constants/notification';
 import { THEME } from '~/constants/theme';
 import { NotificationSettingsService } from '~/services/notification-settings';
@@ -27,14 +24,17 @@ const NotificationSettings = () => {
   const authstore = useAuthStore();
   const dialogRef = useRef<DialogRef>(null);
   const [notificationData, setNotificationData] = useState(getNotificationSections);
-  const { bottom: bottomInset } = useSafeAreaInsets();
 
   const { data: fetchedData, isLoading } = useQuery({
     queryKey: ['fetchNotification', authstore.data?.user.id],
     queryFn: () => NotificationSettingsService.getNotifications(authstore.data?.user.id),
   });
+    queryFn: () => NotificationSettingsService.getNotifications(authstore.data?.user.id),
+  });
 
   useEffect(() => {
+    if (fetchedData) setNotificationData(getNotificationSections(fetchedData?.data));
+  }, [fetchedData]);
     if (fetchedData) setNotificationData(getNotificationSections(fetchedData?.data));
   }, [fetchedData]);
 
@@ -42,8 +42,12 @@ const NotificationSettings = () => {
     mutationFn: () => NotificationSettingsService.setNotifications(notificationData),
     onSuccess: (res) => {
       dialogRef.current?.open();
+      dialogRef.current?.open();
     },
     onError: (err) => {
+      Alert.alert('Server error', 'An error occured while saving settings');
+    },
+  });
       Alert.alert('Server error', 'An error occured while saving settings');
     },
   });
@@ -59,8 +63,9 @@ const NotificationSettings = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {false ? (
+      {isLoading ? (
         <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" />
           <ActivityIndicator size="large" />
         </View>
       ) : (
@@ -105,14 +110,12 @@ const NotificationSettings = () => {
 
       <Dialog
         ref={dialogRef}
-        title={t('Notification Updated')}
-        description={t(
-          'Notification preferences updated successfully. Remember, you can always adjust these settings again later'
-        )}
+        title="Notification Updated"
+        description="Notification preferences updated successfully. Remember, you can always adjust these settings again later"
         showCloseButton={false}>
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText}>{t('Done')}</Text>
+            <Text style={styles.cancelButtonText}>Done</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
@@ -136,6 +139,7 @@ const styles = StyleSheet.create({
   saveBtn: {
     width: '100%',
     paddingHorizontal: THEME.spacing.md,
+    marginVertical: 10,
     marginVertical: 10,
   },
   section: {
@@ -168,10 +172,13 @@ const styles = StyleSheet.create({
     color: THEME.colors.white,
     fontSize: THEME.fontSize.lg,
     fontWeight: 500,
+    fontWeight: 500,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
     alignItems: 'center',
   },
 });
