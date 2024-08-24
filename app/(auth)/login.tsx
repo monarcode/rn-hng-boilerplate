@@ -28,7 +28,7 @@ const LoginScreen = () => {
               icon={<GoogleLogo />}
               containerStyle={{ marginVertical: THEME.spacing.lg }}
               variant="secondary">
-              Google
+              Sign in with Google
             </Button>
 
             <View style={styles.alt}>
