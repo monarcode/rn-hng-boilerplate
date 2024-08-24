@@ -115,6 +115,12 @@ const UserSettingsScreen = () => {
           <SettingItem icon={<Business />} title={t("Manage Organization")} />
           <SettingItem icon={<Users />} title={t("Members")} goto={() => router.push('/user/members')} />
         </SettingsSection>
+        <SettingsSection title="Payment Setting">
+          <SettingItem
+            icon={<Business />}
+            title="Subscription"
+            goto={() => router.push('/user/subscription')}
+          />
         <SettingsSection title={t("Payment Setting")}>
           <SettingItem icon={<Wallet />} title={t("Subscription")} />
         </SettingsSection>
