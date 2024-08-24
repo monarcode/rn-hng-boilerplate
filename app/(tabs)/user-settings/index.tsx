@@ -40,7 +40,7 @@ const UserSettingsScreen = () => {
   };
   return (
     <SafeAreaView
-      edges={['top', 'bottom']}
+      edges={['top']}
       style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
       <View style={[styles.header]}>
         <Text size="xl" weight="semiBold">
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   profileInfo: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: THEME.spacing.xl,
+    marginVertical: THEME.spacing.md,
   },
   profileImageContainer: {
     width: 80,
