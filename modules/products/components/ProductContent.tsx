@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, Animated, ScrollView, StyleSheet, Image } from 'react-native';
+import { Pressable, Animated, ScrollView, StyleSheet, Image, Dimensions } from 'react-native';
 import { ChevronDown } from 'react-native-feather';
 import { useRotationAnimation } from '../hooks/animation';
 import {
@@ -8,11 +8,15 @@ import {
   formatCurrency,
   stateCityMapping,
 } from '../constants';
-import { TextInput } from '~/components/shared';
+import { TextInput, View, Text } from '~/components/shared';
 import { CreateAddressSchema, ProductContentProps } from '../types';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createAddressSchema } from '../validation-schema/address';
+import { currency } from '~/libs/currency';
+import { THEME } from '~/constants/theme';
+
+const { width } = Dimensions.get('screen');
 
 const ProductContent = ({ data, title }: ProductContentProps) => {
   const images = convertImageToArray(data?.image);
@@ -51,6 +55,14 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
     };
   };
 
+  const dataPrice = (price: number) => {
+    if (price > 50000) {
+      return currency(price, { notation: 'compact' });
+    } else {
+      return currency(price, { notation: 'standard' });
+    }
+  };
+
   const form = useForm<CreateAddressSchema>({
     resolver: zodResolver(createAddressSchema),
   });
@@ -76,9 +88,11 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
             <Text style={styles.productUniqueId}>{uniqueId}</Text>
           </View>
           <View style={[styles.columnContainer, { alignItems: 'flex-end' }]}>
-            <Text style={styles.productPrice}>{formatCurrency(data?.price)}</Text>
+            <Text style={styles.productPrice}>{dataPrice(data?.price)}</Text>
             <View style={styles.rowGap3}>
-              {title === 'Organizational' && <Text>{data?.quantity}</Text>}
+              {title === 'Organizational' && (
+                <Text style={styles.quantityText}>{data?.quantity}</Text>
+              )}
               {title === 'user' && (
                 <View
                   style={
@@ -93,7 +107,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
           </View>
         </View>
       </View>
-      <View style={styles.variationInfoContainer}>
+      {/* <View style={styles.variationInfoContainer}>
         <View style={styles.variationColumnContainer}>
           <Text style={styles.variationLabel}>Variation</Text>
           <View style={styles.variationContainer}>
@@ -109,8 +123,8 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
                     style={[
                       styles.variationImageContainer,
                       {
-                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE',
-                        borderWidth: selectedImage === image ? 2 : 1,
+                        borderColor: selectedImage === image ? '#F68C1E' : '#DEDEDE', // Change border color if selected
+                        borderWidth: selectedImage === image ? 2 : 1, // Change border width if selected
                       },
                     ]}>
                     <Image
@@ -132,10 +146,10 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
             )}
           </View>
         </View>
-      </View>
+      </View> */}
       <View style={styles.descriptionInfoContainer}>
         <View style={styles.descriptionContainer}>
-          <Text>Description</Text>
+          <Text style={{ fontSize: 17, fontFamily: 'Inter_600SemiBold' }}>Description</Text>
           <View>
             <Text style={styles.descriptionText}>{data?.description}</Text>
           </View>
@@ -236,6 +250,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 6,
   },
+  quantityText: {
+    fontSize: THEME.fontSize.md,
+    color: THEME.colors.neutral[400],
+    fontFamily: THEME.fontFamily.bold,
+  },
   // Product info
   infoContainer: {
     flexDirection: 'column',
@@ -304,11 +323,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     fontSize: 14,
-    fontFamily: 'Inter_400Regular',
-    color: '#71717A',
+    fontFamily: THEME.fontFamily.regular,
+    color: THEME.colors.neutral[400],
   },
   descriptionLabel: {
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: THEME.fontFamily.semiBold,
+    color: THEME.colors.black,
+    fontSize: THEME.fontSize.lg,
   },
   //dropDownContainer
   dropDownContainer: {
@@ -319,9 +340,9 @@ const styles = StyleSheet.create({
   },
   dropdownIcon: {},
   dropDownLabel: {
-    fontFamily: 'Inter_400Regular',
-    fontSize: 14,
-    color: '#71717A',
+    fontFamily: THEME.fontFamily.regular,
+    fontSize: THEME.fontSize.md,
+    color: THEME.colors.neutral[400],
   },
   // dropDownContentContainer
   dropDownContentContainer: {
@@ -350,7 +371,7 @@ const styles = StyleSheet.create({
   largeImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'center',
+    resizeMode: 'stretch',
   },
   placeholderText: {
     fontSize: 18,
@@ -363,7 +384,7 @@ const styles = StyleSheet.create({
   thumbnailImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'center',
+    resizeMode: 'stretch',
   },
   noImagesText: {
     fontSize: 16,
@@ -374,19 +395,19 @@ const styles = StyleSheet.create({
   // Text Handling
 
   productName: {
-    fontSize: 16,
+    fontSize: THEME.fontSize['2xl'],
     color: '#000',
     fontFamily: 'Inter_600SemiBold',
   },
   productUniqueId: {
     fontFamily: 'Inter_400Regular',
-    fontSize: 14,
-    color: '#0A0A0A',
+    fontSize: THEME.fontSize.md,
+    color: THEME.colors.dark,
   },
   productPrice: {
-    fontSize: 20,
-    color: '#000',
-    fontFamily: 'Inter_600SemiBold',
+    fontSize: THEME.fontSize['2xl'],
+    color: THEME.colors.dark,
+    fontFamily: THEME.fontFamily.semiBold,
   },
   // stock circle
   stockCircle: {
@@ -403,9 +424,9 @@ const styles = StyleSheet.create({
   },
   stockText: {
     fontFamily: 'Inter_400Regular',
-    fontSize: 14,
+    fontSize: THEME.fontSize.md,
     textTransform: 'capitalize',
-    color: '#525252',
+    color: THEME.colors.neutral[400],
   },
   // variation label text
   variationLabel: {
