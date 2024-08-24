@@ -16,8 +16,7 @@ import { Button, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { useDashboard } from '~/hooks/dashboard/dashboard';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
-import Products from '../../assets/icons/products.svg';
-import AddUser from '../../assets/icons/mdi_users-add-outline.svg';
+
 import useAuthStore from '~/store/auth';
 
 const HomeScreen = () => {

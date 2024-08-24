@@ -21,7 +21,7 @@ interface DateTime {
 }
 
 interface HeaderHeroProps {
-  goback: () => void; // Function triggered when the Chevron-Left button is pressed
+  // Function triggered when the Chevron-Left button is pressed
   title: string; // Title of the hero section
 }
 
