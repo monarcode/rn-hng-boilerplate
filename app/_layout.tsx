@@ -19,6 +19,7 @@ import Toast from 'react-native-toast-message';
 import { queryClient } from '~/libs/query';
 import { toastConfig } from '~/libs/toast-config';
 import useAuthStore from '~/store/auth';
+import '~/utils/i18n';
 
 SplashScreen.preventAutoHideAsync();
 

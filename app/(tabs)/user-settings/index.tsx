@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import React, { useRef } from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
 import Business from '~/assets/icons/business.svg';
@@ -18,7 +19,9 @@ import { THEME } from '~/constants/theme';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
 import { SettingItem, SettingsSection } from '~/modules/settings/components';
 import useAuthStore from '~/store/auth';
+
 const UserSettingsScreen = () => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const dialogRef = useRef<DialogRef>(null);
   const resetStore = useAuthStore((state) => state.resetStore);
@@ -44,7 +47,7 @@ const UserSettingsScreen = () => {
       style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
       <View style={[styles.header]}>
         <Text size="xl" weight="semiBold">
-          Settings
+          {t('Settings')}
         </Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -77,56 +80,56 @@ const UserSettingsScreen = () => {
           </View>
         </View>
 
-        <SettingsSection title="Profile Settings">
+        <SettingsSection title={t("Profile Settings")}>
           {/*
           To enable navigation when using any of the SettingItem components,
           you should call the goto prop within the SettingItem */}
           <SettingItem
             icon={<AccountSetting />}
-            title="Account"
+            title={t("Account")}
             goto={() => router.push('/user/general-profile')}
           />
           <SettingItem
             icon={<Notification />}
-            title="Notification"
+            title={t("Notification")}
             goto={() => router.push('/user-settings/notification')}
           />
           <SettingItem
             icon={<Database />}
-            title="Change Password"
+            title={t("Change Password")}
             goto={() => router.push('/user/change-password')}
           />
           <SettingItem
             icon={<Globe />}
-            title="Language and Region"
+            title={t("Language and Region")}
             goto={() => router.push('/user-settings/language-and-region')}
           />
         </SettingsSection>
 
-        <SettingsSection title="Organizational Settings">
+        <SettingsSection title={t("Organizational Settings")}>
           <SettingItem
             icon={<UserPlus />}
-            title="Create Organisation"
+            title={t("Create Organisation")}
             goto={() => router.push('/(auth)/organisation-sign-up')}
           />
-          <SettingItem icon={<Business />} title="Manage Organization" />
-          <SettingItem icon={<Users />} title="Members" goto={() => router.push('/user/members')} />
+          <SettingItem icon={<Business />} title={t("Manage Organization")} />
+          <SettingItem icon={<Users />} title={t("Members")} goto={() => router.push('/user/members')} />
         </SettingsSection>
-        <SettingsSection title="Payment Setting">
-          <SettingItem icon={<Wallet />} title="Subscription" />
+        <SettingsSection title={t("Payment Setting")}>
+          <SettingItem icon={<Wallet />} title={t("Subscription")} />
         </SettingsSection>
         <TouchableOpacity
           style={[styles.logout, { marginBottom: bottomInset }]}
           onPress={handleLogout}>
           <Text size="md" weight="medium" style={{ color: THEME.colors.error }}>
-            Log Out
+            {t('Log Out')}
           </Text>
           <ExitIcon />
         </TouchableOpacity>
 
         <Dialog
           ref={dialogRef}
-          title="Confirm Logout"
+          title={t("Confirm Logout")}
           description="Are you sure you want to log out?"
           showCloseButton={false}>
           <View style={styles.dialogButtons}>
