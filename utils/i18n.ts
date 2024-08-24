@@ -16,6 +16,7 @@ import ar from '../locales/ar.json';
 
 // Initialize i18next
 i18n.use(initReactI18next).init({
+  compatibilityJSON: 'v3', // <--- add this line
   fallbackLng: 'en',
   lng: Localization.getLocales()?.[0]?.languageCode || 'en', // Use the locale detected by expo-localization
   resources: {
