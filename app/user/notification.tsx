@@ -1,8 +1,10 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Stack } from 'expo-router';
 import React from 'react';
-import { StyleSheet, ScrollView, SectionList } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, SectionList, ScrollView } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import BasicHeader from '~/components/basic-header';
 import { Text, View, Button } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
@@ -83,15 +85,12 @@ const NotificationSettings = () => {
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={[styles.header, { paddingTop: topInset, paddingBottom: bottomInset }]}>
-        <FontAwesome name="angle-left" size={24} color="black" />
-        <Text size="lg" weight="semiBold">
-          Notification
-        </Text>
-        <View />
-      </View>
-
+    <SafeAreaView style={styles.container}>
+      <Stack.Screen
+        options={{
+          header: () => <BasicHeader label="Notifications" />,
+        }}
+      />
       <SectionList
         contentContainerStyle={styles.section}
         sections={notificationSections}
@@ -109,15 +108,15 @@ const NotificationSettings = () => {
           <Text style={styles.sectionHeader}>{title}</Text>
         )}
       />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: THEME.colors.white,
     paddingHorizontal: THEME.spacing.gutter,
+    paddingTop: -THEME.spacing.lg,
   },
   header: {
     flexDirection: 'row',
@@ -136,14 +135,13 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(188, 188, 188, 0.40)',
     paddingBottom: 11,
     borderBottomWidth: 0.5,
-    marginTop: 16,
   },
   sectionBody: {
     flexDirection: 'column',
     justifyContent: 'space-between',
     width: '100%',
     paddingBottom: 11,
-    marginTop: 16,
+
     gap: 12,
   },
   profileInfo: {
