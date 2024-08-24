@@ -10,6 +10,7 @@ import GoBack from '~/components/go-back';
 import { Text } from '~/components/shared';
 import EditProductForm from '~/modules/products/components/edit-product-form';
 import { ProductDetailType } from '~/modules/products/types/create-product';
+import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
 
 const EdittProduct = () => {
   const { id } = useLocalSearchParams();
@@ -62,13 +63,13 @@ const EdittProduct = () => {
   };
 
   return (
-    <>
+    <KeyboardWrapper>
       <SafeAreaView
         edges={['top', 'bottom']}
         style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
         <View style={styles.header}>
           <GoBack />
-          <Text weight="bold" size="xl">
+          <Text weight="semiBold" size="xl">
             Edit Product
           </Text>
           <View style={styles.iconPlaceholder} />
@@ -85,7 +86,7 @@ const EdittProduct = () => {
           />
         </ScrollView>
       </SafeAreaView>
-    </>
+    </KeyboardWrapper>
   );
 };
 
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: 10,
     // marginBottom: THEME.spacing.lg,
     paddingVertical: THEME.spacing.md,
     borderBottomWidth: 0.6,

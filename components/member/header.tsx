@@ -4,13 +4,13 @@ import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';
 import { Text } from '~/components/shared';
 
-const Header = () => {
+const Header = ({ title }: { title: string }) => {
   return (
     <View style={styles.header}>
       <View style={{ gap: THEME.spacing.xs, flexDirection: 'row' }}>
         <GoBack />
         <Text size="xl" weight="semiBold">
-          Members
+          {title}
         </Text>
       </View>
       <Text size="sm">Manage who has access to this workspace</Text>

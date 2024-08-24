@@ -1,28 +1,36 @@
 import React from 'react';
-import { FlatList, View, Image, StyleSheet } from 'react-native';
+import { FlatList, View, Image, StyleSheet, Pressable } from 'react-native';
 import { THEME } from '~/constants/theme';
 import { Text } from '~/components/shared';
 import { Member } from '~/types/member';
+import { useRouter } from 'expo-router';
 
 interface MemberListProps {
   members: Member[];
 }
 
 const MemberList = ({ members }: MemberListProps) => {
+  const router = useRouter();
+
+  function gotoMemberDetail(userId: string) {
+    router.push(`/user/members/${userId}`);
+  }
   const renderMemberItem = ({ item }: { item: Member }) => {
     if (!item) {
       return null;
     }
     return (
-      <View style={styles.memberItem}>
-        <Image source={{ uri: item.avatar }} style={styles.avatar} />
-        <View style={styles.memberInfo}>
-          <Text size="md" style={styles.memberName} weight="medium">
-            {item.name}
-          </Text>
-          <Text size="sm">{item.email}</Text>
+      <Pressable onPress={() => gotoMemberDetail(item.name)}>
+        <View style={styles.memberItem}>
+          <Image source={{ uri: item.avatar }} style={styles.avatar} />
+          <View style={styles.memberInfo}>
+            <Text size="md" style={styles.memberName} weight="medium">
+              {item.name}
+            </Text>
+            <Text size="sm">{item.email}</Text>
+          </View>
         </View>
-      </View>
+      </Pressable>
     );
   };
 
