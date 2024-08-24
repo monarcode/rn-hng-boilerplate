@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   StyleSheet,
   SectionList,
@@ -9,7 +8,6 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
 
 import CheckIcon from '~/assets/icons/check.svg';
 import GoBack from '~/components/go-back';
@@ -66,7 +64,7 @@ const NotificationSettings = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {false ? (
+      {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" />
           <ActivityIndicator size="large" />
@@ -114,14 +112,12 @@ const NotificationSettings = () => {
 
       <Dialog
         ref={dialogRef}
-        title={t('Notification Updated')}
-        description={t(
-          'Notification preferences updated successfully. Remember, you can always adjust these settings again later'
-        )}
+        title="Notification Updated"
+        description="Notification preferences updated successfully. Remember, you can always adjust these settings again later"
         showCloseButton={false}>
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText}>{t('Done')}</Text>
+            <Text style={styles.cancelButtonText}>Done</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
