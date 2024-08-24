@@ -1,5 +1,6 @@
 import { Bag, Briefcase, HomeTrendUp, Setting2 } from 'iconsax-react-native';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text } from 'react-native';
 import Animated, {
   interpolateColor,
@@ -7,7 +8,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTranslation } from 'react-i18next';
 
 import { View } from '../shared';
 
@@ -18,8 +18,6 @@ const AnimatedProductsIcon = Animated.createAnimatedComponent(Briefcase);
 const AnimatedCartIcon = Animated.createAnimatedComponent(Bag);
 const AnimatedSettingsIcon = Animated.createAnimatedComponent(Setting2);
 const AnimatedText = Animated.createAnimatedComponent(Text);
-
-
 
 interface Props {
   route: string;
@@ -78,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: THEME.spacing.sm,
-    rowGap: THEME.spacing.sm,
+    rowGap: THEME.spacing.xs,
   },
   label: {
     fontFamily: THEME.fontFamily.regular,
