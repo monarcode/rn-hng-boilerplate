@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import useAuthStore from '~/store/auth';
 import { useProducts } from '~/hooks/products/organization/fetchProducts';
 import { ProductData } from '~/modules/products/types';
@@ -64,26 +64,26 @@ const EdittProduct = () => {
   };
 
   return (
-    <>
-      <BasicHeader label="Edit Product" />
-      <KeyboardAwareWrapper>
-        <SafeAreaView
-          edges={['top', 'bottom']}
-          style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
-          <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}>
-            <EditProductForm
-              handleInputChange={handleInputChange}
-              product={product}
-              productDetail={productDetail}
-              productId={id}
-            />
-          </ScrollView>
-        </SafeAreaView>
-      </KeyboardAwareWrapper>
-    </>
+    <KeyboardAwareWrapper>
+      <Stack.Screen
+        options={{
+          header: () => <BasicHeader label={`Edit Product`} />,
+        }}
+      />
+      <View style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}>
+          <EditProductForm
+            handleInputChange={handleInputChange}
+            product={product}
+            productDetail={productDetail}
+            productId={id}
+          />
+        </ScrollView>
+      </View>
+    </KeyboardAwareWrapper>
   );
 };
 

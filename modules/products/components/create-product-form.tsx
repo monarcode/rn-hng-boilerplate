@@ -100,17 +100,17 @@ const CreateProductForm = () => {
         {image.uri && (
           <Image
             source={{ uri: image.uri }}
-            resizeMode="center"
-            style={{ width: 200, height: 200, marginTop: 10 }}
+            resizeMode="contain"
+            style={{ width: 150, height: 150 }}
           />
         )}
-        <Button containerStyle={styles.uploadButton} onPress={pickImage}>
-          {!image.uri && (
+        {!image.uri && (
+          <Button containerStyle={styles.uploadButton} onPress={pickImage}>
             <Text style={styles.uploadButtonText} weight="medium">
               {t('Upload New')}
             </Text>
-          )}
-        </Button>
+          </Button>
+        )}
         {!image.uri && <Text style={styles.subtext}>{t('Upload product image')}</Text>}
       </View>
       {!image.uri && isSubmitAttempted && (
@@ -153,13 +153,11 @@ const CreateProductForm = () => {
           control={form.control}
           name="description"
           label="Description"
-          placeholder=""
-          containerStyle={{ height: 80 }}
-          style={{
-            flex: 1,
-          }}
-          inputStyle={{ textAlign: 'left', textAlignVertical: 'top', height: 75 }}
+          placeholder="Product Description"
+          numberOfLines={4}
           multiline
+          containerStyle={{ width: '100%', height: 80, alignItems: 'flex-start' }}
+          textAlign="left"
         />
         <Text weight="light" size="sm" style={{ marginTop: 5 }}>
           {t('Maximum of 72 characters')}
@@ -253,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     borderStyle: 'dashed',
     overflow: 'hidden',
-    // marginTop: 10,
+    marginTop: 10,
   },
   uploadButton: {
     backgroundColor: THEME.colors.white,
