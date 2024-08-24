@@ -56,7 +56,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
   };
 
   const dataPrice = (price: number) => {
-    if (price > 5000000) {
+    if (price > 50000) {
       return currency(price, { notation: 'compact' });
     } else {
       return currency(price, { notation: 'standard' });
