@@ -49,7 +49,7 @@ const NotificationSettings = () => {
   return (
     <SafeAreaView style={styles.container}>
 
-      {false ? (
+      {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size={'large'} />
         </View>
