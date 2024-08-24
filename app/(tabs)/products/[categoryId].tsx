@@ -1,6 +1,7 @@
 import { useLocalSearchParams, router } from 'expo-router';
 import { StyleSheet, Pressable, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { Plus } from 'react-native-feather';
+import React, { useState } from 'react';
 
 import GoBack from '~/components/go-back';
 import { SearchAndFilter } from '~/components/product-list';
@@ -12,6 +13,7 @@ import useAuthStore from '~/store/auth';
 
 const ViewProductsByCategory = () => {
   const authstore = useAuthStore();
+  const [query, setQuery] = useState<string>('');
   const orgId = authstore.data?.organisations[0].organisation_id;
   const { categoryId } = useLocalSearchParams();
   const { data } = useProducts(orgId);
@@ -31,8 +33,7 @@ const ViewProductsByCategory = () => {
           <Image source={require('~/assets/menu.png')} />
         </TouchableOpacity>
       </View>
-      <SearchAndFilter />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <SearchAndFilter query={query} setQuery={setQuery} />
         <View style={{ padding: THEME.spacing.md }}>
           <FlatList
             scrollEnabled={false}
@@ -40,9 +41,9 @@ const ViewProductsByCategory = () => {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ProductItemListTile {...item} />}
             contentContainerStyle={{ gap: THEME.spacing.lg }}
+            showsVerticalScrollIndicator={false}
           />
         </View>
-      </ScrollView>
       <Pressable
         style={styles.floatingButton}
         onPress={() => {

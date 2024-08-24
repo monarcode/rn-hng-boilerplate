@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Search } from 'react-native-feather';
+import { Dimensions } from 'react-native';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
-import GoBack from '~/components/go-back';
+const { width } = Dimensions.get('window');
 
 type Order = {
   id: string;
@@ -18,13 +18,11 @@ type Order = {
 };
 
 const OrdersList: React.FC = () => {
-  const { t } = useTranslation();
-
   const orders: Order[] = [
     {
       id: '1',
       orderNumber: '99012',
-      date: '20-Aug-2024 7:41PM',
+      date: '20-Aug-2024  7:41PM',
       estimatedDate: '26th Aug',
       isDelivered: false,
       productImage: require('~/assets/product.png'),
@@ -32,36 +30,39 @@ const OrdersList: React.FC = () => {
     {
       id: '2',
       orderNumber: '99013',
-      date: '21-Aug-2024 3:22PM',
+      date: '21-Aug-2024  3:22PM',
       estimatedDate: '27th Aug',
       isDelivered: false,
-      productImage: require('~/assets/product.png'),
+      productImage: require('~/assets/product-three.png'),
     },
     {
       id: '3',
       orderNumber: '99014',
-      date: '22-Aug-2024 1:12PM',
+      date: '22-Aug-2024  1:12PM',
       estimatedDate: '30th Aug',
       isDelivered: true,
-      productImage: require('~/assets/product.png'),
+      productImage: require('~/assets/product-two.png'),
     },
   ];
 
   const renderOrderItem: ListRenderItem<Order> = ({ item }) => (
     <View style={styles.orderCard}>
       <View style={styles.orderInfo}>
-        <Text weight='bold' style={styles.orderNumber}>Order#: {item.orderNumber}</Text>
+        <Text weight="bold" style={styles.orderNumber}>
+          Order#: {item.orderNumber}
+        </Text>
         <Text style={styles.orderDate}> {item.date} </Text>
         <View style={styles.deliveryInfo}>
           <Image source={require('~/assets/delivery-icon.png')} style={styles.deliveryIcon} />
           <Text
-            weight='medium'
+            weight="medium"
             style={[
               styles.deliveryText,
-              { color: item.isDelivered ? THEME.colors.red : THEME.colors.green }
-            ]}
-          >
-            {item.isDelivered ? `Delivered on ${item.estimatedDate}` : `Estimated Delivery on ${item.estimatedDate}`}
+              { color: item.isDelivered ? THEME.colors.red : THEME.colors.green },
+            ]}>
+            {item.isDelivered
+              ? `Delivered on ${item.estimatedDate}`
+              : `Estimated Delivery on ${item.estimatedDate}`}
           </Text>
         </View>
       </View>
@@ -75,24 +76,28 @@ const OrdersList: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.orderStyle}>
-          <GoBack />
-          <Text size="2xl" weight="bold"> {t('Orders')} </Text>
+          <Text size="2xl" weight="bold">
+            Orders
+          </Text>
         </View>
-        <TouchableOpacity onPress={() => { /* menu logic */ }}>
-          <Image source={require('~/assets/search.png')} />
+        <TouchableOpacity
+          style={styles.searchStyle}
+          onPress={() => {
+            /* menu logic */
+          }}>
+          <Search width={24} height={24} color={THEME.colors.neutral[400]} />
         </TouchableOpacity>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.orderItem}>
-          <FlatList
-            data={orders}
-            renderItem={renderOrderItem}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.listContentContainer}
-          />
-        </View>
-      </ScrollView>
+      <View style={styles.orderItem}>
+        <FlatList
+          data={orders}
+          renderItem={renderOrderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContentContainer}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };
@@ -114,9 +119,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   orderStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+    marginLeft: 10,
   },
   listContentContainer: {
     paddingBottom: 20,
@@ -130,24 +133,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: '#f1f1f1',
+    borderColor: THEME.colors.borderLight,
   },
   orderInfo: {
     flex: 1,
+    marginRight: 10,
   },
   orderNumber: {
-    fontSize: 16,
+    fontSize: width < 350 ? 14 : 16,
     color: '#71717a',
   },
   orderDate: {
-    fontSize: 14,
-    color: "#71717a",
+    fontSize: width < 350 ? 12 : 14,
+    color: '#71717a',
     marginTop: 5,
   },
   deliveryInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 26,
   },
   deliveryIcon: {
     width: 20,
@@ -155,20 +159,26 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   deliveryText: {
-    fontSize: 14,
+    fontSize: width < 350 ? 12 : 14,
+    flexShrink: 1,
   },
   productImage: {
-    width: 90,
-    height: 80,
+    width: width < 350 ? 70 : 90,
+    height: width < 350 ? 60 : 80,
+    resizeMode: 'contain',
   },
   productImageStyle: {
     borderWidth: 1,
-    borderColor: '#f1f1f1',
+    borderColor: THEME.colors.borderLight,
     borderRadius: 10,
+    padding: 2,
   },
   orderItem: {
-    padding: THEME.spacing.md
-  }
+    padding: THEME.spacing.md,
+  },
+  searchStyle: {
+    marginRight: THEME.spacing.md,
+  },
 });
 
 export default OrdersList;
