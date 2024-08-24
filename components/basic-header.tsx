@@ -6,7 +6,7 @@ import GoBack from './go-back';
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
-const BasicHeader = ({ label }: { label: string }) => {
+const BasicHeader = ({ label }: { label?: string | undefined }) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -18,9 +18,11 @@ const BasicHeader = ({ label }: { label: string }) => {
         <GoBack />
       </View>
 
-      <Text size="lg" weight="medium">
-        {label}
-      </Text>
+      {label ? (
+        <Text size="lg" weight="medium">
+          {label}
+        </Text>
+      ) : null}
     </View>
   );
 };
