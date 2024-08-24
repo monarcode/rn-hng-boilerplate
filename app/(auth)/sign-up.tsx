@@ -4,14 +4,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import GoogleLogo from '~/assets/icons/google-icon.svg';
 import GoBack from '~/components/go-back';
-import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
+import KeyboardAwareWrapper from '~/components/keyboard-aware-wrapper';
 import { Button, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import SignUpForm from '~/modules/authentication/components/sign-up-form';
 
 const SignUpScreen = () => {
   return (
-    <KeyboardWrapper>
+    <KeyboardAwareWrapper>
       <SafeAreaView
         edges={['top', 'bottom']}
         style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
@@ -51,7 +51,7 @@ const SignUpScreen = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </KeyboardWrapper>
+    </KeyboardAwareWrapper>
   );
 };
 

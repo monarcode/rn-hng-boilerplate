@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Ellipse from '~/assets/icons/ellipse.svg';
 import GoBack from '~/components/go-back';
-import KeyboardWrapper from '~/components/keyboard-behaviour-wrapper';
-import { Button, View, Text } from '~/components/shared';
+import KeyboardAwareWrapper from '~/components/keyboard-aware-wrapper';
+import { Button, Text, View } from '~/components/shared';
 import { FormInput } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
@@ -44,7 +44,7 @@ const GeneralProfileSettings = () => {
   };
 
   return (
-    <KeyboardWrapper>
+    <KeyboardAwareWrapper>
       <SafeAreaView
         edges={['top', 'bottom']}
         style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
@@ -156,7 +156,7 @@ const GeneralProfileSettings = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </KeyboardWrapper>
+    </KeyboardAwareWrapper>
   );
 };
 
