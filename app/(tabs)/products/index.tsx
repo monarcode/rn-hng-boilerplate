@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Pressable, StyleSheet, ScrollView, Image } from 'react-native';
 import { Plus } from 'react-native-feather';
 import { FlatList } from 'react-native-gesture-handler';
+import { useTranslation } from 'react-i18next';
 
 import { useProducts } from './../../../hooks/products/organization/fetchProducts';
 
@@ -14,6 +15,7 @@ import useAuthStore from '~/store/auth';
 import { CategoryProps } from '~/components/product-list/types';
 
 const ListCategories = () => {
+  const { t } = useTranslation();
   type listViewOption = 'list' | 'grid';
   const [listView, setListView] = useState<listViewOption>('list');
   const authstore = useAuthStore();
@@ -34,7 +36,7 @@ const ListCategories = () => {
           justifyContent: 'center',
         }}>
         <Text size="2xl" weight="semiBold">
-          Loading
+          {t('Loading')}
         </Text>
       </View>
     );
@@ -68,7 +70,7 @@ const ListCategories = () => {
               </View>
 
               <Text size="md" weight="medium" style={{ marginTop: 30 }}>
-                No products yet, please add product
+                {t('No products yet, please add product')}
               </Text>
             </View>
           )}
