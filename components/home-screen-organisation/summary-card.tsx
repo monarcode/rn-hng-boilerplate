@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     gap: THEME.spacing.md,
-    width: '50%',
+    flex: 1,
+    maxWidth: '48%',
   },
 });
