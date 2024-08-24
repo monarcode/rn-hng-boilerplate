@@ -23,13 +23,13 @@ const LanguageAndRegion = () => {
   const languageOptions = [
     { label: 'English', value: 'en' },
     { label: 'Français (French)', value: 'fr' },
-    // { label: 'Italiano (Italian)', value: 'Italiano (Italian)' },
-    // { label: 'Español (Spanish)', value: 'Español (Spanish)' },
-    // { label: 'Deutsch (German)', value: 'Deutsch (German)' },
-    // { label: '日本語 (Japanese)', value: '日本語 (Japanese)' },
-    // { label: '한국어 (Korean)', value: '한국어 (Korean)' },
-    // { label: 'Русский (Russian)', value: 'Русский (Russian)' },
-    // { label: 'العربية (Arabic)', value: 'العربية (Arabic)' },
+    { label: 'Italiano (Italian)', value: 'it' },
+    { label: 'Español (Spanish)', value: 'es' },
+    { label: 'Deutsch (German)', value: 'de' },
+    { label: '日本語 (Japanese)', value: 'ja' },
+    { label: '한국어 (Korean)', value: 'ko' },
+    { label: 'Русский (Russian)', value: 'ru' },
+    { label: 'العربية (Arabic)', value: 'ar' },
   ];
 
   const regionOptions = [
@@ -70,9 +70,9 @@ const LanguageAndRegion = () => {
           {t('Customise your language and region prefrences')}
         </Text>
         <View style={styles.sectionContainer}>
-          <Select onValueChange={e => setSelectedLang(e?.value || '')} options={languageOptions} placeholder="Language" width={300} />
-          <Select options={regionOptions} placeholder="Region" width={300} />
-          <Select options={timeZoneOptions} placeholder="Time-Zone" width={300} />
+          <Select onValueChange={e => setSelectedLang(e?.value || '')} options={languageOptions} placeholder={t('Language')} width={300} />
+          <Select options={regionOptions} placeholder={t('Region')} width={300} />
+          <Select options={timeZoneOptions} placeholder={t("Time-Zone")} width={300} />
         </View>
 
         <View style={styles.btnContaner}>

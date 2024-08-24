@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { ScrollView } from 'react-native-gesture-handler';
+
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
 import GoBack from '~/components/go-back';
-import { ScrollView } from 'react-native-gesture-handler';
 
 type Order = {
   id: string;
@@ -16,6 +18,8 @@ type Order = {
 };
 
 const OrdersList: React.FC = () => {
+  const { t } = useTranslation();
+
   const orders: Order[] = [
     {
       id: '1',
@@ -77,7 +81,7 @@ const OrdersList: React.FC = () => {
           <GoBack />
           <Text size="2xl" weight="bold">
             {' '}
-            Orders{' '}
+            {t('Orders')}{' '}
           </Text>
         </View>
         <TouchableOpacity
