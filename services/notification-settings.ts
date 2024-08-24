@@ -1,7 +1,7 @@
 import { HTTPError } from 'ky';
 
 import { http } from '~/libs/ky';
-import { NotSettingsResponse, NotSettingsResponseError } from '~/types/notification-settings';
+import { NotSettingsResponseError } from '~/types/notification-settings';
 
 const getNotifications = async (userId: string | undefined) => {
   try {
