@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Image, FlatList, ListRenderItem, Pressable } from 'react-native';
 import { Search } from 'react-native-feather';
-import { Dimensions } from 'react-native';
+import { Dimensions, Pressable } from 'react-native';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
