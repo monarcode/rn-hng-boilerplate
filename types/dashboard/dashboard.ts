@@ -14,10 +14,10 @@ type monthSale = {
 };
 
 type DashboardResponse = {
-  revenue: 0;
-  subscriptions: 0;
-  sales: 0;
-  activeSubscription: 0;
+  revenue: number;
+  subscriptions: number;
+  sales: number;
+  activeSubscription: number;
   monthSales: monthSale[];
 };
 

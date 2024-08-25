@@ -8,7 +8,7 @@ const useDashboard = (userId: string | undefined) => {
     queryFn: () => fetchDashboard(userId),
   });
 
-  return { data, isError, isLoading };
+  return { dashBoardData:data, isError, isLoading };
 };
 const useInvite = (orgId: string | undefined) => {
   const { data, isLoading, isError } = useQuery({

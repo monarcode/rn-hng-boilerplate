@@ -21,38 +21,36 @@ const ListCategories = () => {
   const [listView, setListView] = useState<listViewOption>('list');
   const authstore = useAuthStore();
   const orgId = authstore.data?.organisations[0].organisation_id;
-  const [queriedProducts, setQueriedProducts] = useState<CategoryProps[] | undefined>([]);
   const [query, setQuery] = useState<string>('');
   // dummy data
 
-  // const { data, isError, isLoading } = useProducts(orgId);
-  const data = ApiData;
-  // if (isLoading) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         backgroundColor: 'white',
-  //         alignItems: 'center',
-  //         justifyContent: 'center',
-  //       }}>
-  //       <Text size="2xl" weight="semiBold">
-  //         {t('Loading')}
-  //       </Text>
-  //     </View>
-  //   );
-  // }
+  const { data, isError, isLoading } = useProducts(orgId);
+  // const data = ApiData;
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text size="2xl" weight="semiBold">
+          {t('Loading')}
+        </Text>
+      </View>
+    );
+  }
   let searchData = data?.map((item) => {
-    const result = item.products.filter((product) =>
+    const result = item.products?.filter((product) =>
       product.name.toLowerCase().includes(query.toLowerCase())
     );
-    if (result.length > 0) {
+    if (result && result.length > 0) {
       return { ...item, products: result };
     }
     return null;
   });
-  searchData = searchData.filter((item) => item !== null);
- 
+  searchData = searchData?.filter((item) => item !== null);
 
   return (
     <>
@@ -70,6 +68,18 @@ const ListCategories = () => {
                   contentContainerStyle={{ gap: THEME.spacing.lg }}
                 />
               )}
+            </View>
+          ) : query !== '' ? (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: 'white',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text size="xl" weight="medium">
+                {t('No Products Found')}
+              </Text>
             </View>
           ) : (
             <View style={{ flex: 1, alignItems: 'center', marginTop: '20%' }}>
