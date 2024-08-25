@@ -2,6 +2,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { StyleSheet, Pressable, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { Plus } from 'react-native-feather';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import GoBack from '~/components/go-back';
 import { SearchAndFilter } from '~/components/product-list';
@@ -10,14 +11,21 @@ import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { useProducts } from '~/hooks/products/organization/fetchProducts';
 import useAuthStore from '~/store/auth';
+import { ApiData } from '~/components/product-list/categories';
 
 const ViewProductsByCategory = () => {
+  const { t } = useTranslation();
   const authstore = useAuthStore();
   const [query, setQuery] = useState<string>('');
   const orgId = authstore.data?.organisations[0].organisation_id;
   const { categoryId } = useLocalSearchParams();
   const { data } = useProducts(orgId);
   const category = data?.find((item) => item.name === categoryId);
+  const products = category?.products?.filter((item) =>
+    item.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  
 
   return (
     <View style={styles.container}>
@@ -34,16 +42,29 @@ const ViewProductsByCategory = () => {
         </TouchableOpacity>
       </View>
       <SearchAndFilter query={query} setQuery={setQuery} />
-        <View style={{ padding: THEME.spacing.md }}>
+      <View style={{ padding: THEME.spacing.md }}>
+        {products && products?.length > 0 ? (
           <FlatList
             scrollEnabled={false}
-            data={category?.products}
+            data={products}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ProductItemListTile {...item} />}
             contentContainerStyle={{ gap: THEME.spacing.lg }}
             showsVerticalScrollIndicator={false}
           />
-        </View>
+        ) : (
+          <View
+            style={{
+              backgroundColor: 'white',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text size="xl" weight="medium">
+              {t('No Products Found')}
+            </Text>
+          </View>
+        )}
+      </View>
       <Pressable
         style={styles.floatingButton}
         onPress={() => {
