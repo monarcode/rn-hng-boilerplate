@@ -1,7 +1,14 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, FlatList, ListRenderItem, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  ListRenderItem,
+  Pressable,
+} from 'react-native';
 import { Search } from 'react-native-feather';
-import { Dimensions, Pressable } from 'react-native';
+import { Dimensions } from 'react-native';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
@@ -47,7 +54,11 @@ const OrdersList: React.FC = () => {
   ];
 
   const renderOrderItem: ListRenderItem<Order> = ({ item }) => (
-    <Pressable onPress={()=>{router.push(`/(tabs)/orders/${item.id}`)}} style={styles.orderCard}>
+    <Pressable
+      onPress={() => {
+        router.push(`/(tabs)/orders/${item.id}`);
+      }}
+      style={styles.orderCard}>
       <View style={styles.orderInfo}>
         <Text weight="bold" style={styles.orderNumber}>
           Order#: {item.orderNumber}
