@@ -13,6 +13,7 @@ import { View, Text } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
 import { CategoryProps } from '~/components/product-list/types';
+import { ApiData } from './../../../components/product-list/categories';
 
 const ListCategories = () => {
   const { t } = useTranslation();
@@ -24,23 +25,34 @@ const ListCategories = () => {
   const [query, setQuery] = useState<string>('');
   // dummy data
 
-  const { data, isError, isLoading } = useProducts(orgId);
-
-  if (isLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text size="2xl" weight="semiBold">
-          {t('Loading')}
-        </Text>
-      </View>
+  // const { data, isError, isLoading } = useProducts(orgId);
+  const data = ApiData;
+  // if (isLoading) {
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 1,
+  //         backgroundColor: 'white',
+  //         alignItems: 'center',
+  //         justifyContent: 'center',
+  //       }}>
+  //       <Text size="2xl" weight="semiBold">
+  //         {t('Loading')}
+  //       </Text>
+  //     </View>
+  //   );
+  // }
+  let searchData = data?.map((item) => {
+    const result = item.products.filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase())
     );
-  }
+    if (result.length > 0) {
+      return { ...item, products: result };
+    }
+    return null;
+  });
+  searchData = searchData.filter((item) => item !== null);
+ 
 
   return (
     <>
@@ -48,12 +60,12 @@ const ListCategories = () => {
         <ProductTopHeader listViewOption={listView} setListViewOption={setListView} />
         <SearchAndFilter query={query} setQuery={setQuery} />
         <ScrollView showsVerticalScrollIndicator={false}>
-          {data?.length && data.length > 0 ? (
+          {searchData?.length && searchData.length > 0 ? (
             <View style={{ padding: THEME.spacing.md }}>
               {data && (
                 <FlatList
                   scrollEnabled={false}
-                  data={data}
+                  data={searchData}
                   renderItem={({ item, index }) => <CategoryItem {...item} />}
                   contentContainerStyle={{ gap: THEME.spacing.lg }}
                 />
