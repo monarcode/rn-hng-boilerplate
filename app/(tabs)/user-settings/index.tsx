@@ -1,8 +1,8 @@
 import { router } from 'expo-router';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
 
 import AccountSetting from '~/assets/icons/account-setting.svg';
 import Business from '~/assets/icons/business.svg';
@@ -80,49 +80,51 @@ const UserSettingsScreen = () => {
           </View>
         </View>
 
-        <SettingsSection title={t("Profile Settings")}>
+        <SettingsSection title={t('Profile Settings')}>
           {/*
           To enable navigation when using any of the SettingItem components,
           you should call the goto prop within the SettingItem */}
           <SettingItem
             icon={<AccountSetting />}
-            title={t("Account")}
+            title={t('Account')}
             goto={() => router.push('/user/general-profile')}
           />
           <SettingItem
             icon={<Notification />}
-            title={t("Notification")}
+            title={t('Notification')}
             goto={() => router.push('/user-settings/notification')}
           />
           <SettingItem
             icon={<Database />}
-            title={t("Change Password")}
+            title={t('Change Password')}
             goto={() => router.push('/user/change-password')}
           />
           <SettingItem
             icon={<Globe />}
-            title={t("Language and Region")}
+            title={t('Language and Region')}
             goto={() => router.push('/user-settings/language-and-region')}
           />
         </SettingsSection>
 
-        <SettingsSection title={t("Organizational Settings")}>
+        <SettingsSection title={t('Organizational Settings')}>
           <SettingItem
             icon={<UserPlus />}
-            title={t("Create Organisation")}
+            title={t('Create Organisation')}
             goto={() => router.push('/(auth)/organisation-sign-up')}
           />
-          <SettingItem icon={<Business />} title={t("Manage Organization")} />
-          <SettingItem icon={<Users />} title={t("Members")} goto={() => router.push('/user/members')} />
-        </SettingsSection>
-        <SettingsSection title="Payment Setting">
+          <SettingItem icon={<Business />} title={t('Manage Organization')} />
           <SettingItem
-            icon={<Business />}
-            title="Subscription"
+            icon={<Users />}
+            title={t('Members')}
+            goto={() => router.push('/user/members')}
+          />
+        </SettingsSection>
+        <SettingsSection title={t('Payment Setting')}>
+          <SettingItem
+            icon={<Wallet />}
+            title={t('Subscription')}
             goto={() => router.push('/user/subscription')}
           />
-        <SettingsSection title={t("Payment Setting")}>
-          <SettingItem icon={<Wallet />} title={t("Subscription")} />
         </SettingsSection>
         <TouchableOpacity
           style={[styles.logout, { marginBottom: bottomInset }]}
@@ -135,7 +137,7 @@ const UserSettingsScreen = () => {
 
         <Dialog
           ref={dialogRef}
-          title={t("Confirm Logout")}
+          title={t('Confirm Logout')}
           description="Are you sure you want to log out?"
           showCloseButton={false}>
           <View style={styles.dialogButtons}>

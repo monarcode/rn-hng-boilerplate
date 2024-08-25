@@ -1,168 +1,155 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Stack } from 'expo-router';
 import React from 'react';
-import { StyleSheet, SectionList, ScrollView } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, FlatList } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import BasicHeader from '~/components/basic-header';
-import { Text, View, Button } from '~/components/shared';
+import GoBack from '~/components/go-back';
+import NotificationCard from '~/components/notifications/notification-card';
+import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 
 const NotificationSettings = () => {
-  const insets = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
 
-  const topInset = insets.top;
-  const bottomInset = insets.bottom;
-
-  //  <Button>
-  //   Save Changes
-  // </Button>
-
-  const notificationSections = [
+  const notifications = [
     {
-      title: (
-        <Text size="xl" weight="semiBold">
-          Notifications Alert
-        </Text>
-      ),
-      data: [
-        {
-          header: 'Mobile push notifications',
-          body: 'Receive push notifications on mentions and comments via your mobile app',
-        },
-      ],
+      id: 1,
+      title: 'James Karty',
+      count: 2,
+      description: 'Do you have it now?',
+      timestamp: '2m ago',
     },
     {
-      title: (
-        <Text size="xl" weight="semiBold">
-          Email notifications
-        </Text>
-      ),
-      data: [
-        {
-          header: 'Activity in your workspace',
-          body: 'Receive emails when you get comments, mentions, page invites, reminders, access requests, and property changes',
-        },
-        {
-          header: 'Always send email notifications',
-          body: 'Receive emails about activity in your workspace, even when you are active on the app',
-        },
-        {
-          header: 'Email digests',
-          body: 'Receive email digest every 8 hours for changes to pages you are subscribed to',
-        },
-        {
-          header: 'Announcement and update emails',
-          body: 'Receive occasional emails about product launches and new features from notion',
-        },
-      ],
+      id: 2,
+      title: 'Mary Smith',
+      count: 1,
+      description: 'Your order is on the way.',
+      timestamp: '1h ago',
     },
     {
-      title: (
-        <Text size="xl" weight="semiBold">
-          Slack Notification
-        </Text>
-      ),
-      data: [
-        {
-          header: 'Activity in your workspace',
-          body: 'Receive emails when you get comments, mentions, page invites, reminders, access requests, and property changes',
-        },
-        {
-          header: 'Always send email notifications',
-          body: 'Receive emails about activity in your workspace, even when you are active on the app',
-        },
-        {
-          header: 'Email digests',
-          body: 'Receive email digest every 8 hours for changes to pages you are subscribed to',
-        },
-        {
-          header: 'Announcement and update emails',
-          body: 'Receive occasional emails about product launches and new features from notion',
-        },
-      ],
+      id: 3,
+      title: 'John Doe',
+      count: 3,
+      description: 'I did not recieve the order',
+      timestamp: '1d ago',
+    },
+    {
+      id: 4,
+      title: 'Jane Doe',
+      count: 5,
+      description: 'Your order is ready.',
+      timestamp: '3d ago',
+    },
+    {
+      id: 5,
+      title: 'Phelickz hng',
+      count: 1,
+      description: 'I forgot my wallet',
+      timestamp: '4d ago',
+    },
+    {
+      id: 6,
+      title: 'Emily Davis',
+      count: 6,
+      description: 'I need to return my order',
+      timestamp: '5d ago',
+    },
+    {
+      id: 7,
+      title: 'Michael Brown',
+      count: 1,
+      description: 'I need to pay for my order',
+      timestamp: '6d ago',
+    },
+    {
+      id: 8,
+      title: 'Sarah Johnson',
+      count: 4,
+      description: 'How much is it?',
+      timestamp: '7d ago',
+    },
+    {
+      id: 9,
+      title: 'Michael Brown',
+      count: 3,
+      description: 'Can you help me with my order?',
+      timestamp: '8d ago',
+    },
+    {
+      id: 10,
+      count: 2,
+      title: 'Sarah Johnson',
+      description: 'Where is my order?',
+      timestamp: '9d ago',
     },
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Stack.Screen
         options={{
-          header: () => <BasicHeader label="Notifications" />,
+          headerBackTitleVisible: false,
+          headerTitle: '',
+          header(props) {
+            return (
+              <View
+                style={{
+                  width: '100%',
+                  paddingTop: top,
+                  paddingBottom: 6,
+                  elevation: 1,
+                  borderWidth: 1,
+                  backgroundColor: THEME.colors.white,
+                  borderColor: THEME.colors.borderLight,
+                }}>
+                <View style={styles.headerContainer}>
+                  <View style={styles.headerLeft}>
+                    <GoBack />
+                    <Text size="xl" weight="semiBold">
+                      Notifications
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            );
+          },
         }}
       />
-      <SectionList
-        contentContainerStyle={styles.section}
-        sections={notificationSections}
-        renderItem={({ item }) => (
-          <View style={styles.sectionBody}>
-            <Text size="md" weight="medium">
-              {item.header}
-            </Text>
-            <Text size="sm" weight="regular">
-              {item.body}
-            </Text>
-          </View>
-        )}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.sectionHeader}>{title}</Text>
-        )}
+
+      <FlatList
+        data={notifications}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => <NotificationCard data={item} />}
+        contentContainerStyle={styles.wrapper}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: THEME.spacing.gutter,
-    paddingTop: -THEME.spacing.lg,
+    paddingHorizontal: 18,
+    backgroundColor: THEME.colors.white,
   },
-  header: {
+  headerContainer: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
+    paddingHorizontal: 10,
+    gap: THEME.spacing.sm,
   },
-  section: {
-    width: '100%',
-  },
-  sectionHeader: {
+  headerLeft: {
+    flex: 1,
     flexDirection: 'row',
+    gap: THEME.spacing.sm,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    borderColor: 'rgba(188, 188, 188, 0.40)',
-    paddingBottom: 11,
-    borderBottomWidth: 0.5,
   },
-  sectionBody: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingBottom: 11,
-
-    gap: 12,
-  },
-  profileInfo: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: THEME.spacing.xl,
-  },
-  profileImageContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-  },
-  profileImage: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  profileName: {
-    marginBottom: 5,
-  },
-  profileEmail: {
-    color: THEME.colors.neutral[400],
+  wrapper: {
+    rowGap: 26,
+    paddingTop: THEME.spacing.md,
+    paddingBottom: 56,
   },
 });
 
