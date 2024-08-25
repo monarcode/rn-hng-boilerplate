@@ -1,6 +1,6 @@
 export type ProductProps = {
   id: string;
-  name: string;
+  name: string ;
   description: string;
   price: number;
   category: string;
@@ -15,6 +15,6 @@ export type ProductProps = {
 };
 
 export type CategoryProps = {
-  name: string;
-  products: ProductProps[];
+  name?: string | undefined ;
+  products?: ProductProps[] | undefined  ;
 };

@@ -11,36 +11,52 @@ import { Text, View } from '../shared';
 import SummaryCard from './summary-card';
 
 import { THEME } from '~/constants/theme';
+import { useDashboard } from '~/hooks/dashboard/dashboard';
+import useAuthStore from '~/store/auth';
+import { useProducts } from '~/hooks/products/organization/fetchProducts';
 
 const Summary = () => {
   const { t } = useTranslation();
+  const authstore = useAuthStore();
+  const user_id = authstore.data?.user.id;
+  const { dashBoardData, isError, isLoading } = useDashboard(user_id);
+  const { data } = useProducts(authstore.data?.organisations[0].organisation_id);
+  
+  let totalProduct = 0;
+  if (data) {
+    data?.forEach((category) => {
+      if (category.products) {
+        totalProduct += category.products.length;
+      }
+    });
+  }
 
   const summary = [
     {
       title: 'Total Members',
-      amount: '100',
-      increase: '+ 23 from last month',
+      amount: dashBoardData ? dashBoardData.activeSubscription : 0,
+      increase: '+ 0 from last month',
       Icon: AllMembers,
       color: '#509DF5',
     },
     {
       title: 'Total Products',
-      amount: '26',
-      increase: '+ 4 added last month',
+      amount: totalProduct,
+      increase: '+ 0 added last month',
       Icon: Product,
       color: '#422AF0',
     },
     {
       title: 'Subscriptions',
-      amount: '126',
-      increase: '+ 2 from last month',
+      amount: dashBoardData?dashBoardData.subscriptions:0,
+      increase: '+ 0 from last month',
       Icon: Dollar,
       color: '#F85547',
     },
     {
       title: 'Active Members',
-      amount: '547',
-      increase: '+ 23 from last month',
+      amount: dashBoardData?dashBoardData.activeSubscription:0,
+      increase: '+ 0 from last month',
       Icon: ActiveMembers,
       color: '#0ED970',
     },
