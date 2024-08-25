@@ -6,6 +6,6 @@ export const createProductSchema = z.object({
   category: z.string().min(3, 'Select a category'),
   price: z
     .string()
-    .regex(/^\d+(\.\d{1,2})?$/, 'Price must be a valid number with up to two decimal places'),
+    .regex(/^\d+(\.\d{1,2})?$/, 'Price must be a valid number with up to one decimal place'),
   quantity: z.string().regex(/^\d+$/, 'Quantity must be a valid whole number'),
 });

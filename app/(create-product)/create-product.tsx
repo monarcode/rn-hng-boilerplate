@@ -1,11 +1,8 @@
 import { Stack } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import BasicHeader from '~/components/basic-header';
-
-import GoBack from '~/components/go-back';
 import KeyboardAwareWrapper from '~/components/keyboard-aware-wrapper';
-import { Text, View } from '~/components/shared';
+import { View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import CreateProductForm from '~/modules/products/components/create-product-form';
 
@@ -36,7 +33,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     rowGap: THEME.spacing.xl,
     flexGrow: 1,
-    paddingBottom: 10,
+    paddingBottom: 30,
   },
 
   subtitle: {

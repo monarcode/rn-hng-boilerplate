@@ -91,12 +91,12 @@ export default EdittProduct;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   contentContainer: {
-    // rowGap: THEME.spacing.xl,
-    // flexGrow: 1,
-    // paddingBottom: 10,
+    rowGap: THEME.spacing.xl,
+    flexGrow: 1,
+    paddingBottom: 30,
   },
 
   subtitle: {
