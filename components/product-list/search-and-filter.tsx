@@ -13,6 +13,7 @@ type QueryProps = {
 };
 
 const SearchAndFilter = ({ query, setQuery }: QueryProps) => {
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -20,8 +21,8 @@ const SearchAndFilter = ({ query, setQuery }: QueryProps) => {
           placeholder="Search Product"
           containerStyle={{ borderWidth: 0 }}
           inputStyle={{ fontSize: 16 }}
-          onTextInput={(e) => {
-            console.log(e.nativeEvent.text);
+          onChange={(e) => {
+            setQuery(e.nativeEvent.text);
           }}
         />
         <View style={styles.slider}>
@@ -49,7 +50,6 @@ const styles = StyleSheet.create({
     borderColor: THEME.colors.border,
     borderRadius: THEME.spacing.sm,
     justifyContent: 'center',
-    paddingVertical: 5,
     paddingHorizontal: 5,
   },
   slider: {

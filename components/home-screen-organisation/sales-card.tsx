@@ -10,8 +10,8 @@ import { currency } from '~/libs/currency';
 const SalesCard = (sale: SalesCardProps) => {
   return (
     <View style={styles.container}>
+      <View style={styles.profileBall}></View>
       <View style={styles.profileContainer}>
-        <View style={styles.profileBall} />
         <View>
           <Text size="lg" weight="medium">
             {sale.name}
@@ -20,8 +20,8 @@ const SalesCard = (sale: SalesCardProps) => {
             {sale.email}
           </Text>
         </View>
+        <Text size="xl" weight="bold">{`+ $${parseFloat(sale.amount.toString())}`}</Text>
       </View>
-      <Text size="xl" weight="bold">{`+ ${currency(sale.amount)}`}</Text>
     </View>
   );
 };
@@ -30,9 +30,6 @@ export default SalesCard;
 
 const styles = StyleSheet.create({
   container: {
-    borderTopWidth: 1,
-    borderColor: THEME.colors.borderLight,
-    paddingVertical: THEME.spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -47,5 +44,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: THEME.spacing.lg,
+    borderBottomWidth: 1,
+    width: '85%',
+    justifyContent: 'space-between',
+    borderColor: '#F2F2F2',
+    paddingVertical: THEME.spacing.md,
   },
 });

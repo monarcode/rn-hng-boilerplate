@@ -1,4 +1,4 @@
-const ApiData = [
+export const ApiData = [
   {
     name: 'Breakfast',
     products: [

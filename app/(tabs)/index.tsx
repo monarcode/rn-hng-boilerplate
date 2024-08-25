@@ -117,7 +117,7 @@ const HomeScreen = () => {
             </Button>
 
             <Button containerStyle={{ flex: 1 }} icon={<AddUser />} variant="secondary">
-              {t('Add A Product')}
+              {t('Add A Member')}
             </Button>
           </View>
           <RecentSales />

@@ -51,10 +51,11 @@ const styles = StyleSheet.create({
     padding: THEME.spacing.sm,
     marginBottom: 20,
   },
-  headerTextContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: THEME.spacing.md,
-  },
+  headerTextContainer:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    paddingVertical:THEME.spacing.md,
+    
+  }
 });

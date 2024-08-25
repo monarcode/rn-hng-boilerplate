@@ -1,10 +1,18 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  ListRenderItem,
+  Pressable,
+} from 'react-native';
 import { Search } from 'react-native-feather';
 import { Dimensions } from 'react-native';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+import { router } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
@@ -46,7 +54,11 @@ const OrdersList: React.FC = () => {
   ];
 
   const renderOrderItem: ListRenderItem<Order> = ({ item }) => (
-    <View style={styles.orderCard}>
+    <Pressable
+      onPress={() => {
+        router.push(`/(tabs)/orders/${item.id}`);
+      }}
+      style={styles.orderCard}>
       <View style={styles.orderInfo}>
         <Text weight="bold" style={styles.orderNumber}>
           Order#: {item.orderNumber}
@@ -69,7 +81,7 @@ const OrdersList: React.FC = () => {
       <View style={styles.productImageStyle}>
         <Image source={item.productImage} style={styles.productImage} />
       </View>
-    </View>
+    </Pressable>
   );
 
   return (
