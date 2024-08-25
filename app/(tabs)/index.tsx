@@ -24,7 +24,6 @@ const HomeScreen = () => {
   const { data: profileData } = useFetchProfile();
   const userData = useAuthStore((state) => state.data?.user);
   const { top } = useSafeAreaInsets();
-  const { data, isError, isLoading } = useDashboard(authstore.data?.user.id);
   if (!authstore.data) {
     return <Redirect href="/(auth)/login" />;
   }
