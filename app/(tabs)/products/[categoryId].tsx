@@ -11,7 +11,6 @@ import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
 import { useProducts } from '~/hooks/products/organization/fetchProducts';
 import useAuthStore from '~/store/auth';
-import { ApiData } from '~/components/product-list/categories';
 
 const ViewProductsByCategory = () => {
   const { t } = useTranslation();
@@ -24,8 +23,6 @@ const ViewProductsByCategory = () => {
   const products = category?.products?.filter((item) =>
     item.name.toLowerCase().includes(query.toLowerCase())
   );
-
-  
 
   return (
     <View style={styles.container}>
