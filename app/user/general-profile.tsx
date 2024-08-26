@@ -44,10 +44,10 @@ const GeneralProfileSettings = () => {
   };
 
   return (
-    <KeyboardAwareWrapper>
-      <SafeAreaView
-        edges={['top', 'bottom']}
-        style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+    <SafeAreaView
+      edges={['top', 'bottom']}
+      style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+      <KeyboardAwareWrapper>
         <View style={[styles.header, { marginBottom: bottomInset }]}>
           <GoBack />
           <Text size="lg" weight="semiBold">
@@ -155,8 +155,8 @@ const GeneralProfileSettings = () => {
             </Button>
           </View>
         </ScrollView>
-      </SafeAreaView>
-    </KeyboardAwareWrapper>
+      </KeyboardAwareWrapper>
+    </SafeAreaView>
   );
 };
 
@@ -225,7 +225,8 @@ const styles = StyleSheet.create({
   yourEmailContainer: {
     borderWidth: 1,
     borderColor: THEME.colors.border,
-    padding: 12,
+    paddingHorizontal: THEME.spacing.sm,
+    paddingVertical: THEME.spacing.md,
     borderRadius: THEME.spacing.sm,
     opacity: 0.5,
   },
