@@ -9,7 +9,9 @@ import normalize from '~/libs/normalize';
 
 export default function SubscriptionCard({ plan }: any) {
   return (
-    <Pressable style={[styles.container, plan.active ? styles.activePlan : styles.inactivePlan]}>
+    <Pressable
+      style={[styles.container, plan.active ? styles.activePlan : styles.inactivePlan]}
+      key={plan?.id}>
       <View style={styles.planType}>
         <Text size="lg" weight="semiBold">
           {plan?.plan} Plan

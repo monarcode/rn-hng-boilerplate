@@ -37,7 +37,7 @@ const uploadPicture = async (photo: string): Promise<ProfilePictureResponse> => 
 
     const filename = Platform.OS === 'ios' ? 'photo.jpg' : 'photo';
 
-    formData.append('DisplayPhoto', {
+    formData.append('display_photo', {
       uri: photo,
       name: filename,
       type: 'image/jpeg',

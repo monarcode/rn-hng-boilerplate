@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: normalize(6),
-    padding: 10,
+    paddingHorizontal: THEME.spacing.sm,
     height: normalize(38),
   },
   iconContainer: {
