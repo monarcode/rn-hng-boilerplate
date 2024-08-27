@@ -24,7 +24,7 @@ const GeneralProfileSettings = () => {
   const userData = authStore.data?.user;
 
   const { selectedImage, handleImagePick, handleRemovePhoto } = useProfileImage(
-    userData?.email || ''
+    data?.data?.profile?.avatar_url || ''
   );
   const { form, onSaveChanges, resetForm, loading } = useProfileForm(
     {
@@ -80,7 +80,7 @@ const GeneralProfileSettings = () => {
               <TouchableOpacity
                 style={styles.uploadButton}
                 onPress={selectedImage.uri ? handleRemovePhoto : handleImagePick}>
-                <Text style={styles.uploadButtonText}>
+                <Text style={styles.uploadButtonText} size="lg">
                   {selectedImage.uri ? 'Remove Photo' : 'Upload your photo'}
                 </Text>
               </TouchableOpacity>
@@ -208,11 +208,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   uploadButton: {
-    marginTop: THEME.spacing.sm,
+    alignItems: 'flex-start',
   },
   uploadButtonText: {
     color: THEME.colors.primary,
-    fontSize: THEME.fontSize.md,
   },
   photoHelpText: {
     color: THEME.colors.neutral[400],
