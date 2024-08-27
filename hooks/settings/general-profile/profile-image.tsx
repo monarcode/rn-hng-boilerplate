@@ -12,9 +12,9 @@ type ImageState = {
   error?: string;
 };
 
-export const useProfileImage = (userEmail: string) => {
+export const useProfileImage = (initialImageUrl: string) => {
   const [selectedImage, setSelectedImage] = useState<ImageState>({
-    uri: '',
+    uri: initialImageUrl,
     status: 'idle',
   });
 

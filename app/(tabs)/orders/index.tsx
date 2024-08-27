@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import React from 'react';
 import {
   StyleSheet,
@@ -6,13 +7,12 @@ import {
   FlatList,
   ListRenderItem,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import { Search } from 'react-native-feather';
-import { Dimensions } from 'react-native';
 
 import { Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import { router } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 

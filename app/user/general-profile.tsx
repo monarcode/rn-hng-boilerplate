@@ -24,7 +24,7 @@ const GeneralProfileSettings = () => {
   const userData = authStore.data?.user;
 
   const { selectedImage, handleImagePick, handleRemovePhoto } = useProfileImage(
-    userData?.email || ''
+    data?.data?.profile?.avatar_url || ''
   );
   const { form, onSaveChanges, resetForm, loading } = useProfileForm(
     {
@@ -44,10 +44,10 @@ const GeneralProfileSettings = () => {
   };
 
   return (
-    <KeyboardAwareWrapper>
-      <SafeAreaView
-        edges={['top', 'bottom']}
-        style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+    <SafeAreaView
+      edges={['top', 'bottom']}
+      style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
+      <KeyboardAwareWrapper>
         <View style={[styles.header, { marginBottom: bottomInset }]}>
           <GoBack />
           <Text size="lg" weight="semiBold">
@@ -80,7 +80,7 @@ const GeneralProfileSettings = () => {
               <TouchableOpacity
                 style={styles.uploadButton}
                 onPress={selectedImage.uri ? handleRemovePhoto : handleImagePick}>
-                <Text style={styles.uploadButtonText}>
+                <Text style={styles.uploadButtonText} size="lg">
                   {selectedImage.uri ? 'Remove Photo' : 'Upload your photo'}
                 </Text>
               </TouchableOpacity>
@@ -155,8 +155,8 @@ const GeneralProfileSettings = () => {
             </Button>
           </View>
         </ScrollView>
-      </SafeAreaView>
-    </KeyboardAwareWrapper>
+      </KeyboardAwareWrapper>
+    </SafeAreaView>
   );
 };
 
@@ -208,11 +208,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   uploadButton: {
-    marginTop: THEME.spacing.sm,
+    alignItems: 'flex-start',
   },
   uploadButtonText: {
     color: THEME.colors.primary,
-    fontSize: THEME.fontSize.md,
   },
   photoHelpText: {
     color: THEME.colors.neutral[400],
@@ -225,7 +224,8 @@ const styles = StyleSheet.create({
   yourEmailContainer: {
     borderWidth: 1,
     borderColor: THEME.colors.border,
-    padding: 12,
+    paddingHorizontal: THEME.spacing.sm,
+    paddingVertical: THEME.spacing.md,
     borderRadius: THEME.spacing.sm,
     opacity: 0.5,
   },
