@@ -1,24 +1,22 @@
+import { router, Stack } from 'expo-router';
 import React, { useRef, useState } from 'react';
-import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
-import GoBack from '~/components/go-back';
+import BasicHeader from '~/components/basic-header';
 import { Dialog, DialogRef, Text, View, Button, Select } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import { router } from 'expo-router';
-
 
 const LanguageAndRegion = () => {
   const { t } = useTranslation();
   const dialogRef = useRef<DialogRef>(null);
   const { i18n } = useTranslation();
-  const [selectedLang, setSelectedLang] = useState('')
+  const [selectedLang, setSelectedLang] = useState('');
 
   const switchLanguage = () => {
     i18n.changeLanguage(selectedLang || 'en');
-    dialogRef.current?.open()
+    dialogRef.current?.open();
   };
-
 
   const languageOptions = [
     { label: 'English', value: 'en' },
@@ -57,45 +55,41 @@ const LanguageAndRegion = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.header]}>
-        <GoBack />
-        <Text size="lg" weight="semiBold">
-          {t('Language & Region')}
-        </Text>
-        <View />
-      </View>
-
-      <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: () => <BasicHeader label={t('Language & Region')} />,
+        }}
+      />
+      <View style={styles.content}>
         <Text style={styles.subHeaderText}>
-          {t('Customise your language and region prefrences')}
+          {t('Customise your language and region preferences')}
         </Text>
         <View style={styles.sectionContainer}>
-          <Select onValueChange={e => setSelectedLang(e?.value || '')} options={languageOptions} placeholder={t('Language')} width={300} />
-          <Select options={regionOptions} placeholder={t('Region')} width={300} />
-          <Select options={timeZoneOptions} placeholder={t("Time-Zone")} width={300} />
+          <Select
+            onValueChange={(e) => setSelectedLang(e?.value || '')}
+            options={languageOptions}
+            placeholder={t('Language')}
+          />
+          <Select options={regionOptions} placeholder={t('Region')} />
+          <Select options={timeZoneOptions} placeholder={t('Time-Zone')} />
         </View>
 
         <View style={styles.btnContaner}>
-          <Button
-            onPress={switchLanguage}
-            children={t("Save")}
-          />
-          <Button
-            onPress={() => router.back()}
-            children={t("Cancel")}
-            variant='outline'
-          />
+          <Button onPress={switchLanguage} children={t('Save')} />
+          <Button onPress={() => router.back()} children={t('Cancel')} variant="outline" />
         </View>
       </View>
       <Dialog
         ref={dialogRef}
-        title={t("Language and Region Updated")}
-        description={t("Language and Region updated successfully. Remember, you can always adjust these settings again later")}
-        showCloseButton={false}
-      >
+        title={t('Language and Region Updated')}
+        description={t(
+          'Language and Region updated successfully. Remember, you can always adjust these settings again later'
+        )}
+        showCloseButton={false}>
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText} >{t('Done')}</Text>
+            <Text style={styles.cancelButtonText}>{t('Done')}</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
@@ -106,10 +100,10 @@ const LanguageAndRegion = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
-    backgroundColor: THEME.colors.white,
-    paddingHorizontal: 20,
-    paddingVertical: THEME.spacing.gutter,
+    marginHorizontal: THEME.spacing.gutter,
+  },
+  content: {
+    rowGap: THEME.spacing.xs,
   },
   header: {
     flexDirection: 'row',
@@ -127,7 +121,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     borderColor: 'rgba(188, 188, 188, 0.40)',
-    backgroundColor: THEME.colors.white,
     paddingBottom: 11,
     borderBottomWidth: 0.5,
     paddingTop: THEME.spacing.md,
@@ -147,31 +140,31 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: THEME.colors.white,
     fontSize: THEME.fontSize.lg,
-    fontWeight: 500
+    fontWeight: 500,
   },
   loadingContainer: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   subHeaderText: {
     fontSize: THEME.fontSize.sm,
     fontWeight: 400,
-    marginBottom: THEME.spacing.xl
+    marginBottom: THEME.spacing.xl,
   },
   sectionContainer: {
     flexDirection: 'column',
     alignItems: 'stretch',
-    gap: THEME.spacing.md
+    gap: THEME.spacing.md,
   },
   btnContaner: {
     marginTop: THEME.spacing.xl,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     width: '100%',
-    gap: THEME.spacing.md
-  }
+    gap: THEME.spacing.md,
+  },
 });
 
 export default LanguageAndRegion;
