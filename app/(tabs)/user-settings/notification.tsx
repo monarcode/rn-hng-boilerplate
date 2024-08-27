@@ -1,12 +1,18 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StyleSheet, SectionList, SafeAreaView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import {
+  StyleSheet,
+  SectionList,
+  SafeAreaView,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import CheckIcon from '~/assets/icons/check.svg';
-import BasicHeader from '~/components/basic-header';
 import GoBack from '~/components/go-back';
 import RenderSetting from '~/components/notification-settings';
 import { Dialog, DialogRef, Text, View, Button } from '~/components/shared';
@@ -33,10 +39,10 @@ const NotificationSettings = () => {
 
   const settingsMutation = useMutation({
     mutationFn: () => NotificationSettingsService.setNotifications(notificationData),
-    onSuccess: (res) => {
+    onSuccess: (_res) => {
       dialogRef.current?.open();
     },
-    onError: (err) => {
+    onError: (_err) => {
       Alert.alert('Server error', 'An error occured while saving settings');
     },
   });
@@ -90,7 +96,7 @@ const NotificationSettings = () => {
               icon={<CheckIcon />}
               loading={settingsMutation.isPending}
               onPress={() => settingsMutation.mutate()}
-              children={t("Save Changes")}
+              children={t('Save Changes')}
             />
           </View>
         </>
@@ -98,13 +104,14 @@ const NotificationSettings = () => {
 
       <Dialog
         ref={dialogRef}
-        title={t("Notification Updated")}
-        description={t("Notification preferences updated successfully. Remember, you can always adjust these settings again later")}
-        showCloseButton={false}
-      >
+        title={t('Notification Updated')}
+        description={t(
+          'Notification preferences updated successfully. Remember, you can always adjust these settings again later'
+        )}
+        showCloseButton={false}>
         <View style={styles.dialogButtons}>
           <TouchableOpacity style={styles.cancelButton} onPress={() => dialogRef.current?.close()}>
-            <Text style={styles.cancelButtonText} >{t('Done')}</Text>
+            <Text style={styles.cancelButtonText}>{t('Done')}</Text>
           </TouchableOpacity>
         </View>
       </Dialog>
