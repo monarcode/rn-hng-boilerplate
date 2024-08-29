@@ -9,6 +9,7 @@ const KeyboardAwareWrapper = ({ children, ...props }: Props) => (
     enableResetScrollToCoords={false}
     keyboardShouldPersistTaps="handled"
     showsVerticalScrollIndicator={false}
+    style={{ flex: 1 }}
     {...props}>
     {children}
   </KeyboardAwareScrollView>

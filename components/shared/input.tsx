@@ -47,6 +47,7 @@ export interface TextInputProps extends NativeTextInputProps {
   onFocus?: () => void;
   /** Callback function called when the input loses focus */
   onBlur?: () => void;
+  required?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -62,6 +63,7 @@ const TextInput: React.FC<TextInputProps> = ({
   label,
   onFocus,
   onBlur,
+  required = false,
   ...props
 }) => {
   const focusProgress = useSharedValue(0);
@@ -86,7 +88,12 @@ const TextInput: React.FC<TextInputProps> = ({
 
   return (
     <View style={[styles.outerContainer, style]}>
-      {label && <Text style={styles.inputLabel}>{label}</Text>}
+      {label && (
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.inputLabel}>{label}</Text>
+          {required && <Text style={{ color: '#f60000' }}>*</Text>}
+        </View>
+      )}
       <Animated.View style={[styles.container, containerStyle, animatedContainerStyle]}>
         {icon && <View style={styles.iconContainer}>{icon}</View>}
         <NativeTextInput

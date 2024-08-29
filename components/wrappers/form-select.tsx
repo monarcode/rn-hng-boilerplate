@@ -14,6 +14,7 @@ interface FormSelectProps<TFieldValues extends FieldValues>
   rules?: any;
   errorMessage?: string;
   label: string;
+  required?: boolean;
 }
 
 /**
@@ -74,6 +75,7 @@ function FormSelect<TFieldValues extends FieldValues>({
   iconColor,
   containerStyle,
   label,
+  required = false,
   ...selectProps
 }: FormSelectProps<TFieldValues>): React.ReactElement {
   return (
@@ -86,7 +88,13 @@ function FormSelect<TFieldValues extends FieldValues>({
 
         return (
           <View style={styles.container}>
-            {label && <Text style={styles.inputLabel}>{label}</Text>}
+            {/* {label && <Text style={styles.inputLabel}>{label}</Text>} */}
+            {label && (
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.inputLabel}>{label}</Text>
+                {required && <Text style={{ color: '#f60000' }}>*</Text>}
+              </View>
+            )}
             <Select
               options={options}
               placeholder={placeholder}

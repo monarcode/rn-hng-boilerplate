@@ -103,8 +103,8 @@ const Select: React.FC<SelectProps> = ({
 
         <SelectPrimitive.Portal>
           <SelectPrimitive.Overlay style={styles.overlay}>
-            <SelectPrimitive.Content align="center" style={{ width }}>
-              <Animated.View
+            <SelectPrimitive.Content align="center" style={{ width, maxHeight: 200 }}>
+              <Animated.ScrollView
                 entering={FadeIn.duration(200)}
                 exiting={FadeOutDown.duration(200)}
                 style={styles.content}>
@@ -122,7 +122,7 @@ const Select: React.FC<SelectProps> = ({
                     </View>
                   </SelectPrimitive.Item>
                 ))}
-              </Animated.View>
+              </Animated.ScrollView>
             </SelectPrimitive.Content>
           </SelectPrimitive.Overlay>
         </SelectPrimitive.Portal>

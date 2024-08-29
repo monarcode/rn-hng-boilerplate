@@ -14,7 +14,6 @@ import RecentSales from '~/components/home-screen-organisation/recent-sales';
 import Summary from '~/components/home-screen-organisation/summary';
 import { Button, Text, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
-import { useDashboard } from '~/hooks/dashboard/dashboard';
 import { useFetchProfile } from '~/hooks/settings/fetchProfile';
 import useAuthStore from '~/store/auth';
 
@@ -27,6 +26,8 @@ const HomeScreen = () => {
   if (!authstore.data) {
     return <Redirect href="/(auth)/login" />;
   }
+
+  console.log({ authstore: authstore.data.organisations });
 
   return (
     <>

@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
-import { Pressable, Animated, ScrollView, StyleSheet, Image, Dimensions } from 'react-native';
-import { ChevronDown } from 'react-native-feather';
-import { useRotationAnimation } from '../hooks/animation';
-import {
-  convertImageToArray,
-  createUniqueId,
-  formatCurrency,
-  stateCityMapping,
-} from '../constants';
-import { TextInput, View, Text } from '~/components/shared';
-import { CreateAddressSchema, ProductContentProps } from '../types';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Animated, Dimensions, Image, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { ChevronDown } from 'react-native-feather';
+
+import { convertImageToArray, createUniqueId, stateCityMapping } from '../constants';
+import { useRotationAnimation } from '../hooks/animation';
+import { CreateAddressSchema, ProductContentProps } from '../types';
 import { createAddressSchema } from '../validation-schema/address';
-import { currency } from '~/libs/currency';
+
+import { Text, TextInput, View } from '~/components/shared';
 import { THEME } from '~/constants/theme';
+import { currency } from '~/libs/currency';
 
 const { width } = Dimensions.get('screen');
 
@@ -85,7 +82,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
         <View style={styles.rowContainerJb}>
           <View style={[styles.columnContainer, { alignItems: 'flex-start' }]}>
             <Text style={styles.productName}>{data?.name}</Text>
-            <Text style={styles.productUniqueId}>{uniqueId}</Text>
+            <Text style={styles.productUniqueId}>{data.id}</Text>
           </View>
           <View style={[styles.columnContainer, { alignItems: 'flex-end' }]}>
             <Text style={styles.productPrice}>{dataPrice(data?.price)}</Text>
@@ -159,7 +156,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
         <View style={styles.rowContainerJb}>
           <Text style={styles.dropDownLabel}>Product Ratings and Reviews</Text>
           <Pressable style={styles.dropdownIcon}>
-            <ChevronDown width={18} height={18} stroke={'black'} />
+            <ChevronDown width={18} height={18} stroke="black" />
           </Pressable>
         </View>
       </View>
@@ -169,7 +166,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
             <Text style={styles.dropDownLabel}>Delivery Address</Text>
             <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
               <Animated.View style={{ transform: [{ rotate }] }}>
-                <ChevronDown width={18} height={18} stroke={'black'} />
+                <ChevronDown width={18} height={18} stroke="black" />
               </Animated.View>
             </Pressable>
           </View>
@@ -180,7 +177,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
                   <View style={styles.rowContainerJb}>
                     <Text style={styles.dropDownLabel}>{selectedState}</Text>
                     <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
-                      <ChevronDown width={18} height={18} stroke={'black'} />
+                      <ChevronDown width={18} height={18} stroke="black" />
                     </Pressable>
                   </View>
                   <ScrollView>
@@ -200,7 +197,7 @@ const ProductContent = ({ data, title }: ProductContentProps) => {
                     <View style={styles.rowContainerJb}>
                       <Text style={styles.dropDownLabel}>{selectedCity || 'Select City'}</Text>
                       <Pressable style={styles.dropdownIcon} onPress={rotateIcon}>
-                        <ChevronDown width={18} height={18} stroke={'black'} />
+                        <ChevronDown width={18} height={18} stroke="black" />
                       </Pressable>
                     </View>
                     <ScrollView>

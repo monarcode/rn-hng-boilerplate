@@ -1,13 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet } from 'react-native';
 import { X } from 'react-native-feather';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import { useTranslation } from 'react-i18next';
 
 import Dollar from '../../../assets/dollar.svg';
 import { CreateProductSchema } from '../types/create-product';
@@ -16,11 +17,10 @@ import { createProductSchema } from '../validation-schema/create-product';
 import { Button, Text, View } from '~/components/shared';
 import { FormInput, FormSelect } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
+import normalize from '~/libs/normalize';
+import { queryClient } from '~/libs/query';
 import { ProductService } from '~/services/product';
 import useAuthStore from '~/store/auth';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '~/libs/query';
-import normalize from '~/libs/normalize';
 
 const CreateProductForm = () => {
   const { t } = useTranslation();
@@ -100,8 +100,8 @@ const CreateProductForm = () => {
         {image.uri && (
           <Image
             source={{ uri: image.uri }}
-            resizeMode="contain"
-            style={{ width: 150, height: 150 }}
+            resizeMode="cover"
+            style={{ width: '100%', height: '100%' }}
           />
         )}
         {!image.uri && (
@@ -134,7 +134,13 @@ const CreateProductForm = () => {
         </View>
       )}
 
-      <FormInput control={form.control} name="name" label="Title" placeholder="Product Name" />
+      <FormInput
+        control={form.control}
+        name="name"
+        label="Title"
+        placeholder="Product Name"
+        required
+      />
 
       <FormSelect
         name="category"
@@ -147,6 +153,7 @@ const CreateProductForm = () => {
           { label: 'Household Items', value: 'Household Items' },
         ]}
         placeholder="Select"
+        required
       />
       <View>
         <FormInput
@@ -170,6 +177,7 @@ const CreateProductForm = () => {
         label="Standard Price"
         placeholder="0.00"
         keyboardType="numeric"
+        required
         icon={<Dollar width={20} height={20} />}
       />
       <FormInput
@@ -178,6 +186,7 @@ const CreateProductForm = () => {
         keyboardType="numeric"
         label="Quantity"
         placeholder="0.00 pcs"
+        required
       />
 
       {/* <View>

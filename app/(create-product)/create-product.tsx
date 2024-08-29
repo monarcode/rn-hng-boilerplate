@@ -1,5 +1,7 @@
 import { Stack } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import BasicHeader from '~/components/basic-header';
 import KeyboardAwareWrapper from '~/components/keyboard-aware-wrapper';
 import { View } from '~/components/shared';
@@ -7,6 +9,8 @@ import { THEME } from '~/constants/theme';
 import CreateProductForm from '~/modules/products/components/create-product-form';
 
 const CreateProductScreen = () => {
+  const { bottom } = useSafeAreaInsets();
+
   return (
     <KeyboardAwareWrapper>
       <Stack.Screen
@@ -17,7 +21,12 @@ const CreateProductScreen = () => {
       <View style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
         <ScrollView
           style={styles.container}
-          contentContainerStyle={styles.contentContainer}
+          contentContainerStyle={[
+            styles.contentContainer,
+            {
+              paddingBottom: bottom + 10,
+            },
+          ]}
           showsVerticalScrollIndicator={false}>
           <CreateProductForm />
         </ScrollView>

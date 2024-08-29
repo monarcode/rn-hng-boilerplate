@@ -1,7 +1,6 @@
 import { HTTPError } from 'ky';
 
 import { http } from '~/libs/ky';
-import { OtpVerificationFormSchema } from '~/modules/authentication/types/otp-verification';
 import { ResetPasswordFormSchema } from '~/modules/authentication/types/reset-password';
 import {
   AuthLoginResponse,
@@ -68,6 +67,8 @@ const forgotPassword = async (email: string): Promise<ForgotPasswordResponse> =>
       })
       .json<ForgotPasswordResponse>();
 
+    console.log({ response });
+
     if ('error' in response) {
       throw new Error('Something went wrong');
     }
@@ -76,6 +77,7 @@ const forgotPassword = async (email: string): Promise<ForgotPasswordResponse> =>
   } catch (error) {
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json<AuthLoginResponse>();
+      console.log({ errorBody });
       throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
     }
 
