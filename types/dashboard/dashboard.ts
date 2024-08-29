@@ -1,3 +1,5 @@
+import { Member } from '../member';
+
 type monthSale = {
   id: string;
   user_id: string;
@@ -34,4 +36,24 @@ type InviteLinkResponse = {
     invite_link: string;
   };
 };
-export { DashboardResponse, DashboardResponseError, InviteLinkResponse };
+type UserResponse = {
+  data: {
+    name: string;
+    description: string;
+    slug: string;
+    email: string;
+    industry: string;
+    type: string;
+    country: string;
+    address: string;
+    state: string;
+    created_at: string;
+    updated_at: string;
+    owner_id: string;
+    is_active: boolean;
+    users: [Member];
+  };
+  message: string;
+  status_code: number;
+};
+export { DashboardResponse, DashboardResponseError, InviteLinkResponse, UserResponse };

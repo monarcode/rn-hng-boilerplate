@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: THEME.spacing.gutter,
+    backgroundColor: THEME.colors.white,
   },
 
   profileContainer: {

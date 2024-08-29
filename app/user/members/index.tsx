@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { THEME } from '~/constants/theme';
 import useAuthStore from '~/store/auth';
-import { useInvite } from '~/hooks/dashboard/dashboard';
+import { useInvite, useUserList } from '~/hooks/dashboard/dashboard';
 import Header from '~/components/member/header';
 import InviteLinkSection from '~/components/member/inviteLink';
 import SearchBar from '~/components/member/searchBar';
@@ -15,14 +15,18 @@ const Members = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { data, isError, isLoading } = useInvite(authstore.data?.organisations[0].organisation_id);
+  const { data: userData, isLoading: isUserLoading } = useUserList(
+    authstore.data?.organisations[0].organisation_id
+  );
 
   const filteredMembers = React.useMemo(() => {
-    return memberArr.filter(
+    return userData?.data.users.filter(
       (member) =>
-        member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         member.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [searchTerm, memberArr]);
+  }, [searchTerm, userData]);
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
@@ -33,7 +37,7 @@ const Members = () => {
         isError={isError}
       />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <MemberList members={filteredMembers} />
+      <MemberList members={filteredMembers} isLoading={isUserLoading} />
     </SafeAreaView>
   );
 };
