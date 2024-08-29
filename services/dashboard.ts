@@ -5,6 +5,7 @@ import {
   DashboardResponse,
   DashboardResponseError,
   InviteLinkResponse,
+  UserResponse,
 } from '~/types/dashboard/dashboard';
 
 const fetchDashboard = async (userId: string | undefined): Promise<DashboardResponse> => {
@@ -25,7 +26,7 @@ const fetchInvite = async (orgId: string | undefined): Promise<InviteLinkRespons
 
     return response;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     if (error instanceof HTTPError) {
       const errorBody = await error.response.json<DashboardResponseError>();
@@ -34,4 +35,19 @@ const fetchInvite = async (orgId: string | undefined): Promise<InviteLinkRespons
     throw error;
   }
 };
-export { fetchDashboard, fetchInvite };
+const fetchUsers = async (orgId: string | undefined): Promise<UserResponse> => {
+  try {
+    const response = await http.get(`organisations/${orgId}/users`).json<UserResponse>();
+
+    return response;
+  } catch (error) {
+    // console.log(error);
+
+    if (error instanceof HTTPError) {
+      const errorBody = await error.response.json<DashboardResponseError>();
+      throw new Error(errorBody.message || `HTTP error ${error.response.status}`);
+    }
+    throw error;
+  }
+};
+export { fetchDashboard, fetchInvite, fetchUsers };
