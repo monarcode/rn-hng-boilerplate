@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -17,6 +18,7 @@ import { EditProfileFormData } from '~/modules/settings/types/edit-profile';
 import useAuthStore from '~/store/auth';
 
 const GeneralProfileSettings = () => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const bottomInset = insets.bottom;
   const { data, isLoading } = useFetchProfile();
@@ -51,7 +53,7 @@ const GeneralProfileSettings = () => {
         <View style={[styles.header, { marginBottom: bottomInset }]}>
           <GoBack />
           <Text size="lg" weight="semiBold">
-            Edit Profile
+            {t('Edit Profile')}
           </Text>
         </View>
 
@@ -81,30 +83,29 @@ const GeneralProfileSettings = () => {
                 style={styles.uploadButton}
                 onPress={selectedImage.uri ? handleRemovePhoto : handleImagePick}>
                 <Text style={styles.uploadButtonText} size="lg">
-                  {selectedImage.uri ? 'Remove Photo' : 'Upload your photo'}
+                  {selectedImage.uri ? t('Remove Photo') : t('Upload your photo')}
                 </Text>
               </TouchableOpacity>
               <Text style={styles.photoHelpText}>
-                Photos help your teammates recognize{'\n'}
-                you.
+                {t('Photos help your teammates recognize\nyou.')}
               </Text>
             </View>
           </View>
 
           <View style={styles.formSection}>
             <Text size="xl" weight="semiBold">
-              Personal Details
+              {t('Personal Details')}
             </Text>
             <FormInput
               name="user_name"
               control={form.control}
-              label="Username"
-              placeholder="Enter username"
+              label={t('Username')}
+              placeholder={t('Enter username')}
             />
 
             <View style={{ rowGap: 9 }}>
               <Text size="md" weight="regular">
-                Your email address
+                {t('Your email address')}
               </Text>
               <View style={styles.yourEmailContainer}>
                 <Text size="md" weight="medium" style={{ color: THEME.colors.neutral['300'] }}>
@@ -116,7 +117,7 @@ const GeneralProfileSettings = () => {
             <View style={{ rowGap: 9 }}>
               <TouchableOpacity style={styles.row} onPress={() => setIsBioOpen((prev) => !prev)}>
                 <Text size="xl" weight="semiBold">
-                  Bio
+                  {t('Bio')}
                 </Text>
                 <Ionicons
                   name={isBioOpen ? 'chevron-up' : 'chevron-down'}
@@ -129,14 +130,14 @@ const GeneralProfileSettings = () => {
                   <FormInput
                     name="bio"
                     control={form.control}
-                    placeholder="Type your message here"
+                    placeholder={t('Type your message here')}
                     numberOfLines={4}
                     multiline
                     containerStyle={{ width: '100%', height: 80, alignItems: 'flex-start' }}
                     textAlign="left"
                   />
                   <Text size="sm" style={styles.characterLimit}>
-                    Maximum of 64 characters
+                    {t('Maximum of 64 characters')}
                   </Text>
                 </>
               )}
@@ -148,10 +149,10 @@ const GeneralProfileSettings = () => {
               onPress={form.handleSubmit(handleSaveChanges)}
               containerStyle={{ flex: 1 }}
               loading={loading}>
-              Save Changes
+              {t('Save Changes')}
             </Button>
             <Button onPress={resetForm} variant="secondary" containerStyle={{ flex: 1 }}>
-              Cancel
+              {t('Cancel')}
             </Button>
           </View>
         </ScrollView>

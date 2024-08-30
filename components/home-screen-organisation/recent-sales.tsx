@@ -8,7 +8,7 @@ import { THEME } from '~/constants/theme';
 import { useTranslation } from 'react-i18next';
 
 const RecentSales = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const Sales = [
     {
       name: 'Prince Edward',
@@ -58,5 +58,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: THEME.spacing.md,
-  },
+
+  }
 });

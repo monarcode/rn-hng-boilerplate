@@ -4,6 +4,7 @@ import { THEME } from '~/constants/theme';
 import { Text } from '~/components/shared';
 import { Member } from '~/types/member';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 interface MemberListProps {
   members: Member[] | undefined;
@@ -11,6 +12,7 @@ interface MemberListProps {
 }
 
 const MemberList = ({ members, isLoading }: MemberListProps) => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   function gotoMemberDetail(userId: string) {
@@ -60,7 +62,7 @@ const MemberList = ({ members, isLoading }: MemberListProps) => {
       ) : (
         <View style={styles.noResultsContainer}>
           <Text size="lg" style={styles.noResultsText}>
-            No results found
+            {t('No results found')}
           </Text>
         </View>
       )}

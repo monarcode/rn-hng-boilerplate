@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { THEME } from '~/constants/theme';
 import { Search } from 'react-native-feather';
 import { TextInput } from '../shared';
+import { useTranslation } from 'react-i18next';
 
 interface SearchBarProps {
   searchTerm: string;
@@ -10,12 +11,13 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({ searchTerm, setSearchTerm }: SearchBarProps) => {
+  const { t } = useTranslation()
   return (
     <View>
       <TextInput
         icon={<Search width={20} height={20} color={THEME.colors.neutral[400]} />}
         label=""
-        placeholder="Search by name or email"
+        placeholder={t("Search by name or email")}
         value={searchTerm}
         onChangeText={setSearchTerm}
       />

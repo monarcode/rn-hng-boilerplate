@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -10,6 +11,7 @@ import { THEME } from '~/constants/theme';
 
 const NotificationSettings = () => {
   const { top } = useSafeAreaInsets();
+  const { t } = useTranslation()
 
   const notifications = [
     {
@@ -106,7 +108,7 @@ const NotificationSettings = () => {
                   <View style={styles.headerLeft}>
                     <GoBack />
                     <Text size="xl" weight="semiBold">
-                      Notifications
+                      {t('Notifications')}
                     </Text>
                   </View>
                 </View>

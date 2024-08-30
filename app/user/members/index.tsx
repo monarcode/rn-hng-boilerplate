@@ -12,9 +12,9 @@ import { memberArr } from '~/components/member/member';
 import { useTranslation } from 'react-i18next';
 
 const Members = () => {
+  const { t } = useTranslation()
   const authstore = useAuthStore();
   const [searchTerm, setSearchTerm] = useState('');
-  const { t } = useTranslation();
 
   const { data, isError, isLoading } = useInvite(authstore.data?.organisations[0].organisation_id);
   const { data: userData, isLoading: isUserLoading } = useUserList(
