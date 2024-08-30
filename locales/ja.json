@@ -151,5 +151,12 @@
     "Total Products": "総製品",
     "Subscriptions": "サブスクリプション",
     "Active Members": "アクティブなメンバー",
-    "from last month": "先月から"
+    "from last month": "先月から",
+    "Add Members": "メンバーを追加",
+    "Copy Link": "リンクをコピー",
+    "Send invites for who you would like to add": "追加したい人に招待状を送信してください",
+    "Add an email address": "メールアドレスを追加してください",
+    "Invite from phonebook": "電話帳から招待",
+    "Working is better in teams.": "チームで仕事をするのはより良いことです.",
+    "Send Invite": "招待を送る"
 }
