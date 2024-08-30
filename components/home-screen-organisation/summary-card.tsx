@@ -6,12 +6,15 @@ import { Text, View } from '../shared';
 import { SummaryProps } from './type';
 
 import { THEME } from '~/constants/theme';
+import { useTranslation } from 'react-i18next';
 
 interface CardProps extends SummaryProps {
   Icon: React.FC<SvgProps>;
 }
 
 const SummaryCard = (summary: CardProps) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View
@@ -34,10 +37,10 @@ const SummaryCard = (summary: CardProps) => {
           {summary.amount}
         </Text>
         <Text size="md" weight="bold" style={{ color: THEME.colors.neutral[400] }}>
-          {summary.title}
+          {t(summary.title)}
         </Text>
         <Text size="sm" style={{ color: '#383f4e' }}>
-          {summary.increase}
+          + 0 {t(summary.increase)}
         </Text>
       </View>
     </View>

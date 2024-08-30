@@ -21,7 +21,7 @@ const Summary = () => {
   const user_id = authstore.data?.user.id;
   const { dashBoardData, isError, isLoading } = useDashboard(user_id);
   const { data } = useProducts(authstore.data?.organisations[0].organisation_id);
-  
+
   let totalProduct = 0;
   if (data) {
     data?.forEach((category) => {
@@ -35,28 +35,28 @@ const Summary = () => {
     {
       title: 'Total Members',
       amount: dashBoardData ? dashBoardData.activeSubscription : 0,
-      increase: '+ 0 from last month',
+      increase: 'from last month',
       Icon: AllMembers,
       color: '#509DF5',
     },
     {
       title: 'Total Products',
       amount: totalProduct,
-      increase: '+ 0 added last month',
+      increase: 'added last month',
       Icon: Product,
       color: '#422AF0',
     },
     {
       title: 'Subscriptions',
-      amount: dashBoardData?dashBoardData.subscriptions:0,
-      increase: '+ 0 from last month',
+      amount: dashBoardData ? dashBoardData.subscriptions : 0,
+      increase: 'from last month',
       Icon: Dollar,
       color: '#F85547',
     },
     {
       title: 'Active Members',
-      amount: dashBoardData?dashBoardData.activeSubscription:0,
-      increase: '+ 0 from last month',
+      amount: dashBoardData ? dashBoardData.activeSubscription : 0,
+      increase: 'from last month',
       Icon: ActiveMembers,
       color: '#0ED970',
     },

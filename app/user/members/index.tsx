@@ -9,10 +9,12 @@ import SearchBar from '~/components/member/searchBar';
 import MemberList from '~/components/member/memberList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { memberArr } from '~/components/member/member';
+import { useTranslation } from 'react-i18next';
 
 const Members = () => {
   const authstore = useAuthStore();
   const [searchTerm, setSearchTerm] = useState('');
+  const { t } = useTranslation();
 
   const { data, isError, isLoading } = useInvite(authstore.data?.organisations[0].organisation_id);
   const { data: userData, isLoading: isUserLoading } = useUserList(
@@ -30,7 +32,7 @@ const Members = () => {
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-      <Header title="Members" />
+      <Header title={t('Members')} />
       <InviteLinkSection
         inviteLink={data?.data?.invite_link || null}
         isLoading={isLoading}
