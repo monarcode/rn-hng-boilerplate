@@ -8,6 +8,7 @@ import { THEME } from '~/constants/theme';
 import { useTranslation } from 'react-i18next';
 
 const RecentSales = () => {
+  const { t } = useTranslation()
   const Sales = [
     {
       name: 'Prince Edward',
