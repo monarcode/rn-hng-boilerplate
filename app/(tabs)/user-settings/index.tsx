@@ -114,7 +114,11 @@ const UserSettingsScreen = () => {
             title={t('Create Organisation')}
             goto={() => router.push('/(auth)/organisation-sign-up')}
           />
-          <SettingItem icon={<Business />} title={t('Manage Organization')} />
+          <SettingItem
+            icon={<Business />}
+            title={t('Manage Organization')}
+            goto={() => router.push('/user/manage-organisation/manage-organisation')}
+          />
           <SettingItem
             icon={<Users />}
             title={t('Members')}
