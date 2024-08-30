@@ -90,5 +90,18 @@
     "Company Address": "Company Address",
     "Select Country": "Select Country",
     "Company's State": "Company's state",
-    "Enter company's state": "Enter company's state"
+    "Enter company's state": "Enter company's state",
+    "Password Settings": "Password Settings",
+    "Update password for enhanced account security": "Update password for enhanced account security",
+    "Current Password": "Current Password",
+    "Enter current password": "Enter current password",
+    "New Password": "New Password",
+    "Enter new password": "Enter new password",
+    " Must contain:": " Must contain:",
+    "At least 1 uppercase": "At least 1 uppercase",
+    "At least 1 number": "At least 1 number",
+    "At least 8 characters": "At least 8 characters",
+    "Confirm New Password": "Confirm New Password",
+    "Confirm new password": "Confirm new password",
+    "Update Password": "Update Password"
 }
