@@ -13,9 +13,11 @@ import { Button, Text } from '~/components/shared';
 import { FormInput, FormSelect } from '~/components/wrappers';
 import { THEME } from '~/constants/theme';
 import { AuthService } from '~/services/authentication';
+import { useTranslation } from 'react-i18next';
 // import useAuthStore from '~/store/auth';
 
 const OrganisationSignupForm = () => {
+  const {t} = useTranslation();
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const form = useForm<OrganisationSignupFormSchema>({
@@ -86,22 +88,22 @@ const OrganisationSignupForm = () => {
       <FormInput
         control={form.control}
         name="name"
-        label="Company's Name"
-        placeholder="Enter company's name"
+        label={t('Company\'s Name')}
+        placeholder={t('Enter company\'s name')}
       />
 
       <FormInput
         control={form.control}
         name="email"
-        label="Company's Email Address"
-        placeholder="Enter company's email address"
+        label={t('Company\'s Email Address')}
+        placeholder={t('Enter company\'s email address')}
       />
 
       <FormInput
-        label="Description"
+        label={t('Description')}
         name="description"
         control={form.control}
-        placeholder="Describe company here..."
+        placeholder={t('Describe company here...')}
         numberOfLines={4}
         multiline
         containerStyle={{ width: '100%', height: 80, alignItems: 'flex-start' }}
@@ -111,36 +113,36 @@ const OrganisationSignupForm = () => {
       <FormSelect
         control={form.control}
         name="industry"
-        label="Select Industry"
-        placeholder="Select"
+        label={t('Select Industry')}
+        placeholder={t('Select')}
         options={[
-          { label: 'Technology', value: 'technology' },
-          { label: 'Finance', value: 'finance' },
-          { label: 'Agriculture', value: 'agriculture' },
+          { label: t('Technology'), value: 'technology' },
+          { label: t('Finance'), value: 'finance' },
+          { label: t('Agriculture'), value: 'agriculture' },
         ]}
       />
 
       <FormSelect
         control={form.control}
         name="type"
-        label="Organisation Type"
-        placeholder="Select"
+        label={t('Organisation Type')}
+        placeholder={t('Select')}
         options={[
-          { label: 'Public', value: 'public' },
-          { label: 'Private', value: 'private' },
-          { label: 'Limited Liability Company (LLC)', value: 'llc' },
+          { label: t('Public'), value: 'public' },
+          { label: t('Private'), value: 'private' },
+          { label: t('Limited Liability Company (LLC)'), value: 'llc' },
         ]}
       />
 
       <Text weight="semiBold" size="xl" style={{ color: THEME.colors.dark }}>
-        Company Address
+        {t('Company Address')}
       </Text>
 
       <FormSelect
         control={form.control}
         name="country"
-        label="Select Country"
-        placeholder="Select"
+        label={t('Select Country')}
+        placeholder={t('Select')}
         options={[
           ...countries.map((country: any) => ({
             label: country.name.common,
@@ -152,12 +154,12 @@ const OrganisationSignupForm = () => {
       <FormInput
         control={form.control}
         name="state"
-        label="Company's State"
-        placeholder="Enter company's state"
+        label={t('Company\'s State')}
+        placeholder={t('Enter company\'s state')}
       />
 
       <Button onPress={form.handleSubmit(onOrganisationSignIn)} loading={loading}>
-        Create Organisation
+        {t('Create Organisation')}
       </Button>
     </View>
   );
