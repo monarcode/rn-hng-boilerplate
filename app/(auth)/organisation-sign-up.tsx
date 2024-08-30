@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import BasicHeader from '~/components/basic-header';
@@ -9,6 +10,7 @@ import { THEME } from '~/constants/theme';
 import OrganisationSignupForm from '~/modules/authentication/components/organisation-sign-up-form';
 
 export default function OrganisationSignup() {
+  const { t } = useTranslation();
   return (
     <>
       <Stack.Screen
@@ -23,7 +25,7 @@ export default function OrganisationSignup() {
           showsVerticalScrollIndicator={false}>
           <View>
             <Text weight="semiBold" size="3xl" style={{ color: THEME.colors.dark }}>
-              Create Organisation
+              {t('Create Organisation')}
             </Text>
             <Text style={styles.subtitle}>Create an account to get started with us</Text>
           </View>
