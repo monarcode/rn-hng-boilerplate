@@ -35,7 +35,7 @@ const Summary = () => {
     {
       title: 'Total Members',
       amount: dashBoardData ? dashBoardData.activeSubscription : 0,
-      increase: 'from last month',
+      increase: `+ 0 ${t('from last month')}`,
       Icon: AllMembers,
       color: '#509DF5',
     },
@@ -49,14 +49,14 @@ const Summary = () => {
     {
       title: 'Subscriptions',
       amount: dashBoardData ? dashBoardData.subscriptions : 0,
-      increase: 'from last month',
+      increase: `+ 0 ${t('from last month')}`,
       Icon: Dollar,
       color: '#F85547',
     },
     {
       title: 'Active Members',
       amount: dashBoardData ? dashBoardData.activeSubscription : 0,
-      increase: 'from last month',
+      increase: `+ 0 ${t('from last month')}`,
       Icon: ActiveMembers,
       color: '#0ED970',
     },

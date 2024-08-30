@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import GoBack from '~/components/go-back';
 import { Text, View } from '~/components/shared';
-import { plansData } from '~/components/subscription/plans';
+import { getPlansData } from '~/components/subscription/plans';
 import SubscriptionCard from '~/components/subscription/subscription-card';
 import { THEME } from '~/constants/theme';
 
@@ -47,7 +47,7 @@ export default function Subscription() {
       />
       <View style={styles.container}>
         <FlatList
-          data={plansData}
+          data={getPlansData(t)}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <SubscriptionCard plan={item} />}
           contentContainerStyle={styles.wrapper}

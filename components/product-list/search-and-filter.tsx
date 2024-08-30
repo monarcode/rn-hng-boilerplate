@@ -6,6 +6,7 @@ import { Filter } from 'react-native-feather';
 import Slider from '../../assets/icons/sliders.svg';
 import FilterItems from '../shared/filter';
 import { Search } from 'react-native-feather';
+import { useTranslation } from 'react-i18next';
 
 type QueryProps = {
   query: string;
@@ -13,12 +14,13 @@ type QueryProps = {
 };
 
 const SearchAndFilter = ({ query, setQuery }: QueryProps) => {
+  const { t } = useTranslation()
 
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Search Product"
+          placeholder={t("Search Product")}
           containerStyle={{ borderWidth: 0 }}
           inputStyle={{ fontSize: 16 }}
           onChange={(e) => {

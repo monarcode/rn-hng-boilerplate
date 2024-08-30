@@ -89,7 +89,7 @@ const ChangePassword = () => {
     <KeyboardAwareWrapper>
       <Stack.Screen
         options={{
-          header: () => <BasicHeader label={t('Password Setting')} />,
+          header: () => <BasicHeader label={t('Password Settings')} />,
         }}
       />
       <View style={styles.container}>

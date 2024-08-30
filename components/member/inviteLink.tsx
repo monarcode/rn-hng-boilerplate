@@ -5,6 +5,7 @@ import { Text } from '~/components/shared';
 import { Copy, Share2 } from 'react-native-feather';
 import { copyToClipboard } from '~/utils/copyToClipboard';
 import { onShare } from '~/utils/share';
+import { useTranslation } from 'react-i18next';
 
 interface InviteLinkSectionProps {
   inviteLink: string | null;
@@ -13,14 +14,16 @@ interface InviteLinkSectionProps {
 }
 
 const InviteLinkSection = ({ inviteLink, isLoading, isError }: InviteLinkSectionProps) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.sectionBodyCon}>
       <View style={styles.sectionBody}>
         <Text size="lg" weight="semiBold">
-          Invite Link
+          {t('Invite Link')}
         </Text>
         <Text weight="regular" style={styles.manageText}>
-          This provides a unique URL that allows anyone to join your workspace.
+          {t('This provides a unique URL that allows anyone to join your workspace.')}
         </Text>
       </View>
 
@@ -33,7 +36,7 @@ const InviteLinkSection = ({ inviteLink, isLoading, isError }: InviteLinkSection
         )}
         {!inviteLink && isError && (
           <Text style={[styles.uploadButtonText, { color: THEME.colors.error }]}>
-            Error fetching invite link
+            {t('Error fetching invite link')}
           </Text>
         )}
         {inviteLink && (

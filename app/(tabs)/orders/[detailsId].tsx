@@ -16,7 +16,7 @@ const OrderDetails = () => {
       style={styles.container}>
       {/* top header */}
       <View style={styles.topHeader}>
-        <BasicHeader label="Orders" />
+        <BasicHeader label={t("Orders")} />
       </View>
       {/* main container */}
       <View style={styles.mainContainer}>
@@ -42,7 +42,7 @@ const OrderDetails = () => {
           }}>
           <View style={{ gap: normalize(2) }}>
             <Text style={{ color: THEME.colors.neutral[300] }} size="xl" weight="medium">
-              Order:
+              {t('Order')}:
               <Text> </Text>
               <Text weight="medium" size="xl" style={{ color: '#141fa4' }}>
                 #99012
@@ -51,7 +51,7 @@ const OrderDetails = () => {
             <Text weight="medium" size="md">
               {t('Order Created')}
             </Text>
-            <Text style={{ color: THEME.colors.neutral[300] }}>August 16th, 2024 at 10:30pm</Text>
+            <Text style={{ color: THEME.colors.neutral[300] }}>{t('August 16th, 2024 at 10:30pm')}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: normalize(10) }}>
             <View
@@ -168,19 +168,19 @@ const OrderDetails = () => {
             <Text size="md" weight="medium">
               {t('Customer Details')}
             </Text>
-            <Text>James Hung Ltd</Text>
-            <Text>jameshung@gmail.com</Text>
-            <Text>+234 9045004705</Text>
+            <Text>{t('James Hung Ltd')}</Text>
+            <Text>{t('jameshung@gmail.com')}</Text>
+            <Text>{t('+234 9045004705')}</Text>
           </View>
           {/* delivery details */}
           <View style={{ gap: normalize(9) }}>
             <Text size="md" weight="semiBold" style={{ color: THEME.colors.neutral[300] }}>
               {t('Shipping Details')}
             </Text>
-            <Text>James Hung Ltd</Text>
-            <Text>112, Houston Street</Text>
-            <Text>New York</Text>
-            <Text>United States</Text>
+            <Text>{t('James Hung Ltd')}</Text>
+            <Text>{t('112, Houston Street')}</Text>
+            <Text>{t('New York')}</Text>
+            <Text>{t('United States')}</Text>
           </View>
         </View>
         {/* order summary */}

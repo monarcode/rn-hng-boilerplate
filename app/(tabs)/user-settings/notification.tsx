@@ -25,7 +25,7 @@ const NotificationSettings = () => {
   const { t } = useTranslation();
   const authstore = useAuthStore();
   const dialogRef = useRef<DialogRef>(null);
-  const [notificationData, setNotificationData] = useState(getNotificationSections);
+  const [notificationData, setNotificationData] = useState(getNotificationSections(t));
   const { bottom: bottomInset } = useSafeAreaInsets();
 
   const { data: fetchedData, isLoading } = useQuery({
@@ -34,7 +34,7 @@ const NotificationSettings = () => {
   });
 
   useEffect(() => {
-    if (fetchedData) setNotificationData(getNotificationSections(fetchedData?.data));
+    if (fetchedData) setNotificationData(getNotificationSections(t, fetchedData?.data));
   }, [fetchedData]);
 
   const settingsMutation = useMutation({

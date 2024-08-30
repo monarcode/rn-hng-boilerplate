@@ -3,8 +3,11 @@ import { View, StyleSheet } from 'react-native';
 import { THEME } from '~/constants/theme';
 import GoBack from '~/components/go-back';
 import { Text } from '~/components/shared';
+import { useTranslation } from 'react-i18next';
 
 const Header = ({ title }: { title: string }) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.header}>
       <View style={{ gap: THEME.spacing.xs, flexDirection: 'row' }}>
@@ -13,7 +16,7 @@ const Header = ({ title }: { title: string }) => {
           {title}
         </Text>
       </View>
-      <Text size="sm">Manage who has access to this workspace</Text>
+      <Text size="sm">{t('Manage who has access to this workspace')}</Text>
     </View>
   );
 };

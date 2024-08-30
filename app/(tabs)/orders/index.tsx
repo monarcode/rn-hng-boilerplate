@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -26,6 +27,7 @@ type Order = {
 };
 
 const OrdersList: React.FC = () => {
+  const { t } = useTranslation()
   const orders: Order[] = [
     {
       id: '1',
@@ -89,7 +91,7 @@ const OrdersList: React.FC = () => {
       <View style={styles.headerContainer}>
         <View style={styles.orderStyle}>
           <Text size="2xl" weight="bold">
-            Orders
+            {t('Orders')}
           </Text>
         </View>
         <TouchableOpacity

@@ -6,15 +6,18 @@ import { Button, Text, View } from '../shared';
 
 import { THEME } from '~/constants/theme';
 import normalize from '~/libs/normalize';
+import { useTranslation } from 'react-i18next';
 
 export default function SubscriptionCard({ plan }: any) {
+  const { t } = useTranslation();
+
   return (
     <Pressable
       style={[styles.container, plan.active ? styles.activePlan : styles.inactivePlan]}
       key={plan?.id}>
       <View style={styles.planType}>
         <Text size="lg" weight="semiBold">
-          {plan?.plan} Plan
+          {plan?.plan} {t('Plan')}
         </Text>
         <View style={styles.priceWrapper}>
           <Text size="3xl" weight="medium" style={styles.price}>
