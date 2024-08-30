@@ -60,6 +60,25 @@
     "Maximum of 64 characters": "Максимум 64 символа",
     "Save Changes": "Сохранить изменения",
     "Type your message here": "Введите здесь свое сообщение",
-    "Bio": "Био"
+    "Bio": "Био",
+    "Create an account to get started with us": "Создайте учетную запись, чтобы начать работу с нами",
+    "Company's Name": "Название компании",
+    "Company's Email Address": "Адрес электронной почты компании",
+    "Enter company's name": "Введите название компании",
+    "Enter company's email address": "Введите адрес электронной почты компании",
+    "Describe company here...": "Опишите компанию здесь...",
+    "Select Industry": "Выберите отрасль",
+    "Select": "Выбирать",
+    "Technology": "Технологии",
+    "Finance": "Финансы",
+    "Agriculture": "Сельское хозяйство",
+    "Organisation Type": "Тип организации",
+    "Public": "Общественный",
+    "Private": "Частный",
+    "Limited Liability Company (LLC)": "Общество с ограниченной ответственностью (ООО)",
+    "Company Address": "Адрес компании",
+    "Select Country": "Выберите страну",
+    "Company's State": "Состояние компании",
+    "Enter company's state": "Введите статус компании"
 
 }
