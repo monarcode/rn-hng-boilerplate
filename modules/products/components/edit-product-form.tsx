@@ -14,6 +14,7 @@ import { ProductService } from '~/services/product';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '~/libs/query';
 import normalize from '~/libs/normalize';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   productDetail: {
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const EditProductForm = ({ product, productDetail, handleInputChange, productId }: Props) => {
+  const { t } = useTranslation();
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
   });
@@ -77,14 +79,14 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
       </View>
 
       <TextInput
-        label="Title"
+        label={t('Title')}
         value={productDetail?.name}
         onChangeText={(value) => handleInputChange('name', value)}
       />
 
       <View>
         <TextInput
-          label="Description"
+          label={t('Description')}
           value={productDetail?.description}
           onChangeText={(value) => handleInputChange('description', value)}
           numberOfLines={4}
@@ -107,13 +109,13 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
 
       <TextInput
         icon={<Dollar width={20} height={20} />}
-        label="Standard Price"
+        label={t('Standard Price')}
         value={String(productDetail?.price)} // Convert price to string
         onChangeText={(value) => handleInputChange('price', value)} // Convert back to number when changing
       />
 
       <TextInput
-        label="Quantity"
+        label={t('Quantity')}
         value={String(productDetail?.quantity)} // Convert quantity to string
         onChangeText={(value) => handleInputChange('quantity', value)} // Convert back to number when changing
       />
@@ -123,10 +125,10 @@ const EditProductForm = ({ product, productDetail, handleInputChange, productId 
           onPress={() => router.replace('/(tabs)/products')}
           variant="secondary"
           containerStyle={styles.addButton}>
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button onPress={onEdit} containerStyle={styles.addButton} loading={isEditing}>
-          Update
+          {t('Update')}
         </Button>
       </View>
     </View>

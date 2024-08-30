@@ -152,7 +152,7 @@ const CreateProductForm = () => {
           { label: 'Device', value: 'Device' },
           { label: 'Household Items', value: 'Household Items' },
         ]}
-        placeholder="Select"
+        placeholder={t('Select product category')}
         required
       />
       <View>
