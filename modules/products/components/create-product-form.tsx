@@ -137,15 +137,15 @@ const CreateProductForm = () => {
       <FormInput
         control={form.control}
         name="name"
-        label="Title"
-        placeholder="Product Name"
+        label={t('Title')}
+        placeholder={t('Product name')}
         required
       />
 
       <FormSelect
         name="category"
         control={form.control}
-        label="Category"
+        label={t('Category')}
         options={[
           { label: 'Food', value: 'Food' },
           { label: 'Fashion', value: 'Fashion' },
@@ -159,8 +159,8 @@ const CreateProductForm = () => {
         <FormInput
           control={form.control}
           name="description"
-          label="Description"
-          placeholder="Product Description"
+          label={t('Description')}
+          placeholder={t('Description')}
           numberOfLines={4}
           multiline
           containerStyle={{ width: '100%', height: 80, alignItems: 'flex-start' }}
@@ -174,7 +174,7 @@ const CreateProductForm = () => {
       <FormInput
         control={form.control}
         name="price"
-        label="Standard Price"
+        label={t('Standard Price')}
         placeholder="0.00"
         keyboardType="numeric"
         required
@@ -184,7 +184,7 @@ const CreateProductForm = () => {
         control={form.control}
         name="quantity"
         keyboardType="numeric"
-        label="Quantity"
+        label={t('Quantity')}
         placeholder="0.00 pcs"
         required
       />

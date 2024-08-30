@@ -5,8 +5,10 @@ import { Text, View } from '../shared';
 import SalesCard from './sales-card';
 
 import { THEME } from '~/constants/theme';
+import { useTranslation } from 'react-i18next';
 
 const RecentSales = () => {
+  const { t } = useTranslation();
   const Sales = [
     {
       name: 'Prince Edward',
@@ -28,10 +30,10 @@ const RecentSales = () => {
     <View style={styles.container}>
       <View style={styles.headerTextContainer}>
         <Text size="lg" weight="bold">
-          Recent Sales
+          {t('Recent Sales')}
         </Text>
         <Text size="lg" style={{ color: THEME.colors.neutral[400] }}>
-          See More
+          {t('See More')}
         </Text>
       </View>
       <SalesCard {...Sales[0]} />
@@ -51,11 +53,10 @@ const styles = StyleSheet.create({
     padding: THEME.spacing.sm,
     marginBottom: 20,
   },
-  headerTextContainer:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    paddingVertical:THEME.spacing.md,
-    
-  }
+  headerTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: THEME.spacing.md,
+  },
 });

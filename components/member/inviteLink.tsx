@@ -36,14 +36,16 @@ const InviteLinkSection = ({ inviteLink, isLoading, isError }: InviteLinkSection
             Error fetching invite link
           </Text>
         )}
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => onShare(inviteLink as string)}>
-            <Share2 color={THEME.colors.primary} width={40} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => copyToClipboard(inviteLink as string)}>
-            <Copy color={THEME.colors.primary} width={40} />
-          </TouchableOpacity>
-        </View>
+        {inviteLink && (
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity onPress={() => onShare(inviteLink as string)}>
+              <Share2 color={THEME.colors.primary} width={40} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => copyToClipboard(inviteLink as string)}>
+              <Copy color={THEME.colors.primary} width={40} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </View>
   );

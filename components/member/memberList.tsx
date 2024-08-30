@@ -49,8 +49,8 @@ const MemberList = ({ members, isLoading }: MemberListProps) => {
 
   return (
     <>
-      {isLoading && <ActivityIndicator color={THEME.colors.primary} />}
-      {members && members?.length > 0 ? (
+      {isLoading && <ActivityIndicator color={THEME.colors.primary} style={{ marginTop: 10 }} />}
+      {!isLoading && members && members?.length > 0 ? (
         <FlatList
           data={members}
           keyExtractor={(item) => item.id}

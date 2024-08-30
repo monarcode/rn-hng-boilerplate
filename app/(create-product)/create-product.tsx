@@ -1,4 +1,5 @@
 import { Stack } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -10,12 +11,13 @@ import CreateProductForm from '~/modules/products/components/create-product-form
 
 const CreateProductScreen = () => {
   const { bottom } = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   return (
     <KeyboardAwareWrapper>
       <Stack.Screen
         options={{
-          header: () => <BasicHeader label="Add a Product" />,
+          header: () => <BasicHeader label={t('Add A Product')} />,
         }}
       />
       <View style={[styles.container, { paddingHorizontal: THEME.spacing.gutter }]}>
