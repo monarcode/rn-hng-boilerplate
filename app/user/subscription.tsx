@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -10,6 +11,7 @@ import SubscriptionCard from '~/components/subscription/subscription-card';
 import { THEME } from '~/constants/theme';
 
 export default function Subscription() {
+  const { t } = useTranslation();
   const { top } = useSafeAreaInsets();
 
   return (
@@ -34,7 +36,7 @@ export default function Subscription() {
                   <View style={styles.headerLeft}>
                     <GoBack />
                     <Text size="xl" weight="semiBold">
-                      Subscription
+                      {t('Subscription')}
                     </Text>
                   </View>
                 </View>
