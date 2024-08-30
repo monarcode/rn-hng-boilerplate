@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { router, Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useSharedValue, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -17,6 +18,7 @@ import { ChangePasswordSchema } from '~/modules/settings/types/change-password';
 import { changePasswordSchema } from '~/modules/settings/validation-schema/change-password';
 
 const ChangePassword = () => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const bottomInset = insets.bottom;
   const [passwordStrength, setPasswordStrength] = useState(0);
@@ -87,25 +89,25 @@ const ChangePassword = () => {
     <KeyboardAwareWrapper>
       <Stack.Screen
         options={{
-          header: () => <BasicHeader label="Password Setting" />,
+          header: () => <BasicHeader label={t('Password Setting')} />,
         }}
       />
       <View style={styles.container}>
         <Text size="sm" weight="regular">
-          Update password for enhanced account security
+          {t('Update password for enhanced account security')}
         </Text>
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <FormPasswordInput
             name="old_password"
-            label="Current Password"
+            label={t('Current Password')}
             control={form.control}
-            placeholder="Enter current password"
+            placeholder={t('Enter current password')}
           />
           <FormPasswordInput
             name="new_password"
-            label="New Password"
+            label={t('New Password')}
             control={form.control}
-            placeholder="Enter new password"
+            placeholder={t('Enter new password')}
             onChangeText={(password) => {
               calculatePasswordStrength(password);
             }}
@@ -135,14 +137,14 @@ const ChangePassword = () => {
               </View>
               <Text style={styles.strengthDescription}>
                 {getStrengthDescription()}
-                <Text style={styles.requirementTitle}> Must contain:</Text>
+                <Text style={styles.requirementTitle}>{t(' Must contain:')}</Text>
               </Text>
 
               <View style={styles.requirements}>
                 {[
-                  { test: /[A-Z]/.test(newPassword), text: 'At least 1 uppercase' },
-                  { test: /[0-9]/.test(newPassword), text: 'At least 1 number' },
-                  { test: newPassword.length >= 8, text: 'At least 8 characters' },
+                  { test: /[A-Z]/.test(newPassword), text: t('At least 1 uppercase') },
+                  { test: /[0-9]/.test(newPassword), text: t('At least 1 number') },
+                  { test: newPassword.length >= 8, text: t('At least 8 characters') },
                 ].map((req, index) => (
                   <View key={index} style={styles.requirementRow}>
                     <Checkmark color={getRequirementColor(req.test)} />
@@ -154,20 +156,20 @@ const ChangePassword = () => {
           )}
           <FormPasswordInput
             name="confirm_new_password"
-            label="Confirm New Password"
+            label={t('Confirm New Password')}
             control={form.control}
-            placeholder="Confirm new password"
+            placeholder={t('Confirm new password')}
           />
           <View style={[styles.actions, { marginBottom: bottomInset }]}>
             <Button onPress={router.back} variant="secondary" containerStyle={{ flex: 1 }}>
-              Cancel
+              {t('Cancel')}
             </Button>
             <Button
               onPress={form.handleSubmit(onSubmitPasswordChange)}
               containerStyle={{ flex: 1 }}
               loading={isPending}
               disabled={isPending}>
-              Update Password
+              {t('Update Password')}
             </Button>
           </View>
         </ScrollView>
