@@ -155,5 +155,12 @@
     "Total Products": "Productos totales",
     "Subscriptions": "Suscripciones",
     "Active Members": "Miembros Activos",
-    "from last month": "del mes pasado"
+    "from last month": "del mes pasado",
+    "Add Members": "Agregar miembros",
+    "Copy Link": "Copiar enlace",
+    "Send invites for who you would like to add": "Envía invitaciones a quién te gustaría agregar",
+    "Add an email address": "Añadir una dirección de correo electrónico",
+    "Invite from phonebook": "Invitar desde la agenda",
+    "Working is better in teams.": "Trabajar es mejor en equipo.",
+    "Send Invite": "Enviar invitación"
 }

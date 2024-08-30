@@ -110,7 +110,7 @@
     "In Transit": "В пути",
     "Paid": "Оплаченный",
     "Progress": "Прогресс",
-    "    James Hung Ltd": "    Джеймс Хунг Лтд.",
+    "James Hung Ltd": "Джеймс Хунг Лтд.",
     "jameshung@gmail.com": "jameshung@gmail.com",
     "+234 9045004705": "+234 9045004705",
     "112, Houston Street": "112, Хьюстон-стрит",
@@ -151,5 +151,12 @@
     "Total Products": "Всего продуктов",
     "Subscriptions": "Подписки",
     "Active Members": "Активные участники",
-    "from last month": "с прошлого месяца"
+    "from last month": "с прошлого месяца",
+    "Add Members": "Добавить участников",
+    "Copy Link": "Копировать ссылку",
+    "Send invites for who you would like to add": "Отправьте приглашения тем, кого вы хотите добавить",
+    "Add an email address": "Добавьте адрес электронной почты",
+    "Invite from phonebook": "Пригласить из телефонной книги",
+    "Working is better in teams.": "Работать лучше в команде.",
+    "Send Invite": "Отправить приглашение"
 }

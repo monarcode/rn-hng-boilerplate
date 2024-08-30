@@ -151,5 +151,13 @@
     "Total Products": "총 제품",
     "Subscriptions": "구독",
     "Active Members": "활성 회원",
-    "from last month": "지난달부터"
+    "from last month": "지난달부터",
+    "Add Members": "구성원 추가",
+    "Copy Link": "링크 복사",
+    "Send invites for who you would like to add": "추가하고 싶은 사람에게 초대장 보내기",
+    "Add an email address": "이메일 주소 추가",
+    "Invite from phonebook": "전화번호부에서 초대",
+    "Working is better in teams.": "팀으로 일하는 것이 더 좋습니다.",
+    "Send Invite": "초대장 보내기"
+    
 }

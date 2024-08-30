@@ -1,11 +1,12 @@
+import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { THEME } from '~/constants/theme';
-import { Text, Button, Dialog, DialogRef } from '~/components/shared';
 import { Camera } from 'react-native-feather';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import Header from '~/components/member/header';
-import { useLocalSearchParams } from 'expo-router';
+import { Text, Button, Dialog, DialogRef } from '~/components/shared';
+import { THEME } from '~/constants/theme';
 
 const MemberProfile = () => {
   const dialogRef = React.useRef<DialogRef>(null);

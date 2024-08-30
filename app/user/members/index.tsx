@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
-import { THEME } from '~/constants/theme';
-import useAuthStore from '~/store/auth';
-import { useInvite, useUserList } from '~/hooks/dashboard/dashboard';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import Header from '~/components/member/header';
 import InviteLinkSection from '~/components/member/inviteLink';
-import SearchBar from '~/components/member/searchBar';
 import MemberList from '~/components/member/memberList';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { memberArr } from '~/components/member/member';
-import { useTranslation } from 'react-i18next';
+import SearchBar from '~/components/member/searchBar';
+import { THEME } from '~/constants/theme';
+import { useInvite, useUserList } from '~/hooks/dashboard/dashboard';
+import useAuthStore from '~/store/auth';
 
 const Members = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const authstore = useAuthStore();
   const [searchTerm, setSearchTerm] = useState('');
 
