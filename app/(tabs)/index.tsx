@@ -27,8 +27,6 @@ const HomeScreen = () => {
     return <Redirect href="/(auth)/login" />;
   }
 
-  console.log({ authstore: authstore.data.organisations });
-
   return (
     <>
       <Stack.Screen
@@ -116,7 +114,13 @@ const HomeScreen = () => {
               {t('Add A Product')}
             </Button>
 
-            <Button containerStyle={{ flex: 1 }} icon={<AddUser />} variant="secondary">
+            <Button
+              containerStyle={{ flex: 1 }}
+              icon={<AddUser />}
+              variant="secondary"
+              onPress={() => {
+                router.push('/user/addmembers');
+              }}>
               {t('Add A Member')}
             </Button>
           </View>
