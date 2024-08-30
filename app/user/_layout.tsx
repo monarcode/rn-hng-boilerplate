@@ -5,6 +5,10 @@ const UserLayout = () => {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="change-password" options={{ headerShown: true }} />
       <Stack.Screen name="subscription" options={{ headerShown: true }} />
+      <Stack.Screen
+        name="manage-organisation/manage-organisation"
+        options={{ headerShown: true }}
+      />
       <Stack.Screen name="notification" options={{ headerShown: true }} />
     </Stack>
   );
