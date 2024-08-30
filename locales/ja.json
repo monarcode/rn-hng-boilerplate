@@ -48,5 +48,17 @@
     "Language": "言語",
     "Region": "地域",
     "Time-Zone": "タイムゾーン",
-    "Done": "終わり"
+    "Done": "終わり",
+    "Your email address": "あなたのメールアドレス",
+    "Edit Profile": "プロフィールを編集",
+    "Upload your photo": "写真をアップロードしてください",
+    "Remove Photo": "写真を削除",
+    "Photos help your teammates recognize\nyou.": "写真はチームメイトがあなたを認識するのに役立ちます.",
+    "Personal Details": "個人情報",
+    "Username": "ユーザー名",
+    "Enter username": "ユーザー名を入力してください",
+    "Maximum of 64 characters": "最大64文字",
+    "Save Changes": "変更を保存",
+    "Type your message here": "ここにメッセージを入力してください",
+    "Bio": "バイオ"
 }

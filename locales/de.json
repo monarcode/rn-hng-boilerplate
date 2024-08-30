@@ -48,5 +48,17 @@
     "Language": "Sprache",
     "Region": "Region",
     "Time-Zone": "Zeitzone",
-    "Done": "Erledigt"
+    "Done": "Erledigt",
+    "Your email address": "Ihre E-Mail-Adresse",
+    "Edit Profile": "Profil bearbeiten",
+    "Upload your photo": "Laden Sie Ihr Foto hoch",
+    "Remove Photo": "Foto entfernen",
+    "Photos help your teammates recognize\nyou.": "Fotos helfen deinen Teamkollegen, dich zu erkennen\n.",
+    "Personal Details": "Persönliche Daten",
+    "Username": "Benutzername",
+    "Enter username": "Benutzernamen eingeben",
+    "Maximum of 64 characters": "Maximal 64 Zeichen",
+    "Save Changes": "Änderungen speichern",
+    "Type your message here": "Geben Sie hier Ihre Nachricht ein",
+    "Bio": "Bio"
 }

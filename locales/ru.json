@@ -48,5 +48,18 @@
     "Language": "Язык",
     "Region": "Область",
     "Time-Zone": "Часовой пояс",
-    "Done": "Сделанный"
+    "Done": "Сделанный",
+    "Your email address": "Ваш электронный адрес",
+    "Edit Profile": "Редактировать профиль",
+    "Upload your photo": "Загрузите свое фото",
+    "Remove Photo": "Удалить фото",
+    "Photos help your teammates recognize\nyou.": "Фотографии помогут вашим товарищам по команде узнать\nвас.",
+    "Personal Details": "Личные данные",
+    "Username": "Имя пользователя",
+    "Enter username": "Введите имя пользователя",
+    "Maximum of 64 characters": "Максимум 64 символа",
+    "Save Changes": "Сохранить изменения",
+    "Type your message here": "Введите здесь свое сообщение",
+    "Bio": "Био"
+
 }

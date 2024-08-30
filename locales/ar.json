@@ -48,5 +48,17 @@
     "Language": "لغة",
     "Region": "منطقة",
     "Time-Zone": "المنطقة الزمنية",
-    "Done": "منتهي"
+    "Done": "منتهي",
+    "Your email address": "عنوان بريدك  الإلكتروني",
+    "Edit Profile": "تحرير الملف الشخصي",
+    "Upload your photo": "ارفع صورتك",
+    "Remove Photo": "إزالة الصورة",
+    "Photos help your teammates recognize\nyou.": "تساعد الصور زملائك في الفريق في التعرف عليك\n.",
+    "Personal Details": "التفاصيل الشخصية",
+    "Username": "اسم المستخدم",
+    "Enter username": "أدخل اسم المستخدم",
+    "Maximum of 64 characters": "الحد الأقصى 64 حرفًا ",
+    "Save Changes": "حفظ التغييرات",
+    "Type your message here": "اكتب رسالتك هنا",
+    "Bio": "السيرة الذاتية"
 }

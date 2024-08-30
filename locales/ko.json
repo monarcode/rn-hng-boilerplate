@@ -48,5 +48,17 @@
     "Language": "언어",
     "Region": "지역",
     "Time-Zone": "시간대",
-    "Done": "완료"
+    "Done": "완료",
+    "Your email address": "귀하의 이메일 주소",
+    "Edit Profile": "프로필 수정",
+    "Upload your photo": "사진을 업로드하세요",
+    "Remove Photo": "사진 제거",
+    "Photos help your teammates recognize\nyou.": "사진은 팀원들이 당신을 알아보는 데 도움이 됩니다.\n",
+    "Personal Details": "개인정보",
+    "Username": "사용자 이름",
+    "Enter username": "사용자 이름을 입력하세요",
+    "Maximum of 64 characters": "최대 64자",
+    "Save Changes": "변경사항 저장",
+    "Type your message here": "여기에 메시지를 입력하세요.",
+    "Bio": "바이오"
 }
