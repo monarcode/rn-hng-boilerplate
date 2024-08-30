@@ -27,7 +27,7 @@ export default function OrganisationSignup() {
             <Text weight="semiBold" size="3xl" style={{ color: THEME.colors.dark }}>
               {t('Create Organisation')}
             </Text>
-            <Text style={styles.subtitle}>Create an account to get started with us</Text>
+            <Text style={styles.subtitle}>{t('Create an account to get started with us')}</Text>
           </View>
 
           <OrganisationSignupForm />
