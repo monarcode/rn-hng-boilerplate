@@ -1,19 +1,22 @@
+import React, { useTransition } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet } from 'react-native';
-import React from 'react';
-import { View, Text, TextInput, Button } from '~/components/shared';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import BasicHeader from '~/components/basic-header';
-import GoBack from '~/components/go-back';
-import useAuthStore from '~/store/auth';
-import { THEME } from '~/constants/theme';
-import normalize from '~/libs/normalize';
 import { Link, Mail, Phone } from 'react-native-feather';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import HandShake from '../../assets/icons/handshake.svg';
+import PhoneBook from '../../assets/icons/phonebook.svg';
+
+import GoBack from '~/components/go-back';
+import { View, Text, TextInput, Button } from '~/components/shared';
+import { THEME } from '~/constants/theme';
 import { useInvite } from '~/hooks/dashboard/dashboard';
+import normalize from '~/libs/normalize';
+import useAuthStore from '~/store/auth';
 import { copyToClipboard } from '~/utils/copyToClipboard';
-import PhoneBook from '../../assets/icons/phonebook.svg'
-import HandShake from '../../assets/icons/handshake.svg'
 
 const AddMembers = () => {
+  const { t } = useTranslation();
   const authstore = useAuthStore();
   const userData = useAuthStore((state) => state.data?.user);
   const { data, isError, isLoading } = useInvite(authstore.data?.organisations[0].organisation_id);
@@ -26,7 +29,7 @@ const AddMembers = () => {
           <GoBack />
           <View>
             <Text size="xl" weight="semiBold">
-              Add Members
+              {t('Add Members')}
             </Text>
             <Text size="lg">{userData?.first_name}</Text>
           </View>
@@ -37,9 +40,9 @@ const AddMembers = () => {
           onPress={() => {
             copyToClipboard((data?.data?.invite_link || null) as string);
           }}>
-          <Link height={15} width={15} color={'#999999'} />
+          <Link height={15} width={15} color="#999999" />
           <Text size="lg" style={{ color: '#999999' }}>
-            Copy Link
+            {t('Copy Link')}
           </Text>
         </Pressable>
       </View>
@@ -53,7 +56,7 @@ const AddMembers = () => {
         }}>
         <View style={{ gap: normalize(15) }}>
           <Text size="lg" style={{ textAlign: 'center' }}>
-            Send invites for who you would like to add
+            {t('Send invites for who you would like to add')}
           </Text>
           <View style={{ gap: normalize(15) }}>
             <View
@@ -66,9 +69,9 @@ const AddMembers = () => {
                 borderRadius: 10,
                 borderColor: '#CBD5E1',
               }}>
-              <Mail height={normalize(20)} width={normalize(20)} color={'#AEAEAE'} />
+              <Mail height={normalize(20)} width={normalize(20)} color="#AEAEAE" />
               <TextInput
-                placeholder="Add an email address"
+                placeholder={t('Add an email address')}
                 containerStyle={{ borderWidth: 0 }}
                 style={{ width: '90%' }}
               />
@@ -87,19 +90,23 @@ const AddMembers = () => {
                 borderColor: '#CBD5E1',
                 height: normalize(38),
               }}>
-              <PhoneBook height={normalize(20)} width={normalize(20)} color={'#AEAEAE'} />
+              <PhoneBook height={normalize(20)} width={normalize(20)} color="#AEAEAE" />
               <View style={{ width: '90%', paddingHorizontal: normalize(8) }}>
-                <Text style={{ color: THEME.colors.neutral[400] }}>Invite from phonebook</Text>
+                <Text style={{ color: THEME.colors.neutral[400] }}>
+                  {t('Invite from phonebook')}
+                </Text>
               </View>
             </View>
 
             <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ color: THEME.colors.neutral[300] }}>Working is better in teams. </Text>
+              <Text style={{ color: THEME.colors.neutral[300] }}>
+                {t('Working is better in teams.')}
+              </Text>
               <HandShake />
             </View>
           </View>
         </View>
-        <Button>Send Invite</Button>
+        <Button>{t('Send Invite')}</Button>
       </View>
     </SafeAreaView>
   );
